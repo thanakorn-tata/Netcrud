@@ -1,0 +1,45 @@
+<div class="layout-wrapper" [class.sidebar-collapsed]="sidebarCollapsed">
+    <!-- Sidebar -->
+    <div class="layout-sidebar">
+
+      <!-- Logo Section -->
+      <div class="sidebar-header">
+
+        <div class="text-lg font-semibold">
+            finance_note
+        </div>
+      </div>
+
+      <!-- Menu Items -->
+      <ul class="layout-menu">
+        <li *ngFor="let item of sidebarItems">
+          <a [routerLink]="item.routerLink" class="layout-menuitem-link">
+            <i [class]="item.icon"></i>
+            <span class="menu-label text-md font-semibold">{{item.label | translate}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Top Menubar -->
+    <div class="layout-main">
+      <div class="menubar-header p-menubar py-4 px-5">
+        <div class="p-menubar p-component flex justify-between items-center w-full">
+          <p-button icon="pi pi-bars" (click)="toggleSidebar()" severity="help" rounded></p-button>
+          
+          <div class="flex gap-2">         
+            <p-button icon="pi pi-language" (click)="toggleLanguage()" severity="help" rounded></p-button>
+            <p-button icon="pi pi-bell" severity="help" rounded></p-button>
+            <p-button icon="pi pi-user" severity="help" rounded></p-button>
+          </div>
+        </div>
+      </div>      
+
+      <!-- outlet -->
+      <div class="mt-3 mx-0">
+        <router-outlet ></router-outlet>
+        <app-footer></app-footer>
+      </div>
+
+    </div>
+</div>

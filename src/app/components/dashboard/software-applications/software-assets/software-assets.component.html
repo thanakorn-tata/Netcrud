@@ -1,0 +1,119 @@
+<div class="mt-6 mb-4 text-2xl font-semibold">
+    {{'dashboard.softwareasset.title' | translate}}
+</div>
+<hr/>
+
+<!-- row1 -->
+<div class="grid grid-cols-1 xl:grid-cols-5 gap-3 py-5 my-4">
+    <!-- column 1 -->
+    <div class="xl:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <!-- card 1-->
+        <div class="bg-white rounded-lg shadow-sm p-3 cursor-pointer hover:shadow-md transition-shadow w-full h-auto">
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex flex-col items-end gap-1 w-full">
+                    <div class="flex justify-between w-full items-center gap-2">
+                        <div class="bg-purple-100 p-2 rounded-lg">
+                            <i class="pi pi-box text-purple-600 !text-2xl"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-800">36</span>
+                    </div>
+                    <span class="text-sm font-semibold">{{'dashboard.softwareasset.total' | translate }}</span>
+                </div>
+            </div>
+        </div>
+        <!-- card 2-->
+        <div class="bg-white rounded-lg shadow-sm p-3 cursor-pointer hover:shadow-md transition-shadow w-full h-auto">
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex flex-col items-end gap-1 w-full">
+                    <div class="flex justify-between w-full items-center gap-2">
+                        <div class="bg-purple-100 p-2 rounded-lg">
+                            <i class="pi pi-check-circle text-purple-600 !text-2xl"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-800">32</span>
+                    </div>
+                    <span class="text-sm font-semibold">{{'dashboard.softwareasset.alloflc' | translate}}</span>
+                </div>
+            </div>
+        </div>
+        <!-- card3  -->
+        <div class="bg-white rounded-lg shadow-sm p-3 cursor-pointer hover:shadow-md transition-shadow w-full h-auto">
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex flex-col items-end gap-1 w-full">
+                    <div class="flex justify-between w-full items-center gap-2">
+                        <div class="bg-purple-100 p-2 rounded-lg">
+                            <i class="pi pi-exclamation-triangle text-purple-600 !text-2xl"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-800">1</span>
+                    </div>
+                    <span class="text-sm font-semibold">{{'dashboard.softwareasset.nearexpire' | translate}}</span>
+                </div>
+            </div>
+        </div>
+        <!-- card 4 -->
+        <div class="bg-white rounded-lg shadow-sm p-3 cursor-pointer hover:shadow-md transition-shadow w-full h-auto">
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex flex-col items-end gap-1 w-full">
+                    <div class="flex justify-between w-full items-center gap-2">
+                        <div class="bg-purple-100 p-2 rounded-lg">
+                            <i class="pi pi-ban text-purple-600 !text-2xl"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-800">0</span>
+                    </div>
+                    <span class="text-sm font-semibold">{{'dashboard.softwareasset.expiredlc' |translate }}</span>
+                </div>
+            </div>
+        </div>
+        <!-- card 5 -->
+        <div class="bg-white rounded-lg shadow-sm p-3 cursor-pointer hover:shadow-md transition-shadow w-full h-auto">
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex flex-col items-end gap-1 w-full">
+                    <div class="flex justify-between w-full items-center gap-2">
+                        <div class="bg-purple-100 p-2 rounded-lg">
+                            <i class="pi pi-list text-purple-600 !text-2xl"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-800">0</span>
+                    </div>
+                    <span class="text-sm font-semibold">{{'dashboard.softwareasset.alllicense' | translate}}</span>
+                </div>
+            </div>
+        </div>
+        <!-- card 6 -->
+        <div class="bg-white rounded-lg shadow-sm p-3 cursor-pointer hover:shadow-md transition-shadow w-full h-auto">
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex flex-col items-end gap-1 w-full">
+                    <div class="flex justify-between w-full items-center gap-2">
+                        <div class="bg-purple-100 p-2 rounded-lg">
+                            <i class="pi pi-user-edit text-purple-600 !text-2xl"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-800">0</span>
+                    </div>
+                    <span class="text-sm font-semibold">{{'dashboard.softwareasset.usagelc' | translate}}</span>
+                </div>
+            </div>
+        </div>
+        <!-- card 7 -->
+        <div class="bg-white rounded-lg shadow-sm p-3 cursor-pointer hover:shadow-md transition-shadow w-full h-auto">
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex flex-col items-end gap-1 w-full">
+                    <div class="flex justify-between w-full items-center gap-2">
+                        <div class="bg-purple-100 p-2 rounded-lg">
+                            <i class="pi pi-exclamation-circle text-purple-600 !text-2xl"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-800">0</span>
+                    </div>
+                    <span class="text-sm font-semibold">{{'dashboard.softwareasset.remainlc' | translate}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- column 2 -->
+    <div class="xl:col-span-3">
+        <div class="pie-card m-2">
+            <div class="text-lg font-semibold">{{'dashboard.lcchart.title' | translate}}</div>
+            <div>
+                <p-chart height="400px" type="pie" [data]="data" [options]="options"></p-chart>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+{
+  "sidebar":{
+    "menu1":"dashboard"
+  },
+  "dashboard":{
+    "tab":{
+      "hardwaretab":"hardware/IT equipment",
+      "softwaretab":"Software/Applications"
+    },
+
+    "other":{
+      "timeduration":"Time Duration",
+      "timesec":"sec",
+      "timehour":"hour"
+    },
+
+    "implementation":{
+      "title":"Implementation of hardware/IT assets",
+      "allasset":"All Asset",
+      "active":"Active",
+      "deprecated":"Deprecated",
+      "expire":"Expire",
+
+      "nearexpire":{
+        "nearexpire":"Near Expire",
+        "note":"* Near Expire : The amount of hardware assets nearing expiration before the period. ( 1 month )"
+      },
+
+      "assetchart":{
+        "title":"ASSET STATUS",
+        "active":"Active",
+        "ready":"Ready To Use",
+        "suspend":"Suspend",
+        "deprecated":"Deprecated"
+      }
+    },
+
+    "amount":{
+        "title":"Amount of each asset type",
+        "desktop":"desktop",
+        "notebook":"notebook",
+        "manage":"Manage device types",
+        "download":"Download"
+      },
+
+    "computerstatus":{
+        "title":"COMPUTER STATUS",
+        "onlinenormal":"Online device normal device",
+        "onlinechanged":"Online device The device has changed",
+        "offlinenormal":"Offline device normal device",
+        "offlinechanged":"Offline device The equipment has changed"
+    },
+    
+    "last5changecomputer":{
+        "title":"The last 5 approve changed computers",
+        "showall":"SHOW ALL",
+        "no":"No.",
+        "type":"Type",
+        "devicename":"Device Name",
+        "datechanged":"Date Changed",
+        "approvedate":"approve Date"
+    },
+
+    "last5newasset":{
+      "title":"The last 5 new assets",
+      "showall":"SHOW ALL",
+      "no":"No.",
+      "type":"Type",
+      "devicename":"Device Name",
+      "owner":"Owner Name",
+      "laston":"Last On"
+    },
+    
+    "last5nearexpired":{
+      "title":"Latest 5 nearExpired Assets",
+      "showall":"SHOW ALL",
+      "no":"No."
+
+  },
+    "last5expired":{
+      "title":"Latest 5 Expired Assets",
+      "showall":"SHOW ALL",
+      "no":"No."
+  },
+  
+    "softwareasset":{
+      "title":"Software/Application Assets",
+      "total":"Total software",
+      "alloflc":"All Types of License",
+      "nearexpire":"Licenses Near Expiration",
+      "expiredlc":"Expired License",
+      "alllicense":"All License",
+      "usagelc":"Usage License",
+      "remainlc":"Remaining"
+    },
+    
+    "lcchart":{
+      "title":"Each Type Of License",
+      "proprietary":"Proprietary Software",
+      "shareware":"Shareware",
+      "demo":"Demo",
+      "windowlc":"Windows License",
+      "freeware":"freeware",
+      "freesoftware":"Free Software",
+      "opensource":"Open Source",
+      "commercial":"Commercial Software"
+    },
+
+    "expiringsoftware":{
+      "title":"Software/Applications That Expiring (Top 5 Latest)",
+      "no":"No.",
+      "software":"software/applications",
+      "version":"version",
+      "name":"license name",
+      "purchase":"purchase date",
+      "expiration":"expiration"
+    },
+
+    "expiredsoftware":{
+      "title":"Software/Applications That Expired (Top 5 Latest)",
+      "no":"No.",
+      "software":"software/applications",
+      "version":"version",
+      "name":"license name",
+      "purchase":"purchase date",
+      "expiration":"expiration"
+    }
+
+  }
+
+}

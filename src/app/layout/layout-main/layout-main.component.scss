@@ -1,0 +1,97 @@
+body{
+  color: #5d3b80;
+}
+
+.layout-wrapper {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .layout-sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .sidebar-header {
+    height: 74px;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    justify-content: flex-start;
+    background-color: #5d3b80 !important;
+    border-bottom: 1px solid #dee2e6;
+    color: #ffffff;
+  }
+  
+  .layout-menu {
+    list-style: none;
+    padding: 0.5rem;
+    margin: 0;
+  }
+  
+  .layout-menuitem-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: #495057;
+    text-decoration: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  .layout-menuitem-link:hover {
+    background-color: #e9ecef;
+  }
+  
+  .layout-menuitem-link i {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+    min-width: 1.2rem;
+  }
+  
+  .layout-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .sidebar-collapsed .layout-sidebar {
+    width: 64px; 
+  }
+  
+  .sidebar-collapsed .menu-label {
+    display: none; 
+  }
+  
+  .sidebar-collapsed .logo {
+    display: none;
+  }
+  
+  .menu-label {
+   color: #5d3b80; 
+  }
+
+  .p-menubar{
+    background: #f8f9fa;
+    border-radius: 0%;
+
+  }
+
+  .menubar-header{
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); 
+  }
+
+  :host ::ng-deep .p-button.p-button-help {
+    background-color: #5d3b80; 
+    border-color: #5d3b80;     
+    color:white;
+  }
+  

@@ -1,0 +1,35 @@
+<div class="p-4">
+    <div class="flex justify-between mb-6">
+        <div class="text-xl font-semibold">
+            {{'dashboard.last5nearexpired.title' | translate}}
+        </div>
+        <div class="text-lg cursor-pointer">
+            {{'dashboard.last5nearexpired.showall' | translate}}
+        </div>
+    </div>
+
+    <div *ngIf="itemstest && itemstest.length > 0">
+        <p-table #dt [value]="itemstest" (sortFunction)="customSort($event)" [customSort]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>{{'dashboard.last5nearexpired.no' | translate}}</th>
+
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-ItemsTest let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{ rowIndex + 1 }}</td> 
+                    
+
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div *ngIf="!itemstest || itemstest.length === 0" class=" text-center p-4 mt-25">
+            <i class="pi pi-database" style="font-size: 5rem"></i>
+            <div class="mt-2 text-2xl">Data not found</div>
+        
+    </div>
+</div>

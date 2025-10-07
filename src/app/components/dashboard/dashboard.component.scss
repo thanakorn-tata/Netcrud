@@ -1,0 +1,34 @@
+.p-tabpanels{
+    background: white;
+    color: #5d3b80;
+}
+
+:host ::ng-deep .p-select{
+    background-color: white !important;
+    color: #5d3b80 !important;
+    border: 1px solid;
+}
+
+:host ::ng-deep .p-select-label {
+    color: #5d3b80 !important;
+}
+
+:host ::ng-deep .p-select-list-container{
+    background-color: white !important;
+    color: #5d3b80 !important;
+}
+
+:host ::ng-deep .p-select-option {
+    background-color: white !important;
+    color: #5d3b80 !important;
+    
+}
+
+:host ::ng-deep .p-select:not(.p-disabled).p-focus{
+    border-color: #5d3b80 !important;
+}
+
+:host ::ng-deep .p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus {
+    background-color: #dfc0fd !important;
+    color: #5d3b80 !important;
+}

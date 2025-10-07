@@ -1,0 +1,38 @@
+@use 'tailwindcss' as *;
+
+@font-face {
+    font-family: 'primeicons';
+    src: url('/assets/fonts/primeicons.eot');
+    src: url('/assets/fonts/primeicons.eot?#iefix') format('embedded-opentype'),
+         url('/assets/fonts/primeicons.woff2') format('woff2'),
+         url('/assets/fonts/primeicons.woff') format('woff'),
+         url('/assets/fonts/primeicons.ttf') format('truetype'),
+         url('/assets/fonts/primeicons.svg?#primeicons') format('svg');
+  }
+
+  body{
+    margin: 0;
+    background-color: #edeff1;
+    color: #5d3b80;
+  } 
+
+  .p-tablist-tab-list{
+    background: white !important;
+    border-color: rgb(255, 255, 255) !important;
+  }
+  .p-tablist-active-bar{
+    background: #ca95ff !important;
+  }
+  .p-tab{
+    border-color: transparent !important;
+    color: #5d3b80 !important;
+  }
+  .p-tab-active{
+    color: #5d3b80 !important; 
+    border-color: #ca95ff !important;
+
+  }
+  hr {
+    color: #5d3b80; 
+    opacity: 0.2;
+  }

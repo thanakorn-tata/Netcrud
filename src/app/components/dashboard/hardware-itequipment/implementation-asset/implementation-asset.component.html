@@ -1,0 +1,95 @@
+<div class="mt-6 mb-4 text-2xl font-semibold">
+    {{'dashboard.implementation.title' | translate}}
+  </div>
+  <hr/>
+  
+  <!-- row1 -->
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 py-5 my-4">
+    <!-- column 1 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- card 1 -->
+      <div class="bg-white rounded-lg shadow-sm p-6 cursor-pointer hover:shadow-md transition-shadow w-full">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col items-end gap-1 w-full">
+            <div class="flex justify-between w-full items-center gap-2">
+              <div class="bg-purple-100 p-3 rounded-lg">
+                <i class="pi pi-server text-purple-600 !text-3xl"></i>
+              </div>
+              <span class="text-md font-semibold text-gray-800">36</span>
+            </div>
+            <span class="text-md font-semibold">{{'dashboard.implementation.allasset' | translate }}</span>
+          </div>
+        </div>
+      </div>
+      <!-- card 2 -->
+      <div class="bg-white rounded-lg shadow-sm p-6 cursor-pointer hover:shadow-md transition-shadow w-full">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col items-end gap-1 w-full">
+            <div class="flex justify-between w-full items-center gap-2">
+              <div class="bg-purple-100 p-3 rounded-lg">
+                <i class="pi pi-check-square text-purple-600 !text-3xl"></i>
+              </div>
+              <span class="text-md font-semibold text-gray-800">32</span>
+            </div>
+            <span class="text-md font-semibold">{{'dashboard.implementation.active' | translate}}</span>
+          </div>
+        </div>
+      </div>
+      <!-- card 3 -->
+      <div class="bg-white rounded-lg shadow-sm p-6 cursor-pointer hover:shadow-md transition-shadow w-full">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col items-end gap-1 w-full">
+            <div class="flex justify-between w-full items-center gap-2">
+              <div class="bg-purple-100 p-3 rounded-lg">
+                <i class="pi pi-ban text-purple-600 !text-3xl"></i>
+              </div>
+              <span class="text-md font-semibold text-gray-800">1</span>
+            </div>
+            <span class="text-md font-semibold">{{'dashboard.implementation.deprecated' | translate}}</span>
+          </div>
+        </div>
+      </div>
+      <!-- card 4 -->
+      <div class="bg-white rounded-lg shadow-sm p-6 cursor-pointer hover:shadow-md transition-shadow w-full">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col items-end gap-1 w-full">
+            <div class="flex justify-between w-full items-center gap-2">
+              <div class="bg-purple-100 p-3 rounded-lg">
+                <i class="pi pi-exclamation-triangle text-purple-600 !text-3xl"></i>
+              </div>
+              <span class="text-md font-semibold text-gray-800">0</span>
+            </div>
+            <span class="text-md font-semibold">{{'dashboard.implementation.expire' |translate }}</span>
+          </div>
+        </div>
+      </div>
+      <!-- card 5 -->
+      <div class="bg-white rounded-lg shadow-sm p-6 cursor-pointer hover:shadow-md transition-shadow w-full">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col items-end gap-1 w-full">
+            <div class="flex justify-between w-full items-center gap-2">
+              <div class="bg-purple-100 p-3 rounded-lg">
+                <i class="pi pi-exclamation-circle text-purple-600 !text-3xl"></i>
+              </div>
+              <span class="text-md font-semibold text-gray-800">0</span>
+            </div>
+            <span class="text-md font-semibold">{{'dashboard.implementation.nearexpire.nearexpire' | translate}}</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="note"> {{'dashboard.implementation.nearexpire.note' | translate}} </p>
+      </div>
+    </div>
+  
+    <!-- column 2 -->
+    <div>
+      <div class="pie-card">
+        <div class="text-xl font-semibold">{{'dashboard.implementation.assetchart.title' | translate}}</div>
+        <div>
+          <p-chart  height="400px" type="pie" [data]="data" [options]="options"></p-chart>
+        </div>
+      </div>
+    </div>
+    
+  </div>

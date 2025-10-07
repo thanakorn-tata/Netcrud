@@ -1,0 +1,48 @@
+<div class="card my-6 mx-0 p-10 shadow-lg rounded-lg bg-white border border-gray-200">
+    <div class="flex justify-between mb-6">
+        <div class="text-xl font-semibold">
+            {{'dashboard.expiredsoftware.title' | translate}}
+        </div>
+    </div>
+
+    <div *ngIf="itemstest && itemstest.length > 0">
+        <p-table #dt [value]="itemstest" (sortFunction)="customSort($event)" [customSort]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>{{'dashboard.expiringsoftware.no' | translate}}</th>
+                    <th pSortableColumn="software">
+                        {{'dashboard.expiringsoftware.software' | translate}} <p-sortIcon field="software" />
+                    </th>
+                    <th pSortableColumn="version">
+                        {{'dashboard.expiringsoftware.version' | translate}} <p-sortIcon field="version" />
+                    </th>
+                    <th pSortableColumn="licence">
+                        {{'dashboard.expiringsoftware.name' | translate}} <p-sortIcon field="licence" />
+                    </th>
+                    <th pSortableColumn="buydate">
+                        {{'dashboard.expiringsoftware.purchase' | translate}} <p-sortIcon field="buydate" />
+                    </th>
+                    <th pSortableColumn="expiration">
+                        {{'dashboard.expiringsoftware.expiration' | translate}} <p-sortIcon field="expiration" />
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-ItemsTest let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{ rowIndex + 1 }}</td> 
+                    <td>{{ ItemsTest.software }}</td>
+                    <td>{{ ItemsTest.version }}</td>
+                    <td>{{ ItemsTest.licence }}</td>
+                    <td>{{ ItemsTest.buydate }}</td>
+                    <td>{{ ItemsTest.expiration }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div *ngIf="!itemstest || itemstest.length === 0" class=" text-center p-4 my-15">
+            <i class="pi pi-database" style="font-size: 5rem"></i>
+            <div class="mt-2 text-2xl">Data not found</div>
+        
+    </div>
+</div>

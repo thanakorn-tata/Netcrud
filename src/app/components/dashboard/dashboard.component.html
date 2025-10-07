@@ -1,0 +1,27 @@
+<p-tabs value="0" class="mx-3">
+    <p-tablist>
+        <p-tab value="0">{{'dashboard.tab.hardwaretab' | translate}}</p-tab>
+        <p-tab value="1">{{'dashboard.tab.softwaretab' | translate}}</p-tab>
+        <div class="flex justify-end w-full">
+            <div class="card mr-2 mt-2">
+                <p-select [options]="times" pTooltip="{{'dashboard.other.timeduration' | translate}}"
+                [(ngModel)]="selectedtime" optionLabel="time" class="w-full md:w-32" />
+            </div>
+        </div>
+    </p-tablist>
+    
+    <p-tabpanels>
+        <!-- tab1 -->
+        <p-tabpanel value="0">
+            <p class="m-0">
+                <app-hardware-itequipment></app-hardware-itequipment>
+            </p>
+        </p-tabpanel>
+        <!-- tab2 -->
+        <p-tabpanel value="1">
+            <p class="m-0">
+                <app-software-applications></app-software-applications>
+            </p>
+        </p-tabpanel>
+    </p-tabpanels>
+</p-tabs>
