@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { PrimeIcons } from 'primeng/api';
-import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { NgFor } from '@angular/common';
-import { TranslateModule, TranslateService} from '@ngx-translate/core'; 
+import { TranslateModule, TranslateService} from '@ngx-translate/core';
 import { FooterComponent } from '../footer/footer.component';
 
 @Component({
@@ -16,10 +15,9 @@ import { FooterComponent } from '../footer/footer.component';
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet, 
+    RouterOutlet,
     RouterLink,
-    MenubarModule, 
-    SidebarModule, 
+    MenubarModule,
     ButtonModule,
     NgFor,
     TranslateModule,
@@ -32,15 +30,15 @@ export class LayoutMainComponent {
     this.translateService.setDefaultLang(savedLang);
     this.translateService.use(savedLang);
   }
-  
+
   toggleLanguage() {
     const currentLang = this.translateService.currentLang;
     const newLang = currentLang === 'en' ? 'th' : 'en';
-  
+
     localStorage.setItem('language', newLang);
     window.location.reload();
   }
-  
+
 
   sidebarCollapsed = false;
 
@@ -70,7 +68,22 @@ export class LayoutMainComponent {
       label: 'sidebar.menu1',
       icon: PrimeIcons.CHART_BAR,
       routerLink: '/dashboard'
+    },
+    {
+      label: 'sidebar.menu2',
+      icon: PrimeIcons.USERS,
+      routerLink: '/student'
+    },
+    {
+      label: 'sidebar.menu3',
+      icon: PrimeIcons.MONEY_BILL,
+      routerLink: '/budget'
+    },
+    {
+      label: 'sidebar.menu4',
+      icon: PrimeIcons.APPLE,
+      routerLink: '/restaurant'
     }
   ];
-  
+
 }

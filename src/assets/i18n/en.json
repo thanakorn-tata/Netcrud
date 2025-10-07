@@ -1,6 +1,9 @@
 {
   "sidebar":{
-    "menu1":"dashboard"
+    "menu1":"Dashboard",
+    "menu2":"Student",
+    "menu3":"ฺBudget",
+    "menu4":"Restaurant"
   },
   "dashboard":{
     "tab":{
@@ -50,7 +53,7 @@
         "offlinenormal":"Offline device normal device",
         "offlinechanged":"Offline device The equipment has changed"
     },
-    
+
     "last5changecomputer":{
         "title":"The last 5 approve changed computers",
         "showall":"SHOW ALL",
@@ -70,7 +73,7 @@
       "owner":"Owner Name",
       "laston":"Last On"
     },
-    
+
     "last5nearexpired":{
       "title":"Latest 5 nearExpired Assets",
       "showall":"SHOW ALL",
@@ -82,7 +85,7 @@
       "showall":"SHOW ALL",
       "no":"No."
   },
-  
+
     "softwareasset":{
       "title":"Software/Application Assets",
       "total":"Total software",
@@ -93,7 +96,7 @@
       "usagelc":"Usage License",
       "remainlc":"Remaining"
     },
-    
+
     "lcchart":{
       "title":"Each Type Of License",
       "proprietary":"Proprietary Software",
