@@ -1,34 +1,55 @@
-.p-tabpanels{
-    background: white;
-    color: #5d3b80;
+/* Tab panels */
+.p-tabpanels {
+    background: #b3e5fc; /* ฟ้าอ่อน */
+    color: #003f5c;       /* ฟ้าเข้มตัวอักษร */
 }
 
-:host ::ng-deep .p-select{
-    background-color: white !important;
-    color: #5d3b80 !important;
-    border: 1px solid;
+/* Select (dropdown) */
+:host ::ng-deep .p-select {
+    background-color: #b3e5fc !important; /* ฟ้าอ่อน */
+    color: #003f5c !important;           /* ฟ้าเข้ม */
+    border: 1px solid #40c4ff !important; /* ขอบฟ้าน้ำทะเล */
+    border-radius: 0.375rem !important;   /* ขอบมน */
+
 }
 
+/* Label ของ select */
 :host ::ng-deep .p-select-label {
-    color: #5d3b80 !important;
+    color: #003f5c !important;
+}
+/* Input / Label ของ select */
+:host ::ng-deep .p-dropdown-label,
+:host ::ng-deep .p-inputtext {
+  background-color: #b3e5fc !important;
+  color: #003f5c !important;
 }
 
-:host ::ng-deep .p-select-list-container{
-    background-color: white !important;
-    color: #5d3b80 !important;
+/* Dropdown panel */
+:host ::ng-deep .p-dropdown-panel {
+  background-color: #e1f5fe !important;
+  color: #003f5c !important;
 }
 
+
+/* List container ของ dropdown */
+:host ::ng-deep .p-select-list-container {
+    background-color: #e1f5fe !important; /* ฟ้าอ่อนกว่ากล่อง */
+    color: #003f5c !important;
+}
+
+/* Option ของ dropdown */
 :host ::ng-deep .p-select-option {
-    background-color: white !important;
-    color: #5d3b80 !important;
-    
+    background-color: #e1f5fe !important; /* ฟ้าอ่อน */
+    color: #003f5c !important;
 }
 
-:host ::ng-deep .p-select:not(.p-disabled).p-focus{
-    border-color: #5d3b80 !important;
+/* เมื่อ focus select */
+:host ::ng-deep .p-select:not(.p-disabled).p-focus {
+    border-color: #40c4ff !important; /* ฟ้าน้ำทะเลเข้ม */
 }
 
+/* Option ที่ focus แต่ไม่ได้เลือก */
 :host ::ng-deep .p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus {
-    background-color: #dfc0fd !important;
-    color: #5d3b80 !important;
+    background-color: #40c4ff !important; /* ฟ้าน้ำทะเลสดใส */
+    color: #fff !important;               /* ตัวอักษรขาวเวลา hover */
 }
