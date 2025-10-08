@@ -1,97 +1,101 @@
-body{
-  color: #5d3b80;
+body {
+  color: #2563eb; /* ฟ้าน้ำเงินสด (Tailwind blue-600) */
 }
 
 .layout-wrapper {
-    display: flex;
-    min-height: 100vh;
-  }
-  
-  .layout-sidebar {
-    width: 250px;
-    background-color: #f8f9fa;
-    display: flex;
-    flex-direction: column;
-    transition: width 0.3s ease;
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .sidebar-header {
-    height: 74px;
-    display: flex;
-    align-items: center;
-    padding: 0 1rem;
-    justify-content: flex-start;
-    background-color: #5d3b80 !important;
-    border-bottom: 1px solid #dee2e6;
-    color: #ffffff;
-  }
-  
-  .layout-menu {
-    list-style: none;
-    padding: 0.5rem;
-    margin: 0;
-  }
-  
-  .layout-menuitem-link {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    color: #495057;
-    text-decoration: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  
-  .layout-menuitem-link:hover {
-    background-color: #e9ecef;
-  }
-  
-  .layout-menuitem-link i {
-    margin-right: 0.5rem;
-    font-size: 1.2rem;
-    min-width: 1.2rem;
-  }
-  
-  .layout-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
+  display: flex;
+  min-height: 100vh;
+}
 
-  .sidebar-collapsed .layout-sidebar {
-    width: 64px; 
-  }
-  
-  .sidebar-collapsed .menu-label {
-    display: none; 
-  }
-  
-  .sidebar-collapsed .logo {
-    display: none;
-  }
-  
-  .menu-label {
-   color: #5d3b80; 
-  }
+.layout-sidebar {
+  width: 250px;
+  background-color: #f0f9ff; /* ฟ้าอ่อนมาก */
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+}
 
-  .p-menubar{
-    background: #f8f9fa;
-    border-radius: 0%;
+.sidebar-header {
+  height: 74px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  justify-content: flex-start;
+  background-color: #1e40af !important; /* ฟ้าเข้ม (blue-800) */
+  border-bottom: 1px solid #93c5fd; /* ขอบฟ้าอ่อน */
+  color: #ffffff;
+}
 
-  }
+.layout-menu {
+  list-style: none;
+  padding: 0.5rem;
+  margin: 0;
+}
 
-  .menubar-header{
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); 
-  }
+.layout-menuitem-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: #1e3a8a; /* ฟ้าน้ำเงินเข้ม */
+  text-decoration: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
-  :host ::ng-deep .p-button.p-button-help {
-    background-color: #5d3b80; 
-    border-color: #5d3b80;     
-    color:white;
-  }
-  
+.layout-menuitem-link:hover {
+  background-color: #dbeafe; /* ฟ้าอ่อนเมื่อ hover */
+}
+
+.layout-menuitem-link i {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+  min-width: 1.2rem;
+}
+
+.layout-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sidebar-collapsed .layout-sidebar {
+  width: 64px;
+}
+
+.sidebar-collapsed .menu-label {
+  display: none;
+}
+
+.sidebar-collapsed .logo {
+  display: none;
+}
+
+.menu-label {
+  color: #2563eb; /* ฟ้าน้ำเงินสด */
+}
+
+.p-menubar {
+  background: #f0f9ff; /* ฟ้าอ่อน */
+  border-radius: 0%;
+}
+
+.menubar-header {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ปุ่ม help สีฟ้า */
+:host ::ng-deep .p-button.p-button-help {
+  background-color: #2563eb;  /* ฟ้าน้ำเงินสด */
+  border-color: #2563eb;
+  color: white;
+}
+
+:host ::ng-deep .p-button.p-button-help:hover {
+  background-color: #1d4ed8; /* ฟ้าเข้มขึ้นเมื่อ hover */
+  border-color: #1d4ed8;
+}
