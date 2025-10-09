@@ -1,28 +1,37 @@
 <div class="container max-w-full p-4">
-  <div class="rounded-lg p-4 text-blue-900">
-
+  <div class="p-4 text-blue-900 rounded-lg">
     <!-- Accordion -->
     <div class="mb-4">
       <p-accordion [activeIndex]="0" styleClass="mb-5">
         <p-accordionTab
           [header]="'ค้นหาข้อมูล'"
-          [headerStyle]="{'background-color':'#3b82f6','color':'#fff','font-weight':'600'}"
-          [contentStyle]="{'background-color':'#dbeafe','color':'#003f5c'}"
+          [headerStyle]="{
+            'background-color': '#3b82f6',
+            color: '#fff',
+            'font-weight': '600'
+          }"
+          [contentStyle]="{ 'background-color': '#dbeafe', color: '#003f5c' }"
         >
-          <div class="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 text-white">
-            <div *ngFor="let box of [1,2,3,4]">
-              <label class="block font-semibold mb-2 text-blue-900">{{ 'student.box' + box | translate }}</label>
+          <div
+            class="grid gap-4 text-white lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1"
+          >
+            <div *ngFor="let box of [1, 2, 3, 4]">
+              <label class="block mb-2 font-semibold text-blue-900">{{
+                "student.box" + box | translate
+              }}</label>
               <p-select
-                  class="w-full rounded text-white"
-                  optionLabel="name"
-                  [placeholder]="'common.message.select' | translate"
-                ></p-select>
-              </div>
+                class="w-full text-white rounded"
+                optionLabel="name"
+                [placeholder]="'common.message.select' | translate"
+              ></p-select>
+            </div>
 
             <div>
-              <label class="block font-semibold mb-2 text-blue-900  ">{{ 'common.status' | translate }}</label>
+              <label class="block mb-2 font-semibold text-blue-900">{{
+                "common.status" | translate
+              }}</label>
               <p-select
-                class="w-full border border-blue-400 bg-blue-200 text-blue-900 rounded"
+                class="w-full text-blue-900 bg-blue-200 border border-blue-400 rounded"
                 optionLabel="name"
                 [placeholder]="'common.message.select' | translate"
               ></p-select>
@@ -47,8 +56,10 @@
     </div>
 
     <!-- Header + Add button -->
-    <div class="flex justify-between items-center my-4">
-      <h4 class="font-semibold text-blue-900">{{ 'sidebar.menu2' | translate }}</h4>
+    <div class="flex items-center justify-between my-4">
+      <h4 class="font-semibold text-blue-900">
+        {{ "sidebar.menu2" | translate }}
+      </h4>
       <p-button
         [label]="'common.button.add' | translate"
         icon="pi pi-plus-circle"
@@ -59,8 +70,9 @@
 
     <!-- Cards: ข้อมูล + รูปชิดขวา -->
     <div class="flex flex-col gap-4 mt-4">
-      <div class="flex border border-blue-400 rounded-lg overflow-hidden h-64 w-full">
-
+      <div
+        class="flex w-full h-64 overflow-hidden border border-blue-400 rounded-lg"
+      >
         <!-- ซ้าย: ข้อมูล -->
         <div class="w-2/3 p-4 bg-blue-100">
           <!-- ใส่ข้อมูลที่กรอกตรงนี้ -->
@@ -68,29 +80,34 @@
         </div>
 
         <!-- ขวา: รูป -->
-        <div class="w-1/3 bg-blue-200 flex items-center justify-end overflow-hidden">
+        <div
+          class="flex items-center justify-end w-1/3 overflow-hidden bg-blue-200"
+        >
           <p-image
             src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
             alt="Image"
-            class="h-full object-cover"
+            class="object-cover h-full"
           />
         </div>
       </div>
 
       <!-- ตัวอย่าง Card อื่น -->
-      <div class="flex border border-blue-400 rounded-lg overflow-hidden h-64 w-full">
+      <div
+        class="flex w-full h-64 overflow-hidden border border-blue-400 rounded-lg"
+      >
         <div class="w-2/3 p-4 bg-blue-100">
           <p class="text-blue-900">ข้อมูลที่กรอกจะแสดงตรงนี้</p>
         </div>
-        <div class="w-1/3 bg-blue-200 flex items-center justify-end overflow-hidden">
+        <div
+          class="flex items-center justify-end w-1/3 overflow-hidden bg-blue-200"
+        >
           <p-image
             src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
             alt="Image"
-            class="h-full object-cover"
+            class="object-cover h-full"
           />
         </div>
       </div>
     </div>
-
   </div>
 </div>
