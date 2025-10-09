@@ -1,0 +1,54 @@
+:host ::ng-deep .p-select {
+  background-color: #bfdbfe !important; /* ฟ้าอ่อน (Tailwind: bg-blue-200) */
+  color: #1e3a8a !important; /* ฟ้าน้ำเงินเข้ม */
+  border: 1px solid #60a5fa !important; /* ฟ้าน้ำทะเล (Tailwind: blue-400) */
+  border-radius: 0.5rem !important; /* มุมโค้งเหมือน rounded */
+}
+
+:host ::ng-deep .p-select-label {
+  color: #1e3a8a !important; /* ฟ้าน้ำเงินเข้ม */
+  background-color: transparent !important;
+}
+
+:host ::ng-deep .p-select-list-container {
+  background-color: #e0f2fe !important; /* ฟ้าอ่อน dropdown */
+  color: #1e3a8a !important;
+}
+
+:host ::ng-deep .p-select-option {
+  background-color: #e0f2fe !important;
+  color: #1e3a8a !important;
+}
+
+:host ::ng-deep .p-select-option.p-focus {
+  background-color: #60a5fa !important;
+  color: white !important;
+}
+::ng-deep .p-datatable {
+  background-color: #eff6ff !important; /* ฟ้าอ่อน */
+  color: #1e3a8a !important;
+  border: 1px solid #93c5fd !important;
+}
+
+::ng-deep .p-datatable-thead > tr > th {
+  background-color: #dbeafe !important;
+  color: #1e3a8a !important;
+}
+
+::ng-deep .p-datatable-tbody > tr {
+  background-color: #eff6ff !important;
+  color: #1e3a8a !important;
+}
+
+::ng-deep .p-datatable-tbody > tr:nth-child(even) {
+  background-color: #dbeafe !important;
+}
+
+::ng-deep .p-datatable-tbody > tr:hover {
+  background-color: #bfdbfe !important;
+}
+::ng-deep .p-paginator {
+  background-color: #eff6ff !important;
+  color: #1e3a8a !important;
+  border-top: 1px solid #93c5fd !important;
+}
