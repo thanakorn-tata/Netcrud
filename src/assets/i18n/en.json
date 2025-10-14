@@ -12,9 +12,13 @@
       "Pleaseenter": "Please enter"
     },
     "button": {
+      "save": "Save",
+      "edit": "Edit",
       "search": "search",
       "cancel": "Cancel",
-      "add": "Add"
+      "add": "Add",
+      "Upload": "uploadProfile",
+      "Upload1": "uploadProject"
     }
   },
   "sidebar": {
@@ -24,14 +28,23 @@
     "menu4": "Restaurant"
   },
   "student": {
-    "box1": "รหัสนักศึกษา",
-    "box2": "ชื่อ-นามสกุล",
-    "box3": "ชั้นปี",
-    "box4": "หลักสูตร",
-    "box5": "วันที่กรอก"
-  },
-  "budget": {
-    "box1": "Budget Type"
+    "fullname": "Full Name",
+      "university": "University",
+      "faculty": "Faculty",
+      "major": "Field of Study / Major",
+      "contact_number": "Contact Number",
+      "email": "Email Address",
+      "intern_department": "Internship Department",
+      "intern_duration": "Internship Duration",
+      "attached_project": "Attached Project or Work Sample (if any)",
+      "description": "Additional Description",
+      "student_photo": "Student Photo",
+      "uploadProfile": "Upload Profile Picture",
+      "uploadProject": "Upload Project or Work Sample (if any)",
+      "manage":{
+        "header": "Add Student Information",
+        "title": "Please fill in the student information completely"
+      }
   },
   "dashboard": {
     "tab": {

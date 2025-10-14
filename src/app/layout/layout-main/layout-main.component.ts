@@ -74,16 +74,6 @@ export class LayoutMainComponent {
       icon: PrimeIcons.USERS,
       routerLink: '/student'
     },
-    // {
-    //   label: 'sidebar.menu3',
-    //   icon: PrimeIcons.MONEY_BILL,
-    //   routerLink: '/budget'
-    // },
-    // {
-    //   label: 'sidebar.menu4',
-    //   icon: PrimeIcons.APPLE,
-    //   routerLink: '/restaurant'
-    // }
   ];
 
 }
