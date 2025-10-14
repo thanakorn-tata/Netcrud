@@ -1,0 +1,159 @@
+<div class="container mx-auto max-w-full">
+  <div class="card p-4 bg-blue-50 rounded-lg">
+    <!-- Header -->
+    <h4 class="text-blue-900 font-bold mt-2 text-4xl mb-2">
+      {{ 'student.manage.header' | translate }}
+    </h4>
+    <hr class="border-blue-400 mb-4" />
+    <section class="text-lg text-blue-900 font-semibold mb-4">
+      {{ 'student.manage.title' | translate }}
+    </section>
+
+    <!-- Student Form -->
+    <div class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-4">
+      <!-- Full Name -->
+      <div>
+        <label class="block font-semibold mb-1 text-blue-900">
+          <span class="text-red-500 mr-1">*</span>{{ 'student.fullname' | translate }}
+        </label>
+        <input
+          pInputText
+          type="text"
+          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
+        />
+      </div>
+
+      <!-- University -->
+      <div>
+        <label class="block font-semibold mb-1 text-blue-900">
+          <span class="text-red-500 mr-1">*</span>{{ 'student.university' | translate }}
+        </label>
+        <input
+          pInputText
+          type="text"
+          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
+        />
+      </div>
+
+      <!-- Faculty -->
+      <div>
+        <label class="block font-semibold mb-1 text-blue-900">
+          <span class="text-red-500 mr-1">*</span>{{ 'student.faculty' | translate }}
+        </label>
+        <input
+          pInputText
+          type="text"
+          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
+        />
+      </div>
+
+      <!-- Major -->
+      <div>
+        <label class="block font-semibold mb-1 text-blue-900">
+          <span class="text-red-500 mr-1">*</span>{{ 'student.major' | translate }}
+        </label>
+        <input
+          pInputText
+          type="text"
+          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
+        />
+      </div>
+
+      <!-- Contact Number -->
+      <div>
+        <label class="block font-semibold mb-1 text-blue-900">
+          <span class="text-red-500 mr-1">*</span>{{ 'student.contact_number' | translate }}
+        </label>
+        <input
+          pInputText
+          type="tel"
+          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
+        />
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block font-semibold mb-1 text-blue-900">
+          <span class="text-red-500 mr-1">*</span>{{ 'student.email' | translate }}
+        </label>
+        <input
+          pInputText
+          type="email"
+          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
+        />
+      </div>
+
+      <!-- Internship Department -->
+      <div>
+        <label class="block font-semibold mb-1 text-blue-900">{{ 'student.intern_department' | translate }}</label>
+        <p-select
+          optionLabel="name"
+          [placeholder]="'common.message.Pleaseselect' | translate"
+          class="w-full"
+        ></p-select>
+      </div>
+
+      <!-- Internship Duration -->
+      <div>
+        <label class="block font-semibold mb-1 text-blue-900">{{ 'student.intern_duration' | translate }}</label>
+        <p-select
+          optionLabel="name"
+          [placeholder]="'common.message.Pleaseselect' | translate"
+          class="w-full"
+        ></p-select>
+      </div>
+
+            <!-- Description -->
+      <div class="lg:col-span-2 md:col-span-2 sm:col-span-1">
+        <label class="block font-semibold mb-1 text-blue-900">{{ 'student.description' | translate }}</label>
+        <textarea
+          rows="4"
+          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md resize-none"
+        ></textarea>
+      </div>
+<p-divider class="col-span-2 border-blue-500 border-t-1 "></p-divider>
+    <!-- Upload Profile Image -->
+<div>
+  <label class="block font-semibold mb-1 text-blue-900">{{ 'student.uploadProfile' | translate }}</label>
+  <label class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200">
+    <i class="pi pi-image text-blue-600 text-xl mr-2"></i>
+    <span class="text-blue-900">{{ 'common.button.Upload' | translate }}</span>
+    <input type="file" accept="image/*" class="hidden" (change)="onProfileChange($event)" />
+  </label>
+</div>
+
+<!-- Upload Project File -->
+<div>
+  <label class="block font-semibold mb-1 text-blue-900">{{ 'student.uploadProject' | translate }}</label>
+  <label class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200">
+    <i class="pi pi-cloud-upload text-blue-600 text-xl mr-2"></i>
+    <span class="text-blue-900">{{ 'common.button.Upload1' | translate }}</span>
+    <input type="file" accept=".pdf,.doc,.docx,.zip" class="hidden" (change)="onProjectChange($event)" />
+  </label>
+</div>
+
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-center gap-2 mt-8">
+      <p-button
+        [label]="'common.button.save' | translate"
+        icon="pi pi-save"
+        styleClass="p-button-primary p-button-sm"
+      ></p-button>
+      <p-button
+        [label]="'common.button.cancel' | translate"
+        icon="pi pi-times"
+        variant="outlined"
+        styleClass="p-button-primary p-button-sm"
+      ></p-button>
+    </div>
+  </div>
+</div>

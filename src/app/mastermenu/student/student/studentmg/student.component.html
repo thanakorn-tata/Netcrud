@@ -1,0 +1,235 @@
+<div class="container max-w-full p-4">
+  <div class="p-4 text-blue-900 rounded-lg">
+    <!-- Accordion -->
+    <div class="mb-4">
+      <p-accordion [activeIndex]="0" styleClass="mb-5">
+        <p-accordionTab
+          [header]="'ค้นหาข้อมูล'"
+          [headerStyle]="{
+            'background-color': '#3b82f6',
+            color: '#fff',
+            'font-weight': '600'
+          }"
+          [contentStyle]="{ 'background-color': '#dbeafe', color: '#003f5c' }"
+        >
+          <!-- ฟอร์มข้อมูลนักศึกษา -->
+          <div
+            class="grid gap-4 text-white lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1"
+          >
+            <!-- Full Name -->
+            <div>
+              <label class="block mb-2 font-semibold text-blue-900">{{
+                "student.fullname" | translate
+              }}</label>
+              <input
+                type="text"
+                class="w-full p-2 text-black border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                [placeholder]="'common.message.Pleaseselect' | translate"
+              />
+            </div>
+
+            <!-- University -->
+            <div>
+              <label class="block mb-2 font-semibold text-blue-900">{{
+                "student.university" | translate
+              }}</label>
+              <input
+                type="text"
+                class="w-full p-2 text-black border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                [placeholder]="'common.message.Pleaseselect' | translate"
+              />
+            </div>
+
+            <!-- Faculty -->
+            <div>
+              <label class="block mb-2 font-semibold text-blue-900">{{
+                "student.faculty" | translate
+              }}</label>
+              <input
+                type="text"
+                class="w-full p-2 text-black border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                [placeholder]="'common.message.Pleaseselect' | translate"
+              />
+            </div>
+
+            <!-- Major -->
+            <div>
+              <label class="block mb-2 font-semibold text-blue-900">{{
+                "student.major" | translate
+              }}</label>
+              <input
+                type="text"
+                class="w-full p-2 text-black border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                [placeholder]="'common.message.Pleaseselect' | translate"
+              />
+            </div>
+
+            <!-- Contact Number -->
+            <div>
+              <label class="block mb-2 font-semibold text-blue-900">{{
+                "student.contact_number" | translate
+              }}</label>
+              <input
+                type="tel"
+                class="w-full p-2 text-black border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                [placeholder]="'common.message.Pleaseselect' | translate"
+              />
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label class="block mb-2 font-semibold text-blue-900">{{
+                "student.email" | translate
+              }}</label>
+              <input
+                type="email"
+                class="w-full p-2 text-black border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                [placeholder]="'common.message.Pleaseselect' | translate"
+              />
+            </div>
+
+            <!-- Internship Department -->
+            <div>
+              <label class="block mb-2 font-semibold text-blue-900">{{
+                "student.intern_department" | translate
+              }}</label>
+              <p-select
+                class="w-full text-blue-900 border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                optionLabel="name"
+                [placeholder]="'common.message.Pleaseselect' | translate"
+              ></p-select>
+            </div>
+                        <!-- Internship Duration -->
+            <div>
+              <label class="block mb-2 font-semibold text-blue-900">{{
+                "student.intern_duration" | translate
+              }}</label>
+              <p-select
+                class="w-full text-blue-900 border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                optionLabel="name"
+                [placeholder]="'common.message.Pleaseselect' | translate"
+              ></p-select>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex justify-center gap-2 mt-6">
+            <p-button
+              [label]="'common.button.search' | translate"
+              icon="pi pi-search"
+              styleClass="p-button-sm bg-blue-500 border-blue-500 text-white hover:bg-blue-600"
+            ></p-button>
+            <p-button
+              [label]="'common.button.cancel' | translate"
+              icon="pi pi-refresh"
+              variant="outlined"
+              styleClass="p-button-sm border-blue-500 text-blue-500 hover:bg-blue-100"
+            ></p-button>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+
+    <!-- Header + Add button -->
+    <div class="flex items-center justify-between my-4">
+      <h4 class="font-semibold text-blue-900">
+        {{ "sidebar.menu2" | translate }}
+      </h4>
+      <p-button
+        [label]="'common.button.add' | translate"
+        icon="pi pi-plus-circle"
+        (onClick)="openPage()"
+        styleClass="p-button-sm bg-blue-500 border-blue-500 text-white hover:bg-blue-600"
+      ></p-button>
+    </div>
+    <hr class="border-blue-400" />
+
+   <p-table
+  stripedRows
+  [value]="students"
+  [totalRecords]="totalRecords"
+  [paginator]="true"
+  [rowHover]="true"
+  [lazy]="true"
+  [(rows)]="rows"
+  styleClass="p-datatable-striped"
+  [tableStyle]="{ 'min-width': '80rem' }"
+  (onPage)="onSearch($event)"
+  [currentPageReportTemplate]="'' | translate"
+>
+  <!-- Header -->
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col" class="text-center " style="width: 5%">
+        {{ "common.table.no" | translate }}
+      </th>
+      <th scope="col" style="width: 15%">
+        {{ "student.fullname" | translate }}
+      </th>
+      <th scope="col" style="width: 10%">
+        {{ "student.university" | translate }}
+      </th>
+      <th scope="col" style="width: 10%">
+        {{ "student.faculty" | translate }}
+      </th>
+      <th scope="col" style="width: 10%">
+        {{ "student.major" | translate }}
+      </th>
+      <th scope="col" style="width: 10%">
+        {{ "student.contact_number" | translate }}
+      </th>
+      <th scope="col" style="width: 10%">
+        {{ "student.email" | translate }}
+      </th>
+      <th scope="col" style="width: 10%">
+        {{ "student.intern_department" | translate }}
+      </th>
+      <th scope="col" style="width: 10%">
+        {{ "student.intern_duration" | translate }}
+      </th>
+      <th scope="col" style="width: 15%">
+        {{ "student.attached_project" | translate }}
+      </th>
+      <th scope="col" style="width: 10%; text-align: center">
+        {{ "common.table.manage" | translate }}
+      </th>
+    </tr>
+  </ng-template>
+
+  <!-- Body -->
+  <ng-template pTemplate="body" let-student>
+    <tr>
+      <td class="text-center text-black">{{ student.rowNum }}</td>
+      <td>{{ student.fullname }}</td>
+      <td>{{ student.university }}</td>
+      <td>{{ student.faculty }}</td>
+      <td>{{ student.major }}</td>
+      <td>{{ student.contact_number }}</td>
+      <td>{{ student.email }}</td>
+      <td>{{ student.intern_department }}</td>
+      <td>{{ student.intern_duration }}</td>
+      <td>{{ student.attached_project || '-' }}</td>
+      <td class="text-center">
+        <span
+          class="pi pi-pencil text-blue-600 cursor-pointer"
+          (click)="openPage()"
+        ></span>
+        <span
+          class="pi pi-trash text-red-600 cursor-pointer ml-2"
+          (click)="deleteStudent(student.id)"
+        ></span>
+      </td>
+    </tr>
+  </ng-template>
+
+  <!-- Empty message -->
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="11" class="text-center">
+        {{ "common.table.EmptyMessege" | translate }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+  </div>
+</div>
