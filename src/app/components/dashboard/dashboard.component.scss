@@ -1,34 +1,43 @@
-.p-tabpanels{
-    background: white;
-    color: #5d3b80;
-}
-
-:host ::ng-deep .p-select{
-    background-color: white !important;
-    color: #5d3b80 !important;
-    border: 1px solid;
+// student-dashboard.component.scss
+:host ::ng-deep .p-select {
+  background-color: white !important;
+  color: #5d3b80 !important;
+  border: 1px solid #e5e7eb;
 }
 
 :host ::ng-deep .p-select-label {
-    color: #5d3b80 !important;
+  color: #5d3b80 !important;
 }
 
-:host ::ng-deep .p-select-list-container{
+:host ::ng-deep .p-select:not(.p-disabled).p-focus {
+  border-color: #8b5cf6 !important;
+  box-shadow: 0 0 0 1px #8b5cf6;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background-color: #f9fafb;
+  color: #374151;
+  font-weight: 600;
+  padding: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr {
+  transition: all 0.2s;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: #f9fafb;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  * {
     background-color: white !important;
-    color: #5d3b80 !important;
-}
-
-:host ::ng-deep .p-select-option {
-    background-color: white !important;
-    color: #5d3b80 !important;
-    
-}
-
-:host ::ng-deep .p-select:not(.p-disabled).p-focus{
-    border-color: #5d3b80 !important;
-}
-
-:host ::ng-deep .p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus {
-    background-color: #dfc0fd !important;
-    color: #5d3b80 !important;
+    color: #1f2937 !important;
+  }
 }

@@ -3,37 +3,32 @@
     <div class="layout-sidebar">
 
       <!-- Logo Section -->
-      <div class="sidebar-header">
-
-        <div class="text-lg font-semibold">
-            finance_note
-        </div>
-      </div>
-
+<div class="flex flex-col items-center justify-center py-6 bg-gradient-to-b from-blue-500 to-indigo-600 text-white">
+  <div class="relative p-2 rounded-full bg-white shadow-md">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkD6uHvGfzNhAJddd7itFnaML91j942cAnaw&s" alt="NetCrud Logo" class="w-20 h-20 rounded-full" />
+  </div>
+  <div class="text-xl font-semibold mt-3">NetCrud</div>
+</div>
       <!-- Menu Items -->
       <ul class="layout-menu">
         <li *ngFor="let item of sidebarItems">
           <a [routerLink]="item.routerLink" class="layout-menuitem-link">
             <i [class]="item.icon"></i>
-            <span class="menu-label text-md font-semibold">{{item.label | translate}}</span>
+            <span class="menu-label text-md font-semibold">{{item.label| translate}}</span>
           </a>
         </li>
       </ul>
     </div>
-    
+
     <!-- Top Menubar -->
     <div class="layout-main">
       <div class="menubar-header p-menubar py-4 px-5">
-        <div class="p-menubar p-component flex justify-between items-center w-full">
-          <p-button icon="pi pi-bars" (click)="toggleSidebar()" severity="help" rounded></p-button>
-          
-          <div class="flex gap-2">         
+    <div class="p-menubar p-component flex justify-end items-center w-full">
+          <div class="flex gap-2">
             <p-button icon="pi pi-language" (click)="toggleLanguage()" severity="help" rounded></p-button>
-            <p-button icon="pi pi-bell" severity="help" rounded></p-button>
-            <p-button icon="pi pi-user" severity="help" rounded></p-button>
           </div>
         </div>
-      </div>      
+      </div>
 
       <!-- outlet -->
       <div class="mt-3 mx-0">

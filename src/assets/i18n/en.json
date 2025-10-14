@@ -1,131 +1,159 @@
 {
-  "sidebar":{
-    "menu1":"dashboard"
+  "common": {
+    "table": {
+      "no": "No.",
+      "description": "description",
+      "manage": "Manage",
+      "EmptyMessege": "No data found"
+    },
+    "status": "Status",
+    "message": {
+      "Pleaseselect": "Please select",
+      "Pleaseenter": "Please enter"
+    },
+    "button": {
+      "save": "Save",
+      "edit": "Edit",
+      "search": "search",
+      "cancel": "Cancel",
+      "add": "Add",
+      "Upload": "uploadProfile",
+      "Upload1": "uploadProject"
+    }
   },
-  "dashboard":{
-    "tab":{
-      "hardwaretab":"hardware/IT equipment",
-      "softwaretab":"Software/Applications"
+  "sidebar": {
+    "menu1": "Dashboard",
+    "menu2": "Student",
+    "menu3": "ฺBudget",
+    "menu4": "Restaurant"
+  },
+  "student": {
+    "fullname": "Full Name",
+      "university": "University",
+      "faculty": "Faculty",
+      "major": "Field of Study / Major",
+      "contact_number": "Contact Number",
+      "email": "Email Address",
+      "intern_department": "Internship Department",
+      "intern_duration": "Internship Duration",
+      "attached_project": "Attached Project or Work Sample (if any)",
+      "description": "Additional Description",
+      "student_photo": "Student Photo",
+      "uploadProfile": "Upload Profile Picture",
+      "uploadProject": "Upload Project or Work Sample (if any)",
+      "manage":{
+        "header": "Add Student Information",
+        "title": "Please fill in the student information completely"
+      }
+  },
+  "dashboard": {
+    "tab": {
+      "hardwaretab": "hardware/IT equipment",
+      "softwaretab": "Software/Applications"
     },
-
-    "other":{
-      "timeduration":"Time Duration",
-      "timesec":"sec",
-      "timehour":"hour"
+    "other": {
+      "timeduration": "Time Duration",
+      "timesec": "sec",
+      "timehour": "hour"
     },
-
-    "implementation":{
-      "title":"Implementation of hardware/IT assets",
-      "allasset":"All Asset",
-      "active":"Active",
-      "deprecated":"Deprecated",
-      "expire":"Expire",
-
-      "nearexpire":{
-        "nearexpire":"Near Expire",
-        "note":"* Near Expire : The amount of hardware assets nearing expiration before the period. ( 1 month )"
+    "implementation": {
+      "title": "Implementation of hardware/IT assets",
+      "allasset": "All Asset",
+      "active": "Active",
+      "deprecated": "Deprecated",
+      "expire": "Expire",
+      "nearexpire": {
+        "nearexpire": "Near Expire",
+        "note": "* Near Expire : The amount of hardware assets nearing expiration before the period. ( 1 month )"
       },
-
-      "assetchart":{
-        "title":"ASSET STATUS",
-        "active":"Active",
-        "ready":"Ready To Use",
-        "suspend":"Suspend",
-        "deprecated":"Deprecated"
+      "assetchart": {
+        "title": "ASSET STATUS",
+        "active": "Active",
+        "ready": "Ready To Use",
+        "suspend": "Suspend",
+        "deprecated": "Deprecated"
       }
     },
-
-    "amount":{
-        "title":"Amount of each asset type",
-        "desktop":"desktop",
-        "notebook":"notebook",
-        "manage":"Manage device types",
-        "download":"Download"
-      },
-
-    "computerstatus":{
-        "title":"COMPUTER STATUS",
-        "onlinenormal":"Online device normal device",
-        "onlinechanged":"Online device The device has changed",
-        "offlinenormal":"Offline device normal device",
-        "offlinechanged":"Offline device The equipment has changed"
+    "amount": {
+      "title": "Amount of each asset type",
+      "desktop": "desktop",
+      "notebook": "notebook",
+      "manage": "Manage device types",
+      "download": "Download"
     },
-    
-    "last5changecomputer":{
-        "title":"The last 5 approve changed computers",
-        "showall":"SHOW ALL",
-        "no":"No.",
-        "type":"Type",
-        "devicename":"Device Name",
-        "datechanged":"Date Changed",
-        "approvedate":"approve Date"
+    "computerstatus": {
+      "title": "COMPUTER STATUS",
+      "onlinenormal": "Online device normal device",
+      "onlinechanged": "Online device The device has changed",
+      "offlinenormal": "Offline device normal device",
+      "offlinechanged": "Offline device The equipment has changed"
     },
-
-    "last5newasset":{
-      "title":"The last 5 new assets",
-      "showall":"SHOW ALL",
-      "no":"No.",
-      "type":"Type",
-      "devicename":"Device Name",
-      "owner":"Owner Name",
-      "laston":"Last On"
+    "last5changecomputer": {
+      "title": "The last 5 approve changed computers",
+      "showall": "SHOW ALL",
+      "no": "No.",
+      "type": "Type",
+      "devicename": "Device Name",
+      "datechanged": "Date Changed",
+      "approvedate": "approve Date"
     },
-    
-    "last5nearexpired":{
-      "title":"Latest 5 nearExpired Assets",
-      "showall":"SHOW ALL",
-      "no":"No."
-
-  },
-    "last5expired":{
-      "title":"Latest 5 Expired Assets",
-      "showall":"SHOW ALL",
-      "no":"No."
-  },
-  
-    "softwareasset":{
-      "title":"Software/Application Assets",
-      "total":"Total software",
-      "alloflc":"All Types of License",
-      "nearexpire":"Licenses Near Expiration",
-      "expiredlc":"Expired License",
-      "alllicense":"All License",
-      "usagelc":"Usage License",
-      "remainlc":"Remaining"
+    "last5newasset": {
+      "title": "The last 5 new assets",
+      "showall": "SHOW ALL",
+      "no": "No.",
+      "type": "Type",
+      "devicename": "Device Name",
+      "owner": "Owner Name",
+      "laston": "Last On"
     },
-    
-    "lcchart":{
-      "title":"Each Type Of License",
-      "proprietary":"Proprietary Software",
-      "shareware":"Shareware",
-      "demo":"Demo",
-      "windowlc":"Windows License",
-      "freeware":"freeware",
-      "freesoftware":"Free Software",
-      "opensource":"Open Source",
-      "commercial":"Commercial Software"
+    "last5nearexpired": {
+      "title": "Latest 5 nearExpired Assets",
+      "showall": "SHOW ALL",
+      "no": "No."
     },
-
-    "expiringsoftware":{
-      "title":"Software/Applications That Expiring (Top 5 Latest)",
-      "no":"No.",
-      "software":"software/applications",
-      "version":"version",
-      "name":"license name",
-      "purchase":"purchase date",
-      "expiration":"expiration"
+    "last5expired": {
+      "title": "Latest 5 Expired Assets",
+      "showall": "SHOW ALL",
+      "no": "No."
     },
-
-    "expiredsoftware":{
-      "title":"Software/Applications That Expired (Top 5 Latest)",
-      "no":"No.",
-      "software":"software/applications",
-      "version":"version",
-      "name":"license name",
-      "purchase":"purchase date",
-      "expiration":"expiration"
+    "softwareasset": {
+      "title": "Software/Application Assets",
+      "total": "Total software",
+      "alloflc": "All Types of License",
+      "nearexpire": "Licenses Near Expiration",
+      "expiredlc": "Expired License",
+      "alllicense": "All License",
+      "usagelc": "Usage License",
+      "remainlc": "Remaining"
+    },
+    "lcchart": {
+      "title": "Each Type Of License",
+      "proprietary": "Proprietary Software",
+      "shareware": "Shareware",
+      "demo": "Demo",
+      "windowlc": "Windows License",
+      "freeware": "freeware",
+      "freesoftware": "Free Software",
+      "opensource": "Open Source",
+      "commercial": "Commercial Software"
+    },
+    "expiringsoftware": {
+      "title": "Software/Applications That Expiring (Top 5 Latest)",
+      "no": "No.",
+      "software": "software/applications",
+      "version": "version",
+      "name": "license name",
+      "purchase": "purchase date",
+      "expiration": "expiration"
+    },
+    "expiredsoftware": {
+      "title": "Software/Applications That Expired (Top 5 Latest)",
+      "no": "No.",
+      "software": "software/applications",
+      "version": "version",
+      "name": "license name",
+      "purchase": "purchase date",
+      "expiration": "expiration"
     }
-
   }
-
 }

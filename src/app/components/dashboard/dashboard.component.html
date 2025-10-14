@@ -1,27 +1,194 @@
-<p-tabs value="0" class="mx-3">
-    <p-tablist>
-        <p-tab value="0">{{'dashboard.tab.hardwaretab' | translate}}</p-tab>
-        <p-tab value="1">{{'dashboard.tab.softwaretab' | translate}}</p-tab>
-        <div class="flex justify-end w-full">
-            <div class="card mr-2 mt-2">
-                <p-select [options]="times" pTooltip="{{'dashboard.other.timeduration' | translate}}"
-                [(ngModel)]="selectedtime" optionLabel="time" class="w-full md:w-32" />
+<div class="p-6">
+  <!-- Header -->
+  <div class="mb-6">
+    <div class="text-2xl font-semibold text-gray-800">
+      Student Internship Dashboard
+    </div>
+    <p class="mt-1 text-gray-600">
+      Overview of intern students by university and quarter
+    </p>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="grid grid-cols-1 gap-4 mb-6 md:grid-cols-2 xl:grid-cols-4">
+    <!-- Total Interns Card -->
+    <div
+      class="p-6 transition-shadow bg-white border-l-4 border-purple-600 rounded-lg shadow-sm cursor-pointer hover:shadow-md"
+    >
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex flex-col w-full gap-1">
+          <div class="flex items-center justify-between w-full gap-2">
+            <div class="p-3 bg-purple-100 rounded-lg">
+              <i class="pi pi-users text-purple-600 !text-3xl"></i>
             </div>
+            <span class="text-3xl font-bold text-gray-800">{{
+              totalInterns
+            }}</span>
+          </div>
+          <span class="text-sm font-medium text-right text-gray-600"
+            >Total Interns</span
+          >
         </div>
-    </p-tablist>
-    
-    <p-tabpanels>
-        <!-- tab1 -->
-        <p-tabpanel value="0">
-            <p class="m-0">
-                <app-hardware-itequipment></app-hardware-itequipment>
-            </p>
-        </p-tabpanel>
-        <!-- tab2 -->
-        <p-tabpanel value="1">
-            <p class="m-0">
-                <app-software-applications></app-software-applications>
-            </p>
-        </p-tabpanel>
-    </p-tabpanels>
-</p-tabs>
+      </div>
+    </div>
+
+    <!-- Universities Card -->
+    <div
+      class="p-6 transition-shadow bg-white border-l-4 border-indigo-600 rounded-lg shadow-sm cursor-pointer hover:shadow-md"
+    >
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex flex-col w-full gap-1">
+          <div class="flex items-center justify-between w-full gap-2">
+            <div class="p-3 bg-indigo-100 rounded-lg">
+              <i class="pi pi-building text-indigo-600 !text-3xl"></i>
+            </div>
+            <span class="text-3xl font-bold text-gray-800">{{
+              totalUniversities
+            }}</span>
+          </div>
+          <span class="text-sm font-medium text-right text-gray-600"
+            >Universities</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Interns Card -->
+    <div
+      class="p-6 transition-shadow bg-white border-l-4 rounded-lg shadow-sm cursor-pointer hover:shadow-md border-violet-600"
+    >
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex flex-col w-full gap-1">
+          <div class="flex items-center justify-between w-full gap-2">
+            <div class="p-3 rounded-lg bg-violet-100">
+              <i class="pi pi-check-circle text-violet-600 !text-3xl"></i>
+            </div>
+            <span class="text-3xl font-bold text-gray-800">{{
+              activeInterns
+            }}</span>
+          </div>
+          <span class="text-sm font-medium text-right text-gray-600"
+            >Active (Q4)</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Average Card -->
+    <div
+      class="p-6 transition-shadow bg-white border-l-4 border-pink-600 rounded-lg shadow-sm cursor-pointer hover:shadow-md"
+    >
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex flex-col w-full gap-1">
+          <div class="flex items-center justify-between w-full gap-2">
+            <div class="p-3 bg-pink-100 rounded-lg">
+              <i class="pi pi-chart-line text-pink-600 !text-3xl"></i>
+            </div>
+            <span class="text-3xl font-bold text-gray-800">{{
+              averagePerQuarter
+            }}</span>
+          </div>
+          <span class="text-sm font-medium text-right text-gray-600"
+            >Avg per Quarter</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Charts Row -->
+  <div class="grid grid-cols-1 gap-6 mb-6 xl:grid-cols-3">
+    <!-- Top 10 Universities Chart -->
+    <div
+      class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg xl:col-span-2 card"
+    >
+      <div class="mb-4 text-xl font-semibold">Top 10 Universities</div>
+      <p-chart
+        type="bar"
+        [data]="universityChartData"
+        [options]="universityChartOptions"
+        height="400px"
+      ></p-chart>
+    </div>
+
+    <!-- Department Distribution -->
+    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card">
+      <div class="mb-4 text-xl font-semibold">Department Distribution</div>
+      <p-chart
+        type="pie"
+        [data]="departmentChartData"
+        [options]="departmentChartOptions"
+        height="400px"
+      ></p-chart>
+    </div>
+  </div>
+
+  <!-- Quarterly Trends -->
+  <div
+    class="p-6 mb-6 bg-white border border-gray-200 rounded-lg shadow-lg card"
+  >
+    <div class="flex items-center justify-between mb-4">
+      <div class="text-xl font-semibold">Quarterly Trends</div>
+      <div class="card">
+        <p-select
+          [options]="years"
+          [(ngModel)]="selectedYear"
+          optionLabel="label"
+          optionValue="value"
+          class="w-32"
+        />
+      </div>
+    </div>
+    <p-chart
+      type="line"
+      [data]="quarterlyChartData"
+      [options]="quarterlyChartOptions"
+      height="350px"
+    ></p-chart>
+  </div>
+
+  <!-- Top 10 Universities Table -->
+  <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card">
+    <div class="mb-4 text-xl font-semibold">Top 10 Universities Details</div>
+    <p-table [value]="universities" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="text-center" style="width: 10%">Rank</th>
+          <th style="width: 50%">University Name</th>
+          <th class="text-center" style="width: 20%">Students</th>
+          <th class="text-center" style="width: 20%">Trend</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-university>
+        <tr>
+          <td class="text-center">
+            <span
+              class="inline-flex items-center justify-center w-8 h-8 font-semibold text-purple-800 bg-purple-100 rounded-full"
+            >
+              {{ university.rank }}
+            </span>
+          </td>
+          <td>
+            <span class="font-medium">{{ university.name }}</span>
+          </td>
+          <td class="text-center">
+            <span
+              class="inline-flex items-center px-3 py-1 font-semibold text-purple-800 bg-purple-100 rounded-full"
+            >
+              {{ university.students }}
+            </span>
+          </td>
+          <td class="text-center">
+            <span
+              [class]="getTrendClass(university.trend)"
+              class="text-2xl font-bold"
+            >
+              {{ university.trend }}
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+*/
