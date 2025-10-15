@@ -6,17 +6,6 @@ import { StudentComponent } from './mastermenu/student/student/studentmg/student
 import { StudentmanageComponent } from './mastermenu/student/student/student-manage/student-manage.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: LayoutMainComponent,
-    children: [
-      { path: '', redirectTo: 'Dashboard', pathMatch: 'full' },
-      { path: 'Dashboard', component: DashboardComponent },
-      { path: 'student', component: StudentComponent },
-      { path: 'studentmanage', component: StudentmanageComponent },
-    ],
-  },
-  { path: '**', redirectTo: '' },
   // Public Routes (No Layout)
   {
     path: 'login',
