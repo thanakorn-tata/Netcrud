@@ -3,18 +3,18 @@
     <div class="layout-sidebar">
 
       <!-- Logo Section -->
-<div class="flex flex-col items-center justify-center py-6 bg-gradient-to-b from-blue-500 to-indigo-600 text-white">
-  <div class="relative p-2 rounded-full bg-white shadow-md">
+<div class="flex flex-col items-center justify-center py-6 text-white bg-gradient-to-b from-blue-500 to-indigo-600">
+  <div class="relative p-2 bg-white rounded-full shadow-md">
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkD6uHvGfzNhAJddd7itFnaML91j942cAnaw&s" alt="NetCrud Logo" class="w-20 h-20 rounded-full" />
   </div>
-  <div class="text-xl font-semibold mt-3">NetCrud</div>
+  <div class="mt-3 text-xl font-semibold">AR Internship</div>
 </div>
       <!-- Menu Items -->
       <ul class="layout-menu">
         <li *ngFor="let item of sidebarItems">
           <a [routerLink]="item.routerLink" class="layout-menuitem-link">
             <i [class]="item.icon"></i>
-            <span class="menu-label text-md font-semibold">{{item.label| translate}}</span>
+            <span class="font-semibold menu-label text-md">{{item.label| translate}}</span>
           </a>
         </li>
       </ul>
@@ -22,8 +22,8 @@
 
     <!-- Top Menubar -->
     <div class="layout-main">
-      <div class="menubar-header p-menubar py-4 px-5">
-    <div class="p-menubar p-component flex justify-end items-center w-full">
+      <div class="px-5 py-4 menubar-header p-menubar">
+    <div class="flex items-center justify-end w-full p-menubar p-component">
           <div class="flex gap-2">
             <p-button icon="pi pi-language" (click)="toggleLanguage()" severity="help" rounded></p-button>
           </div>
@@ -31,7 +31,7 @@
       </div>
 
       <!-- outlet -->
-      <div class="mt-3 mx-0">
+      <div class="mx-0 mt-3">
         <router-outlet ></router-outlet>
         <app-footer></app-footer>
       </div>
