@@ -1,61 +1,247 @@
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { PrimeNgSharedModule } from "../../../../shared/prime-ng-shared.module";
-import { GlobalService } from '../../../../services/test/global.service';
-import { StudentmanageComponent } from '../student-manage/student-manage.component';
+import { AuthService, User } from '../../../../services/test/auth.service';
+interface Student {
+  id: number;
+  rowNum: number;
+  fullname: string;
+  university: string;
+  faculty: string;
+  major: string;
+  contact_number: string;
+  email: string;
+  intern_department: string;
+  intern_duration: string;
+  attached_project?: string | null;
+  grade?: string | null;
+  created_by?: number;
+}
 
 @Component({
   selector: 'app-student',
+  standalone: true,
+  imports: [CommonModule, FormsModule, PrimeNgSharedModule],
   templateUrl: './student.component.html',
-  styleUrls: ['./student.component.scss'],
-  imports: [PrimeNgSharedModule]
+  styleUrls: ['./student.component.scss']
 })
-export class StudentComponent {
+export class StudentComponent implements OnInit {
+  // User & Role
+  currentUser: User | null = null;
+  isAdmin: boolean = false;
 
-  // Data
-  students = [
-    {
-      id: 1,
-      rowNum: 1,
-      fullname: "นายสมชาย ใจดี",
-      university: "มหาวิทยาลัยศรีนครินทรวิโรฒ",
-      faculty: "คณะบริหารธุรกิจ",
-      major: "สาขาวิชาคอมพิวเตอร์ธุรกิจ",
-      contact_number: "0812345678",
-      email: "somchai@example.com",
-      intern_department: "ฝ่ายพัฒนาแอปพลิเคชัน",
-      intern_duration: "มกราคม - มีนาคม 2568",
-      attached_project: "ระบบจัดการข้อมูลนักศึกษา"
-    }
+  // Grade Options
+  gradeOptions = [
+    { label: 'A', value: 'A' },
+    { label: 'B', value: 'B' },
+    { label: 'C', value: 'C' },
+    { label: 'D', value: 'D' },
+    { label: 'F', value: 'F' }
   ];
 
-  totalRecords = this.students.length;
+  // Search Filters
+  searchFilters = {
+    fullname: '',
+    university: '',
+    faculty: '',
+    major: '',
+    contact_number: '',
+    email: ''
+  };
+
+  // Data
+  students: Student[] = [];
+  filteredStudents: Student[] = [];
+  totalRecords = 0;
   rows = 10;
+
+  // Delete Dialog
+  showDeleteDialog = false;
+  selectedStudent: Student | null = null;
 
   constructor(
     private router: Router,
-    private globalService: GlobalService) {}
+    private authService: AuthService
+  ) {}
 
-  // Paginator / Table event
-  onSearch(event: any) {
-    console.log("Page change:", event);
-    // TODO: implement search logic (API call / filtering)
+  ngOnInit(): void {
+    // Get current user & role
+    this.currentUser = this.authService.currentUserValue;
+    this.isAdmin = this.authService.isAdmin();
+
+    // Load students from localStorage
+    this.loadStudents();
   }
 
-  // Navigate to Add / Edit page
-openPage() {
-  // Navigate ไปหน้า Student Manage
-  this.router.navigate(['/studentmanage']);
-}
+  loadStudents(): void {
+    const storedStudents = localStorage.getItem('students');
+    if (storedStudents) {
+      this.students = JSON.parse(storedStudents);
+    } else {
+      this.students = [
+        {
+          id: 1,
+          rowNum: 1,
+          fullname: "นายสมชาย ใจดี",
+          university: "มหาวิทยาลัยศรีนครินทรวิโรฒ",
+          faculty: "คณะบริหารธุรกิจ",
+          major: "สาขาวิชาคอมพิวเตอร์ธุรกิจ",
+          contact_number: "0812345678",
+          email: "somchai@example.com",
+          intern_department: "ฝ่ายพัฒนาแอปพลิเคชัน",
+          intern_duration: "มกราคม - มีนาคม 2568",
+          attached_project: "ระบบจัดการข้อมูลนักศึกษา",
+          grade: "A",
+          created_by: 1
+        },
+        {
+          id: 2,
+          rowNum: 2,
+          fullname: "นางสาวสมหญิง รักเรียน",
+          university: "มหาวิทยาลัยเกษตรศาสตร์",
+          faculty: "คณะวิทยาศาสตร์",
+          major: "สาขาวิชาวิทยาการคอมพิวเตอร์",
+          contact_number: "0898765432",
+          email: "somying@example.com",
+          intern_department: "ฝ่ายวิเคราะห์ข้อมูล",
+          intern_duration: "เมษายน - มิถุนายน 2568",
+          attached_project: "ระบบวิเคราะห์ข้อมูลลูกค้า",
+          grade: "B+",
+          created_by: 2
+        },
+        {
+          id: 3,
+          rowNum: 3,
+          fullname: "นายทดสอบ ระบบ",
+          university: "จุฬาลงกรณ์มหาวิทยาลัย",
+          faculty: "คณะวิศวกรรมศาสตร์",
+          major: "สาขาวิชาวิศวกรรมคอมพิวเตอร์",
+          contact_number: "0856789012",
+          email: "test@example.com",
+          intern_department: "ฝ่ายเทคโนโลยีสารสนเทศ",
+          intern_duration: "กรกฎาคม - กันยายน 2568",
+          attached_project: null,
+          grade: null,
+          created_by: 1
+        }
+      ];
+      this.saveStudents();
+    }
 
+    // Filter students based on role
+    if (this.isAdmin) {
+      // Admin เห็นทั้งหมด
+      this.filteredStudents = [...this.students];
+    } else {
+      // User เห็นได้ทั้งหมด แต่แก้ไขได้เฉพาะของตัวเอง
+      this.filteredStudents = [...this.students];
+    }
 
-
-
-  onClear() {
-    console.log("Clear form / search");
+    this.totalRecords = this.filteredStudents.length;
   }
 
-  deleteStudent(id: number) {
-    console.log("Delete student with ID:", id);
+  saveStudents(): void {
+    localStorage.setItem('students', JSON.stringify(this.students));
+  }
+
+  onSearch(): void {
+    this.filteredStudents = this.students.filter(student => {
+      return (
+        (!this.searchFilters.fullname ||
+          student.fullname.toLowerCase().includes(this.searchFilters.fullname.toLowerCase())) &&
+        (!this.searchFilters.university ||
+          student.university.toLowerCase().includes(this.searchFilters.university.toLowerCase())) &&
+        (!this.searchFilters.faculty ||
+          student.faculty.toLowerCase().includes(this.searchFilters.faculty.toLowerCase())) &&
+        (!this.searchFilters.major ||
+          student.major.toLowerCase().includes(this.searchFilters.major.toLowerCase()))
+      );
+    });
+    this.totalRecords = this.filteredStudents.length;
+  }
+
+  onClear(): void {
+    this.searchFilters = {
+      fullname: '',
+      university: '',
+      faculty: '',
+      major: '',
+      contact_number: '',
+      email: ''
+    };
+    this.filteredStudents = [...this.students];
+    this.totalRecords = this.filteredStudents.length;
+  }
+
+  // เช็คว่าเป็นข้อมูลของ User ที่ Login อยู่หรือไม่
+  isMyStudent(student: Student): boolean {
+    return student.created_by === this.currentUser?.id;
+  }
+
+  onGradeChange(student: Student): void {
+    // Update grade in localStorage
+    const index = this.students.findIndex(s => s.id === student.id);
+    if (index !== -1) {
+      this.students[index].grade = student.grade;
+      this.saveStudents();
+      console.log(`Updated grade for ${student.fullname}: ${student.grade}`);
+    }
+  }
+
+  getGradeColor(grade: string | undefined | null): string {
+    if (!grade) return 'text-gray-400';
+
+    const gradeColors: { [key: string]: string } = {
+      'A': 'text-green-600',
+      'B+': 'text-green-500',
+      'B': 'text-blue-600',
+      'C+': 'text-blue-500',
+      'C': 'text-yellow-600',
+      'D+': 'text-orange-500',
+      'D': 'text-orange-600',
+      'F': 'text-red-600'
+    };
+
+    return gradeColors[grade] || 'text-gray-600';
+  }
+
+  openPage(id?: number): void {
+    if (id) {
+      this.router.navigate(['/studentmanage', id]);
+    } else {
+      this.router.navigate(['/studentmanage']);
+    }
+  }
+
+  viewStudent(id: number): void {
+    this.router.navigate(['/studentmanage', id], {
+      queryParams: { readonly: true }
+    });
+  }
+
+  deleteStudent(id: number): void {
+    const student = this.students.find(s => s.id === id);
+
+    // เช็คว่า User สามารถลบได้หรือไม่
+    if (!this.isAdmin && student?.created_by !== this.currentUser?.id) {
+      alert('คุณไม่สามารถลบข้อมูลของผู้อื่นได้');
+      return;
+    }
+
+    this.selectedStudent = student || null;
+    this.showDeleteDialog = true;
+  }
+
+  confirmDelete(): void {
+    if (this.selectedStudent) {
+      this.students = this.students.filter(s => s.id !== this.selectedStudent!.id);
+      this.saveStudents();
+      this.onSearch(); // Refresh filtered list
+      console.log(`Deleted student: ${this.selectedStudent.fullname}`);
+    }
+    this.showDeleteDialog = false;
+    this.selectedStudent = null;
   }
 }

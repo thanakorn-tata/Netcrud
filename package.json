@@ -26,7 +26,7 @@
     "datepicker": "^0.0.0",
     "ngx-ui-loader": "^19.0.0",
     "primeicons": "^7.0.0",
-    "primeng": "^19.0.6",
+    "primeng": "^19.1.4",
     "primeng-buddhist-year-datepicker": "^19.0.1",
     "rxjs": "~7.8.0",
     "tailwindcss-primeui": "^0.4.0",
@@ -39,13 +39,15 @@
     "@angular/compiler-cli": "^19.1.0",
     "@tailwindcss/postcss": "^4.0.6",
     "@types/jasmine": "~5.1.0",
-    "autoprefixer": "^10.4.20",
+    "autoprefixer": "^10.4.21",
     "jasmine-core": "~5.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.14",
     "typescript": "~5.7.2"
   }
 }

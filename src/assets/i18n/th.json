@@ -4,7 +4,7 @@
       "no": "ลำดับ",
       "description": "คำอธิบาย",
       "manage": "จัดการ",
-      "EmptyMessege": "ไม่พบข้อมูล"
+      "emptyMessage": "ไม่พบข้อมูลนักศึกษา"
     },
     "status": "สถานะ",
     "message": {
@@ -14,36 +14,44 @@
     "button": {
       "save": "บันทึก",
       "edit": "แก้ไข",
+      "delete": "ลบ",
       "search": "ค้นหา",
       "cancel": "ยกเลิก",
       "add": "เพิ่ม",
       "Upload": "อัปโหลดรูปโปรไฟล์",
-      "Upload1": "อัปโหลดโครงการหรือผลงาน"
+      "Upload1": "อัปโหลดโครงการหรือผลงาน",
+      "clear": "ล้างข้อมูล",
+      "view": "ดูข้อมูล"
+    },
+    "dialog": {
+      "deleteHeader": "ยืนยันการลบ",
+      "deleteMessage": "คุณต้องการลบนักศึกษา <strong>{{name}}</strong> ใช่หรือไม่?"
+    }
+  },
+  "student": {
+    "search": {
+      "header": "ค้นหาข้อมูล"
+    },
+    "list": {
+      "header": "รายการนักศึกษาฝึกงาน",
+      "userinfo": "ข้อมูลของคุณ"
+    },
+    "fullname": "ชื่อ-นามสกุล",
+    "university": "มหาวิทยาลัย",
+    "faculty": "คณะ",
+    "major": "สาขา",
+    "contact_number": "เบอร์โทร",
+    "email": "อีเมล",
+    "intern_department": "ฝ่ายที่ฝึกงาน",
+    "intern_duration": "ระยะเวลา",
+    "grade": {
+      "placeholder": "เลือกเกรด"
     }
   },
   "sidebar": {
     "menu1": "ภาพรวม",
     "menu2": "นักเรียน/นักศึกษา"
   },
-  "student": {
-      "fullname": "ชื่อ - นามสกุล",
-      "university": "มหาวิทยาลัย",
-      "faculty": "คณะ",
-      "major": "สาขาวิชา",
-      "contact_number": "เบอร์โทรศัพท์ติดต่อ",
-      "email": "อีเมล",
-      "intern_department": "แผนกที่เข้ารับการฝึกงาน",
-      "intern_duration": "ระยะเวลาการฝึกงาน",
-      "attached_project": "แนบโครงการหรือผลงานระหว่างการฝึกงาน (ถ้ามี)",
-      "description": "คำอธิบายเพิ่มเติม",
-      "student_photo": "รูปถ่ายนักศึกษา",
-      "uploadProfile": "อัปโหลดรูปโปรไฟล์",
-      "uploadProject": "อัปโหลดโครงการหรือผลงาน (ถ้ามี)",
-      "manage":{
-        "header": "เพิ่มข้อมูลนักเรียน/นักศึกษา",
-        "title": "กรอกข้อมูลนักเรียน/นักศึกษาให้ครบถ้วน"
-      }
-    },
   "dashboard": {
     "tab": {
       "hardwaretab": "ฮาร์ดแวร์/อุปกรณ์ไอที",

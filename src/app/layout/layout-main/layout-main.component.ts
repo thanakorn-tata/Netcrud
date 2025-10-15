@@ -7,6 +7,8 @@ import { ButtonModule } from 'primeng/button';
 import { NgFor } from '@angular/common';
 import { TranslateModule, TranslateService} from '@ngx-translate/core';
 import { FooterComponent } from '../footer/footer.component';
+import { AuthService , User } from '../../services/test/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-layout-main',
@@ -25,11 +27,18 @@ import { FooterComponent } from '../footer/footer.component';
   ]
 })
 export class LayoutMainComponent {
-  constructor(private translateService: TranslateService) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private translateService: TranslateService) {
     const savedLang = localStorage.getItem('language') || 'en';
     this.translateService.setDefaultLang(savedLang);
     this.translateService.use(savedLang);
+
   }
+
+   currentUser: User | null = null;
+  isAdmin: boolean = false;
 
   toggleLanguage() {
     const currentLang = this.translateService.currentLang;
@@ -47,9 +56,11 @@ export class LayoutMainComponent {
     this.checkScreenWidth();
   }
 
-  ngOnInit() {
-    this.checkScreenWidth();
-  }
+  ngOnInit(): void {
+    // Get current user & role
+    this.currentUser = this.authService.currentUserValue;
+    this.isAdmin = this.authService.isAdmin();
+    this.checkScreenWidth();}
 
   checkScreenWidth() {
     if (window.innerWidth <= 864) {
@@ -75,5 +86,9 @@ export class LayoutMainComponent {
       routerLink: '/student'
     },
   ];
-
+logout(): void { {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+}
 }
