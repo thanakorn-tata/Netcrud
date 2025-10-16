@@ -4,11 +4,15 @@
   <div class="card p-4 bg-blue-50 rounded-lg">
     <!-- Header -->
     <h4 class="text-blue-900 font-bold mt-2 text-4xl mb-2">
-      {{ isEditMode ? 'แก้ไขข้อมูลนักศึกษา' : 'เพิ่มข้อมูลนักศึกษา' }}
+      {{
+        isEditMode
+          ? ("student.search.editheader" | translate)
+          : ("student.search.headermanage" | translate)
+      }}
     </h4>
     <hr class="border-blue-400 mb-4" />
     <section class="text-lg text-blue-900 font-semibold mb-4">
-      {{ 'student.manage.title' | translate }}
+      {{ "common.message.placeholder" | translate }}
     </section>
 
     <!-- Student Form -->
@@ -16,7 +20,8 @@
       <!-- Full Name -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span>{{ 'student.fullname' | translate }}
+          <span class="text-red-500 mr-1">*</span
+          >{{ "student.fullname" | translate }}
         </label>
         <input
           pInputText
@@ -30,7 +35,8 @@
       <!-- University -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span>{{ 'student.university' | translate }}
+          <span class="text-red-500 mr-1">*</span
+          >{{ "student.university" | translate }}
         </label>
         <input
           pInputText
@@ -44,7 +50,8 @@
       <!-- Faculty -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span>{{ 'student.faculty' | translate }}
+          <span class="text-red-500 mr-1">*</span
+          >{{ "student.faculty" | translate }}
         </label>
         <input
           pInputText
@@ -58,7 +65,8 @@
       <!-- Major -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span>{{ 'student.major' | translate }}
+          <span class="text-red-500 mr-1">*</span
+          >{{ "student.major" | translate }}
         </label>
         <input
           pInputText
@@ -72,7 +80,8 @@
       <!-- Contact Number -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span>{{ 'student.contact_number' | translate }}
+          <span class="text-red-500 mr-1">*</span
+          >{{ "student.contact_number" | translate }}
         </label>
         <input
           pInputText
@@ -86,7 +95,8 @@
       <!-- Email -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span>{{ 'student.email' | translate }}
+          <span class="text-red-500 mr-1">*</span
+          >{{ "student.email" | translate }}
         </label>
         <input
           pInputText
@@ -99,7 +109,9 @@
 
       <!-- Internship Department -->
       <div>
-        <label class="block font-semibold mb-1 text-blue-900">{{ 'student.intern_department' | translate }}</label>
+        <label class="block font-semibold mb-1 text-blue-900">{{
+          "student.intern_department" | translate
+        }}</label>
         <p-select
           [options]="departments"
           [(ngModel)]="student.intern_department"
@@ -112,7 +124,9 @@
 
       <!-- Internship Duration -->
       <div>
-        <label class="block font-semibold mb-1 text-blue-900">{{ 'student.intern_duration' | translate }}</label>
+        <label class="block font-semibold mb-1 text-blue-900">{{
+          "student.intern_duration" | translate
+        }}</label>
         <p-select
           [options]="durations"
           [(ngModel)]="student.intern_duration"
@@ -125,7 +139,9 @@
 
       <!-- Description -->
       <div class="lg:col-span-2 md:col-span-2 sm:col-span-1">
-        <label class="block font-semibold mb-1 text-blue-900">{{ 'student.description' | translate }}</label>
+        <label class="block font-semibold mb-1 text-blue-900">{{
+          "common.table.description" | translate
+        }}</label>
         <textarea
           rows="4"
           [(ngModel)]="student.description"
@@ -138,24 +154,50 @@
 
       <!-- Upload Profile Image -->
       <div>
-        <label class="block font-semibold mb-1 text-blue-900">{{ 'student.uploadProfile' | translate }}</label>
-        <label class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200">
+        <label class="block font-semibold mb-1 text-blue-900">{{
+          "common.button.Upload" | translate
+        }}</label>
+        <label
+          class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200"
+        >
           <i class="pi pi-image text-blue-600 text-xl mr-2"></i>
-          <span class="text-blue-900">{{ 'common.button.Upload' | translate }}</span>
-          <input type="file" accept="image/*" class="hidden" (change)="onProfileChange($event)" />
+          <span class="text-blue-900">{{
+            "common.button.Upload" | translate
+          }}</span>
+          <input
+            type="file"
+            accept="image/*"
+            class="hidden"
+            (change)="onProfileChange($event)"
+          />
         </label>
         <div *ngIf="profilePreview" class="mt-2">
-          <img [src]="profilePreview" alt="Profile Preview" class="w-32 h-32 object-cover rounded-md" />
+          <img
+            [src]="profilePreview"
+            alt="Profile Preview"
+            class="w-32 h-32 object-cover rounded-md"
+          />
         </div>
       </div>
 
       <!-- Upload Project File -->
       <div>
-        <label class="block font-semibold mb-1 text-blue-900">{{ 'student.uploadProject' | translate }}</label>
-        <label class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200">
+        <label class="block font-semibold mb-1 text-blue-900">{{
+          "common.button.Upload1" | translate
+        }}</label>
+        <label
+          class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200"
+        >
           <i class="pi pi-cloud-upload text-blue-600 text-xl mr-2"></i>
-          <span class="text-blue-900">{{ 'common.button.Upload1' | translate }}</span>
-          <input type="file" accept=".pdf,.doc,.docx,.zip" class="hidden" (change)="onProjectChange($event)" />
+          <span class="text-blue-900">{{
+            "common.button.Upload1" | translate
+          }}</span>
+          <input
+            type="file"
+            accept=".pdf,.doc,.docx,.zip"
+            class="hidden"
+            (change)="onProjectChange($event)"
+          />
         </label>
         <div *ngIf="projectFileName" class="mt-2 text-sm text-blue-900">
           <i class="pi pi-file mr-1"></i> {{ projectFileName }}

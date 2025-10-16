@@ -1,27 +1,42 @@
 <div class="layout-wrapper flex min-h-screen">
-
   <!-- Sidebar -->
-  <div class="layout-sidebar flex flex-col justify-between h-screen w-64 bg-white shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
-
+  <div
+    class="layout-sidebar flex flex-col justify-between h-screen w-64 bg-white shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
+  >
     <!-- ส่วนบน: Logo + Menu -->
     <div>
       <!-- Logo Section -->
-      <div class="flex flex-col items-center justify-center py-6 bg-gradient-to-b from-[#93C5FD] to-[#BFDBFE] text-[#1E3A8A] rounded-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+      <div
+        class="flex flex-col items-center justify-center py-6 bg-gradient-to-b from-[#EDE9FE] to-[#D8B4FE] text-[#5D3B80] rounded-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+      >
         <div class="relative p-2 rounded-full bg-white shadow-md">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkD6uHvGfzNhAJddd7itFnaML91j942cAnaw&s"
-               alt="NetCrud Logo" class="w-20 h-20 rounded-full object-cover" />
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkD6uHvGfzNhAJddd7itFnaML91j942cAnaw&s"
+            alt="NetCrud Logo"
+            class="w-20 h-20 rounded-full object-cover"
+          />
         </div>
         <div class="text-xl font-semibold mt-3">AR Intrunship</div>
         <div class="flex items-center gap-3 mt-3">
-          <div class="bg-blue-500 w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all duration-300 transform hover:-translate-y-1">
+          <div
+            class="bg-blue-500 w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all duration-300 transform hover:-translate-y-1"
+          >
             <i class="pi pi-user text-white"></i>
           </div>
           <div>
-            <p class="font-semibold text-blue-900">{{ currentUser?.fullname }}</p>
+            <p class="font-semibold text-blue-900">
+              {{ currentUser?.fullname }}
+            </p>
             <p class="text-sm text-blue-700">
               สิทธิ์:
-              <span [class]="isAdmin ? 'text-red-600 font-bold' : 'text-green-600 font-bold'">
-                {{ isAdmin ? 'ผู้ดูแลระบบ (Admin)' : 'ผู้ใช้ทั่วไป (User)' }}
+              <span
+                [class]="
+                  isAdmin
+                    ? 'text-red-600 font-bold'
+                    : 'text-green-600 font-bold'
+                "
+              >
+                {{ isAdmin ? "ผู้ดูแลระบบ (Admin)" : "ผู้ใช้ทั่วไป (User)" }}
               </span>
             </p>
           </div>
@@ -31,10 +46,12 @@
       <!-- Menu Items -->
       <ul class="layout-menu flex flex-col gap-1 mt-4 px-2">
         <li *ngFor="let item of sidebarItems">
-          <a [routerLink]="item.routerLink"
-             class="layout-menuitem-link flex items-center gap-3 px-4 py-2 rounded transition-all duration-300 transform hover:-translate-y-1 hover:shadow-md hover:bg-[#E0F2FE] hover:text-[#1E3A8A] font-medium">
+          <a
+            [routerLink]="item.routerLink"
+            class="layout-menuitem-link flex items-center gap-3 px-4 py-2 rounded transition-all duration-300 transform hover:-translate-y-1 hover:shadow-md hover:bg-[#E0F2FE] hover:text-[#1E3A8A] font-medium"
+          >
             <i [class]="item.icon"></i>
-            <span class="menu-label">{{item.label | translate}}</span>
+            <span class="menu-label">{{ item.label | translate }}</span>
           </a>
         </li>
       </ul>
@@ -42,9 +59,10 @@
 
     <!-- ส่วนล่าง: Logout Button -->
     <div class="px-4 pb-4">
-      <button (click)="logout()"
-              class="bg-primary hover:bg-secondary text-red-500 font-semibold py-2 px-4 rounded w-full flex items-center justify-center gap-2
-                     transition-all duration-200 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 border-2 border-blue-300">
+      <button
+        (click)="logout()"
+        class="bg-primary hover:bg-secondary text-red-500 font-semibold py-2 px-4 rounded w-full flex items-center justify-center gap-2 transition-all duration-200 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 border-2 border-blue-300"
+      >
         <i class="pi pi-sign-out"></i>
         Logout
       </button>
@@ -53,26 +71,28 @@
 
   <!-- Main Content -->
   <div class="layout-main flex-1 flex flex-col bg-background">
-
-<!-- Topbar / Menubar -->
-<div class="menubar-header p-4 bg-white flex justify-end items-center
-            transition-all duration-300 transform hover:-translate-y-1 border-none">
-  <div class="flex gap-2">
-    <p-button icon="pi pi-language"
-              (click)="toggleLanguage()"
-              severity="help"
-              rounded
-              class="p-2 bg-accent text-text transition-all duration-300 transform hover:-translate-y-1">
-    </p-button>
-  </div>
-</div>
-
+    <!-- Topbar / Menubar -->
+    <div
+      class="menubar-header p-4 bg-white flex justify-end items-center transition-all duration-300 transform hover:-translate-y-1 border-none"
+    >
+      <div class="flex gap-2">
+        <p-button
+          icon="pi pi-language"
+          (click)="toggleLanguage()"
+          severity="help"
+          rounded
+          class="p-2 bg-accent text-text transition-all duration-300 transform hover:-translate-y-1"
+        >
+        </p-button>
+      </div>
+    </div>
 
     <!-- Router Outlet + Footer -->
-    <div class="flex-1 mt-3 mx-4 p-4 bg-background rounded-lg shadow-lg overflow-auto transition-all duration-300 transform hover:-translate-y-1">
+    <div
+      class="flex-1 mt-3 mx-4 p-4 bg-background rounded-lg shadow-lg overflow-auto transition-all duration-300 transform hover:-translate-y-1"
+    >
       <router-outlet></router-outlet>
       <app-footer></app-footer>
     </div>
-
   </div>
 </div>

@@ -9,7 +9,8 @@
     "status": "Status",
     "message": {
       "Pleaseselect": "Please select",
-      "Pleaseenter": "Please enter"
+      "Pleaseenter": "Please enter",
+      "placeholder": "Please fill in all required fields"
     },
     "button": {
       "save": "Save",
@@ -28,9 +29,18 @@
       "deleteMessage": "Do you want to delete student <strong>{{name}}</strong>?"
     }
   },
+  "role": {
+  "Permission": "Permission",
+  "types": {
+    "admin": "Administrator",
+    "user": "General User"
+  }
+},
   "student": {
     "search": {
-      "header": "Search"
+      "header": "Search",
+      "headermanage": "Add Student Information",
+      "editheader": "Edit Student Information"
     },
     "list": {
       "header": "Intern Students List",
