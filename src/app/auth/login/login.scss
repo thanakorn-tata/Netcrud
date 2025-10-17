@@ -1,127 +1,27 @@
-/* ========================================================== */
-/* 🎓 STUDENT DATA TABLE, FORM & DROPDOWN — BLUE THEME       */
-/* ========================================================== */
-
-/* ============================= */
-/* 🔹 DataTable Header & Rows */
-:host ::ng-deep .p-datatable-thead > tr > th {
-  background-color: #3b82f6 !important; /* ฟ้าเข้มเหมือน Accordion header */
-  color: #ffffff !important;            /* ตัวอักษรขาว */
-  font-weight: 600;
-  text-align: center;
+/* 🔹 ฟองลอยเบา ๆ */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(10deg); }
+}
+.animate-float {
+  animation: float 10s ease-in-out infinite;
 }
 
-:host ::ng-deep .p-datatable-tbody > tr:nth-child(even),
-:host ::ng-deep .p-datatable-tbody > tr:nth-child(odd) {
-  background-color: #dbeafe !important; /* ฟ้าอ่อนเหมือนช่องฟอร์ม */
+/* 🔹 เด้งเบา ๆ ที่โลโก้ */
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-bounce-slow {
+  animation: bounce-slow 3s infinite;
 }
 
-:host ::ng-deep .p-datatable-tbody > tr > td {
-  color: #1e3a8a !important; /* ฟ้าน้ำเงินเข้ม */
-  background-color: #dbeafe !important; /* ฟ้าอ่อนเหมือนช่องฟอร์ม */
+/* 🔹 เอฟเฟกต์สั่นเมื่อเกิด Error */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }
-
-/* ============================= */
-/* 🔹 Input Text, Textarea & PrimeNG InputText */
-:host ::ng-deep input[type="text"],
-:host ::ng-deep input[type="email"],
-:host ::ng-deep input[type="tel"],
-:host ::ng-deep input[type="number"],
-:host ::ng-deep input[type="password"],
-:host ::ng-deep textarea,
-:host ::ng-deep .p-inputtext {
-  background-color: #dbeafe !important; /* ฟ้าอ่อน */
-  color: #1e3a8a !important;           /* ฟ้าน้ำเงินเข้ม */
-  border: 1px solid #60a5fa !important;
-  border-radius: 0.5rem !important;
-  padding: 0.5rem !important;
-  font-weight: 500;
-  transition: all 0.2s ease-in-out;
-}
-
-:host ::ng-deep input:focus,
-:host ::ng-deep textarea:focus,
-:host ::ng-deep .p-inputtext:focus {
-  outline: none !important;
-  border-color: #3b82f6 !important; /* ฟ้าเข้ม */
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
-  background-color: #dbeafe !important; /* ฟ้าอ่อนคงที่ */
-}
-
-/* ============================= */
-/* 🔹 PrimeNG p-select (Dropdown) */
-:host ::ng-deep .p-select {
-  background-color: #dbeafe !important; /* ฟ้าอ่อนเหมือนช่องฟอร์ม */
-  color: #1e3a8a !important;
-  border: 1px solid #60a5fa !important;
-  border-radius: 0.5rem !important;
-  width: 100% !important;
-}
-
-:host ::ng-deep .p-select-label {
-  color: #1e3a8a !important;
-  background-color: #dbeafe !important;
-}
-
-:host ::ng-deep .p-select-list-container {
-  background-color: #dbeafe !important;
-  color: #1e3a8a !important;
-  border-radius: 0.5rem !important;
-  border: 1px solid #93c5fd !important;
-  z-index: 9999 !important;
-}
-
-:host ::ng-deep .p-select-option {
-  background-color: #dbeafe !important;
-  color: #1e3a8a !important;
-  transition: background-color 0.2s;
-}
-
-:host ::ng-deep .p-select-option.p-focus,
-:host ::ng-deep .p-select-option:hover {
-  background-color: #60a5fa !important; /* ฟ้าเข้ม hover */
-  color: #ffffff !important;
-}
-
-/* ============================= */
-/* 🔹 Paginator Styling */
-:host ::ng-deep .p-paginator {
-  background-color: #dbeafe !important; /* ฟ้าอ่อนเหมือนช่อง */
-  color: #1e3a8a !important;
-  border-top: 1px solid #60a5fa !important;
-}
-
-:host ::ng-deep .p-paginator .p-paginator-page,
-:host ::ng-deep .p-paginator .p-paginator-prev,
-:host ::ng-deep .p-paginator .p-paginator-next {
-  color: #1e3a8a !important;
-}
-
-:host ::ng-deep .p-paginator .p-paginator-page.p-highlight {
-  background-color: #3b82f6 !important;
-  color: #ffffff !important;
-}
-
-:host ::ng-deep .p-paginator .p-paginator-page:hover,
-:host ::ng-deep .p-paginator .p-paginator-prev:hover,
-:host ::ng-deep .p-paginator .p-paginator-next:hover {
-  background-color: #60a5fa !important;
-  color: #ffffff !important;
-}
-
-/* ============================= */
-/* 🔹 Table Scrollbar */
-:host ::ng-deep .p-datatable-wrapper {
-  scrollbar-color: #60a5fa #dbeafe !important;
-  scrollbar-width: thin;
-}
-
-/* ============================= */
-/* 🔹 Cell Alignment */
-:host ::ng-deep td.text-left {
-  text-align: left !important;
-}
-
-:host ::ng-deep td.text-center {
-  text-align: center !important;
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
 }

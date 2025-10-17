@@ -5,10 +5,13 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PrimeNgSharedModule } from '../../shared/prime-ng-shared.module';
 import { AuthService } from '../../services/test/auth.service';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, PrimeNgSharedModule],
+imports: [CommonModule, ReactiveFormsModule, PrimeNgSharedModule, MessagesModule, MessageModule],
   templateUrl: './register.html',
   styleUrls: ['./register.scss']
 })

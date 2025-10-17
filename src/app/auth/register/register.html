@@ -1,168 +1,156 @@
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-500 to-blue-600 p-4">
-  <div class="bg-white rounded-lg shadow-2xl w-full max-w-md p-8">
+<div
+  class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-blue-500 to-purple-600 relative overflow-hidden"
+>
+  <!-- Floating circles background -->
+  <div
+    class="absolute w-96 h-96 bg-white/10 rounded-full blur-3xl top-10 left-10 animate-pulse"
+  ></div>
+  <div
+    class="absolute w-80 h-80 bg-purple-300/20 rounded-full blur-2xl bottom-10 right-10 animate-float"
+  ></div>
+
+  <div
+    class="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl w-full max-w-md p-8 z-10 border border-white/20"
+  >
     <!-- Logo/Header -->
     <div class="text-center mb-8">
-      <div class="bg-green-500 w-20 h-20 rounded-full mx-auto flex items-center justify-center mb-4">
-        <i class="pi pi-user-plus text-white text-4xl"></i>
+      <div
+        class="bg-gradient-to-br from-indigo-500 to-purple-600 w-24 h-24 rounded-full mx-auto flex items-center justify-center mb-4 shadow-lg animate-bounce-slow"
+      >
+        <i class="pi pi-user-plus text-white text-5xl"></i>
       </div>
-      <h2 class="text-3xl font-bold text-blue-900">สมัครสมาชิก</h2>
-      <p class="text-gray-600 mt-2">สร้างบัญชีผู้ใช้ใหม่</p>
+      <h2 class="text-3xl font-extrabold text-indigo-900 drop-shadow-sm">
+        สมัครสมาชิก
+      </h2>
+      <p class="text-gray-600 mt-2 tracking-wide">
+        สร้างบัญชีใหม่เพื่อเข้าสู่ระบบ
+      </p>
     </div>
 
-    <!-- Error Message -->
-    <p-messages [(value)]="messages" [enableService]="false" [closable]="true"></p-messages>
+    <!-- Success/Error Messages -->
+    <p-messages [(value)]="messages"></p-messages>
 
     <!-- Register Form -->
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <!-- Full Name -->
-      <div class="mb-4">
-        <label class="block text-gray-700 font-semibold mb-2">
-          <i class="pi pi-user mr-2"></i>ชื่อ-นามสกุล
-          <span class="text-red-500">*</span>
+      <!-- Fullname -->
+      <div class="mb-5">
+        <label
+          class="block text-gray-700 font-semibold mb-2 flex items-center gap-2"
+        >
+          <i class="pi pi-id-card text-indigo-500"></i>ชื่อ-นามสกุล
         </label>
         <input
           type="text"
-          pInputText
           formControlName="fullname"
-          class="w-full"
+          class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-300 transition-all duration-300"
           placeholder="กรุณากรอกชื่อ-นามสกุล"
-          [class.ng-invalid]="registerForm.get('fullname')?.invalid && registerForm.get('fullname')?.touched"
         />
         <small
           *ngIf="registerForm.get('fullname')?.invalid && registerForm.get('fullname')?.touched"
-          class="text-red-500">
+          class="text-red-500 mt-1 block"
+        >
           กรุณากรอกชื่อ-นามสกุล
         </small>
       </div>
 
       <!-- Username -->
-      <div class="mb-4">
-        <label class="block text-gray-700 font-semibold mb-2">
-          <i class="pi pi-at mr-2"></i>ชื่อผู้ใช้
-          <span class="text-red-500">*</span>
+      <div class="mb-5">
+        <label
+          class="block text-gray-700 font-semibold mb-2 flex items-center gap-2"
+        >
+          <i class="pi pi-user text-indigo-500"></i>ชื่อผู้ใช้
         </label>
         <input
           type="text"
-          pInputText
           formControlName="username"
-          class="w-full"
+          class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-300 transition-all duration-300"
           placeholder="กรุณากรอกชื่อผู้ใช้"
-          [class.ng-invalid]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
         />
         <small
           *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
-          class="text-red-500">
+          class="text-red-500 mt-1 block"
+        >
           กรุณากรอกชื่อผู้ใช้ (อย่างน้อย 4 ตัวอักษร)
         </small>
       </div>
 
       <!-- Email -->
-      <div class="mb-4">
-        <label class="block text-gray-700 font-semibold mb-2">
-          <i class="pi pi-envelope mr-2"></i>อีเมล
-          <span class="text-red-500">*</span>
+      <div class="mb-5">
+        <label
+          class="block text-gray-700 font-semibold mb-2 flex items-center gap-2"
+        >
+          <i class="pi pi-envelope text-indigo-500"></i>อีเมล
         </label>
         <input
           type="email"
-          pInputText
           formControlName="email"
-          class="w-full"
+          class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-300 transition-all duration-300"
           placeholder="example@email.com"
-          [class.ng-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
         />
         <small
           *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
-          class="text-red-500">
-          กรุณากรอกอีเมลที่ถูกต้อง
+          class="text-red-500 mt-1 block"
+        >
+          กรุณากรอกอีเมลให้ถูกต้อง
         </small>
       </div>
 
       <!-- Password -->
-      <div class="mb-4">
-        <label class="block text-gray-700 font-semibold mb-2">
-          <i class="pi pi-lock mr-2"></i>รหัสผ่าน
-          <span class="text-red-500">*</span>
+      <div class="mb-5">
+        <label
+          class="block text-gray-700 font-semibold mb-2 flex items-center gap-2"
+        >
+          <i class="pi pi-lock text-indigo-500"></i>รหัสผ่าน
         </label>
-        <p-password
+        <input
+          type="password"
           formControlName="password"
-          [toggleMask]="true"
-          [feedback]="true"
-          promptLabel="กรุณากรอกรหัสผ่าน"
-          weakLabel="อ่อนแอ"
-          mediumLabel="ปานกลาง"
-          strongLabel="แข็งแรง"
-          styleClass="w-full"
-          [inputStyle]="{ width: '100%' }"
-          placeholder="กรุณากรอกรหัสผ่าน"
-        ></p-password>
+          class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-300"
+          placeholder="กรุณากรอกรหัสผ่าน (อย่างน้อย 6 ตัว)"
+        />
         <small
           *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
-          class="text-red-500">
-          รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร
+          class="text-red-500 mt-1 block"
+        >
+          กรุณากรอกรหัสผ่าน
         </small>
       </div>
 
       <!-- Confirm Password -->
-      <div class="mb-6">
-        <label class="block text-gray-700 font-semibold mb-2">
-          <i class="pi pi-lock mr-2"></i>ยืนยันรหัสผ่าน
-          <span class="text-red-500">*</span>
+      <div class="mb-8">
+        <label
+          class="block text-gray-700 font-semibold mb-2 flex items-center gap-2"
+        >
+          <i class="pi pi-lock text-indigo-500"></i>ยืนยันรหัสผ่าน
         </label>
-        <p-password
+        <input
+          type="password"
           formControlName="confirmPassword"
-          [toggleMask]="true"
-          [feedback]="false"
-          styleClass="w-full"
-          [inputStyle]="{ width: '100%' }"
-          placeholder="กรุณากรอกรหัสผ่านอีกครั้ง"
-        ></p-password>
+          class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-300"
+          placeholder="กรุณากรอกยืนยันรหัสผ่าน"
+        />
         <small
-          *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched"
-          class="text-red-500">
+          *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched"
+          class="text-red-500"
+        >
           รหัสผ่านไม่ตรงกัน
         </small>
       </div>
 
       <!-- Submit Button -->
-      <p-button
+      <button
         type="submit"
-        label="สมัครสมาชิก"
-        icon="pi pi-user-plus"
         [disabled]="registerForm.invalid || loading"
-        [loading]="loading"
-        styleClass="w-full p-button-lg"
-        severity="success"
-      ></p-button>
+        class="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-lg shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 relative overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        <span class="relative z-10 flex justify-center items-center gap-2">
+          <i class="pi pi-user-plus"></i>
+          {{ loading ? 'กำลังสมัครสมาชิก...' : 'สมัครสมาชิก' }}
+        </span>
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-white/30 to-transparent opacity-0 hover:opacity-20 transition-all duration-500"
+        ></div>
+      </button>
     </form>
-
-    <!-- Divider -->
-    <div class="flex items-center my-6">
-      <div class="flex-1 border-t border-gray-300"></div>
-      <span class="px-4 text-gray-500 text-sm">หรือ</span>
-      <div class="flex-1 border-t border-gray-300"></div>
-    </div>
-
-    <!-- Login Link -->
-    <div class="text-center">
-      <p class="text-gray-600">
-        มีบัญชีอยู่แล้ว?
-        <a routerLink="/login" class="text-green-600 hover:text-green-700 font-semibold hover:underline">
-          เข้าสู่ระบบ
-        </a>
-      </p>
-    </div>
-
-    <!-- Features Info -->
-    <div class="mt-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
-      <p class="text-sm font-semibold text-gray-700 mb-2 flex items-center">
-        <i class="pi pi-info-circle mr-2 text-green-600"></i>
-        ข้อมูลเกี่ยวกับการสมัคร:
-      </p>
-      <ul class="text-xs text-gray-600 space-y-1 ml-6 list-disc">
-        <li>บัญชีที่สร้างจะมีสิทธิ์ <strong>ผู้ใช้ทั่วไป (User)</strong></li>
-        <li>สามารถเพิ่มและจัดการข้อมูลนักศึกษาของตัวเองได้</li>
-        <li>ดูข้อมูลนักศึกษาคนอื่นได้ แต่แก้ไขไม่ได้</li>
-      </ul>
-    </div>
   </div>
 </div>
