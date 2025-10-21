@@ -1,19 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PrimeNgSharedModule } from '../../../../shared/prime-ng-shared.module';
-import { StudentService } from '../../../../services/test/student.service';
+import { StudentApiService, StudentAPI } from '../../../../services/student-api.service';
 import { MessageService } from 'primeng/api';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
 @Component({
   selector: 'app-student-manage',
   templateUrl: './student-manage.component.html',
   styleUrls: ['./student-manage.component.scss'],
-  imports: [PrimeNgSharedModule],
+  imports: [PrimeNgSharedModule, ProgressSpinnerModule],
   providers: [MessageService]
 })
 export class StudentmanageComponent implements OnInit {
   studentId?: number;
   isEditMode = false;
+  loading = false;
 
   student = {
     fullname: '',
@@ -47,7 +50,7 @@ export class StudentmanageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private studentService: StudentService,
+    private studentApiService: StudentApiService,
     private messageService: MessageService
   ) {}
 
@@ -65,22 +68,33 @@ export class StudentmanageComponent implements OnInit {
   }
 
   loadStudent(id: number) {
-    const foundStudent = this.studentService.getStudentById(id);
-    if (foundStudent) {
-      this.student = {
-        fullname: foundStudent.fullname,
-        university: foundStudent.university,
-        faculty: foundStudent.faculty,
-        major: foundStudent.major,
-        contact_number: foundStudent.contact_number,
-        email: foundStudent.email,
-        intern_department: foundStudent.intern_department,
-        intern_duration: foundStudent.intern_duration,
-        attached_project: foundStudent.attached_project || '',
-        description: foundStudent.description || ''
-      };
-      this.profilePreview = foundStudent.profileImage || null;
-    }
+    this.loading = true;
+    this.studentApiService.getById(id).subscribe({
+      next: (student) => {
+        this.student = {
+          fullname: student.fullname,
+          university: student.university,
+          faculty: student.faculty,
+          major: student.major,
+          contact_number: student.contact_number,
+          email: student.email,
+          intern_department: student.intern_department,
+          intern_duration: student.intern_duration,
+          attached_project: student.attached_project || '',
+          description: '' // ถ้ามี field description ใน API ให้เพิ่มเข้าไป
+        };
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error loading student:', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'ข้อผิดพลาด',
+          detail: 'ไม่สามารถโหลดข้อมูลนักศึกษาได้'
+        });
+        this.loading = false;
+      }
+    });
   }
 
   onProfileChange(event: any) {
@@ -110,39 +124,78 @@ export class StudentmanageComponent implements OnInit {
 
       this.messageService.add({
         severity: 'error',
-        summary: 'ข้อผิดพลาด', // สามารถใช้ JSON i18n แทนได้
+        summary: 'ข้อผิดพลาด',
         detail: 'กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน'
       });
-      return; // stop function ถ้า validation ไม่ผ่าน
+      return;
     }
+
+    this.loading = true;
+
+    // สร้าง object สำหรับส่ง API
+    const studentData: StudentAPI = {
+      fullname: this.student.fullname,
+      university: this.student.university,
+      faculty: this.student.faculty,
+      major: this.student.major,
+      contact_number: this.student.contact_number,
+      email: this.student.email,
+      intern_department: this.student.intern_department,
+      intern_duration: this.student.intern_duration,
+      attached_project: this.student.attached_project || null,
+      grade: null,
+      created_by: 1 // TODO: ใช้ User ID จาก AuthService
+    };
 
     if (this.isEditMode && this.studentId) {
       // Update existing student
-      this.studentService.updateStudent(this.studentId, {
-        ...this.student,
-        profileImage: this.profilePreview as string
-      });
-
-      this.messageService.add({
-        severity: 'success',
-        summary: 'สำเร็จ',
-        detail: 'แก้ไขข้อมูลนักศึกษาเรียบร้อยแล้ว'
+      this.studentApiService.update(this.studentId, studentData).subscribe({
+        next: (response) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'สำเร็จ',
+            detail: 'แก้ไขข้อมูลนักศึกษาเรียบร้อยแล้ว'
+          });
+          this.loading = false;
+          setTimeout(() => {
+            this.router.navigate(['/student']);
+          }, 1000);
+        },
+        error: (err) => {
+          console.error('Error updating student:', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'ข้อผิดพลาด',
+            detail: 'ไม่สามารถแก้ไขข้อมูลได้'
+          });
+          this.loading = false;
+        }
       });
     } else {
       // Add new student
-      this.studentService.addStudent({
-        ...this.student,
-        profileImage: this.profilePreview as string
-      });
-
-      this.messageService.add({
-        severity: 'success',
-        summary: 'สำเร็จ',
-        detail: 'เพิ่มข้อมูลนักศึกษาเรียบร้อยแล้ว'
+      this.studentApiService.create(studentData).subscribe({
+        next: (response) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'สำเร็จ',
+            detail: 'เพิ่มข้อมูลนักศึกษาเรียบร้อยแล้ว'
+          });
+          this.loading = false;
+          setTimeout(() => {
+            this.router.navigate(['/student']);
+          }, 1000);
+        },
+        error: (err) => {
+          console.error('Error creating student:', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'ข้อผิดพลาด',
+            detail: 'ไม่สามารถเพิ่มข้อมูลได้'
+          });
+          this.loading = false;
+        }
       });
     }
-
-    this.router.navigate(['/student']);
   }
 
   onCancel() {

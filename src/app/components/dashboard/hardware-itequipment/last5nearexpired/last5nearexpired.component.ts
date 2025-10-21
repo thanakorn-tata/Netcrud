@@ -3,10 +3,10 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { Table } from 'primeng/table';
 import { SortEvent } from 'primeng/api';
-import { TranslateModule} from '@ngx-translate/core'; 
+import { TranslateModule} from '@ngx-translate/core';
 
-import { ItemTest_empty } from '../../../../services/test/items-test';
-import { ItemsTestService2 } from '../../../../services/test/items-test2-service';
+import { ItemTest_empty } from '../../../../services/items-test';
+import { ItemsTestService2 } from '../../../../services/items-test2-service';
 
 @Component({
   selector: 'app-last5nearexpired',

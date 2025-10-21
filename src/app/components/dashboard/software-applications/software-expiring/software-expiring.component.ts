@@ -5,8 +5,8 @@ import { Table } from 'primeng/table';
 import { SortEvent } from 'primeng/api';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ItemTest_expiring } from '../../../../services/test/items-test';
-import { ItemsTestExpiring } from '../../../../services/test/items-expiring-service';
+import { ItemTest_expiring } from '../../../../services/items-test';
+import { ItemsTestExpiring } from '../../../../services/items-expiring-service';
 
 @Component({
   selector: 'app-software-expiring',
@@ -32,11 +32,11 @@ export class SoftwareExpiringComponent implements OnInit {
 
   customSort(event: SortEvent) {
     if (!event.data || !event.field || event.order === undefined) return;
-    
+
     event.data.sort((a, b) => {
       const value1 = a[event.field as keyof ItemTest_expiring];
       const value2 = b[event.field as keyof ItemTest_expiring];
-      
+
       let result = 0;
       if (value1 == null && value2 != null) {
         result = -1;
@@ -47,7 +47,7 @@ export class SoftwareExpiringComponent implements OnInit {
       } else {
         result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
       }
-      
+
       return (event.order ?? 1) * result;
     });
   }

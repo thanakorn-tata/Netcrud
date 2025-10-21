@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PrimeNgSharedModule } from '../../shared/prime-ng-shared.module';
-import { AuthService } from '../../services/test/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 

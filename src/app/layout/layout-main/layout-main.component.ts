@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { NgFor } from '@angular/common';
 import { TranslateModule, TranslateService} from '@ngx-translate/core';
 import { FooterComponent } from '../footer/footer.component';
-import { AuthService , User } from '../../services/test/auth.service';
+import { AuthService , User } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({

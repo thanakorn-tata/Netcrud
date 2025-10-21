@@ -3,10 +3,10 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { Table } from 'primeng/table';
 import { SortEvent } from 'primeng/api';
-import { TranslateModule} from '@ngx-translate/core'; 
+import { TranslateModule} from '@ngx-translate/core';
 
-import { ItemsTest_changedcom } from '../../../../services/test/items-test';
-import { ItemsTestService } from '../../../../services/test/items-test-service';
+import { ItemsTest_changedcom } from '../../../../services/items-test';
+import { ItemsTestService } from '../../../../services/items-test-service';
 
 @Component({
   selector: 'app-last5changed-computer',
