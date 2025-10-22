@@ -18,7 +18,7 @@ interface Student {
   intern_duration: string;
   attached_project?: string | null;
   grade?: string | null;
-  created_by?: number;
+  created_by?: number | null;
 }
 
 @Component({
@@ -71,15 +71,12 @@ export class StudentComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private studentApiService: StudentApiService
-  ) {}
+    private studentApiService: StudentApiService,
+    ) {}
 
   ngOnInit(): void {
-    // Get current user & role
     this.currentUser = this.authService.currentUserValue;
     this.isAdmin = this.authService.isAdmin();
-
-    // Load students from API
     this.loadStudents();
   }
 
@@ -87,19 +84,25 @@ export class StudentComponent implements OnInit {
     this.loading = true;
     this.studentApiService.getAll().subscribe({
       next: (data) => {
-        // แปลงข้อมูลจาก API และเพิ่ม rowNum
-        this.students = data.map((student, index) => ({
-          ...student,
-          id: student.id || 0,
-          rowNum: index + 1
+        this.students = data.map((apiStudent, index): Student => ({
+          id: apiStudent.id ?? 0,
+          rowNum: index + 1,
+          fullname: apiStudent.fullname ?? '',
+          university: apiStudent.university ?? '',
+          faculty: apiStudent.faculty ?? '',
+          major: apiStudent.major ?? '',
+          contact_number: apiStudent.contact_number ?? '',
+          email: apiStudent.email ?? '',
+          intern_department: apiStudent.intern_department ?? '',
+          intern_duration: apiStudent.intern_duration ?? '',
+          attached_project: apiStudent.attached_project ?? null,
+          grade: apiStudent.grade ?? null,
+          created_by: apiStudent.created_by ?? null
         }));
 
-        // Filter students based on role
         if (this.isAdmin) {
-          // Admin เห็นทั้งหมด
           this.filteredStudents = [...this.students];
         } else {
-          // User เห็นได้ทั้งหมด แต่แก้ไขได้เฉพาะของตัวเอง
           this.filteredStudents = [...this.students];
         }
 
@@ -109,65 +112,8 @@ export class StudentComponent implements OnInit {
       error: (err) => {
         console.error('Error loading students:', err);
         this.loading = false;
-
-        // Fallback to mock data if API fails
-        this.loadMockData();
       }
     });
-  }
-
-  // Mock data สำหรับกรณีที่ API ยังไม่พร้อม
-  loadMockData(): void {
-    this.students = [
-      {
-        id: 1,
-        rowNum: 1,
-        fullname: "นายสมชาย ใจดี",
-        university: "มหาวิทยาลัยศรีนครินทรวิโรฒ",
-        faculty: "คณะบริหารธุรกิจ",
-        major: "สาขาวิชาคอมพิวเตอร์ธุรกิจ",
-        contact_number: "0812345678",
-        email: "somchai@example.com",
-        intern_department: "ฝ่ายพัฒนาแอปพลิเคชัน",
-        intern_duration: "มกราคม - มีนาคม 2568",
-        attached_project: "ระบบจัดการข้อมูลนักศึกษา",
-        grade: "A",
-        created_by: 1
-      },
-      {
-        id: 2,
-        rowNum: 2,
-        fullname: "นางสาวสมหญิง รักเรียน",
-        university: "มหาวิทยาลัยเกษตรศาสตร์",
-        faculty: "คณะวิทยาศาสตร์",
-        major: "สาขาวิชาวิทยาการคอมพิวเตอร์",
-        contact_number: "0898765432",
-        email: "somying@example.com",
-        intern_department: "ฝ่ายวิเคราะห์ข้อมูล",
-        intern_duration: "เมษายน - มิถุนายน 2568",
-        attached_project: "ระบบวิเคราะห์ข้อมูลลูกค้า",
-        grade: "B+",
-        created_by: 2
-      },
-      {
-        id: 3,
-        rowNum: 3,
-        fullname: "นายทดสอบ ระบบ",
-        university: "จุฬาลงกรณ์มหาวิทยาลัย",
-        faculty: "คณะวิศวกรรมศาสตร์",
-        major: "สาขาวิชาวิศวกรรมคอมพิวเตอร์",
-        contact_number: "0856789012",
-        email: "test@example.com",
-        intern_department: "ฝ่ายเทคโนโลยีสารสนเทศ",
-        intern_duration: "กรกฎาคม - กันยายน 2568",
-        attached_project: null,
-        grade: null,
-        created_by: 1
-      }
-    ];
-
-    this.filteredStudents = [...this.students];
-    this.totalRecords = this.filteredStudents.length;
   }
 
   onSearch(): void {
@@ -199,32 +145,18 @@ export class StudentComponent implements OnInit {
     this.totalRecords = this.filteredStudents.length;
   }
 
-  // เช็คว่าเป็นข้อมูลของ User ที่ Login อยู่หรือไม่
   isMyStudent(student: Student): boolean {
     return student.created_by === this.currentUser?.id;
   }
 
+  // 🔥 แก้ไข: ใช้ updateGrade() แทน update()
   onGradeChange(student: Student): void {
-    if (!student.id) return;
+    if (!student.id || !student.grade) return;
 
     this.loading = true;
 
-    // Update grade via API
-    const updateData: StudentAPI = {
-      fullname: student.fullname,
-      university: student.university,
-      faculty: student.faculty,
-      major: student.major,
-      contact_number: student.contact_number,
-      email: student.email,
-      intern_department: student.intern_department,
-      intern_duration: student.intern_duration,
-      attached_project: student.attached_project,
-      grade: student.grade,
-      created_by: student.created_by
-    };
-
-    this.studentApiService.update(student.id, updateData).subscribe({
+    // ใช้ API endpoint updateGrade แทน
+    this.studentApiService.updateGrade(student.id, student.grade).subscribe({
       next: (updatedStudent) => {
         console.log(`Updated grade for ${student.fullname}: ${student.grade}`);
         this.loading = false;
@@ -234,11 +166,17 @@ export class StudentComponent implements OnInit {
         if (index !== -1) {
           this.students[index].grade = updatedStudent.grade;
         }
+
+        // แสดงข้อความสำเร็จ
+        alert('อัปเดตเกรดสำเร็จ');
       },
       error: (err) => {
         console.error('Error updating grade:', err);
         this.loading = false;
-        alert('เกิดข้อผิดพลาดในการอัพเดทเกรด');
+        alert('เกิดข้อผิดพลาดในการอัปเดทเกรด');
+
+        // โหลดข้อมูลใหม่เพื่อให้แน่ใจว่าข้อมูลถูกต้อง
+        this.loadStudents();
       }
     });
   }
@@ -277,7 +215,6 @@ export class StudentComponent implements OnInit {
   deleteStudent(id: number): void {
     const student = this.students.find(s => s.id === id);
 
-    // เช็คว่า User สามารถลบได้หรือไม่
     if (!this.isAdmin && student?.created_by !== this.currentUser?.id) {
       alert('คุณไม่สามารถลบข้อมูลของผู้อื่นได้');
       return;
@@ -295,9 +232,8 @@ export class StudentComponent implements OnInit {
         next: () => {
           console.log(`Deleted student: ${this.selectedStudent!.fullname}`);
 
-          // Remove from local data
           this.students = this.students.filter(s => s.id !== this.selectedStudent!.id);
-          this.onSearch(); // Refresh filtered list
+          this.onSearch();
 
           this.loading = false;
           this.showDeleteDialog = false;

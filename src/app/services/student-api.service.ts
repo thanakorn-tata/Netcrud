@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface StudentAPI {
@@ -14,7 +14,9 @@ export interface StudentAPI {
   intern_duration: string;
   attached_project?: string | null;
   grade?: string | null;
-  created_by?: number;
+  created_by?: number | null;
+  profile_file?: string | null;
+  project_file?: string | null;
 }
 
 @Injectable({
@@ -30,7 +32,6 @@ export class StudentApiService {
   }
 
   getById(id: number): Observable<StudentAPI> {
-
     return this.http.get<StudentAPI>(`${this.apiUrl}/${id}`);
   }
 
@@ -38,8 +39,26 @@ export class StudentApiService {
     return this.http.post<StudentAPI>(this.apiUrl, student);
   }
 
+  // สำหรับการสร้างพร้อมไฟล์
+  createWithFiles(formData: FormData): Observable<StudentAPI> {
+    return this.http.post<StudentAPI>(this.apiUrl, formData);
+  }
+
   update(id: number, student: StudentAPI): Observable<StudentAPI> {
     return this.http.put<StudentAPI>(`${this.apiUrl}/${id}`, student);
+  }
+
+  // สำหรับการอัปเดตพร้อมไฟล์
+  updateWithFiles(id: number, formData: FormData): Observable<StudentAPI> {
+    return this.http.put<StudentAPI>(`${this.apiUrl}/${id}`, formData);
+  }
+
+  // สำหรับการอัปเดตเฉพาะเกรด
+  updateGrade(id: number, grade: string): Observable<StudentAPI> {
+    return this.http.patch<StudentAPI>(
+      `${this.apiUrl}/${id}/grade`,
+      { grade: grade }
+    );
   }
 
   delete(id: number): Observable<void> {

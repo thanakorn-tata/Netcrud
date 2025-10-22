@@ -16,7 +16,6 @@ export const routes: Routes = [
     loadComponent: () => import('./auth/register/register').then(m => m.RegisterComponent)
   },
 
-  // Protected Routes (With Layout)
   {
     path: '',
     component: LayoutMainComponent,

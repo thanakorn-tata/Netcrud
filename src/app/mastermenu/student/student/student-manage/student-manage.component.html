@@ -22,6 +22,7 @@
 
     <!-- Student Form -->
     <div class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-4">
+
       <!-- Full Name -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
@@ -33,6 +34,7 @@
           type="text"
           [(ngModel)]="student.fullname"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
@@ -48,6 +50,7 @@
           type="text"
           [(ngModel)]="student.university"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
@@ -63,6 +66,7 @@
           type="text"
           [(ngModel)]="student.faculty"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
@@ -78,6 +82,7 @@
           type="text"
           [(ngModel)]="student.major"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
@@ -93,6 +98,7 @@
           type="tel"
           [(ngModel)]="student.contact_number"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
@@ -108,6 +114,7 @@
           type="email"
           [(ngModel)]="student.email"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
@@ -115,43 +122,31 @@
       <!-- Internship Department -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
+          <span class="text-red-500 mr-1">*</span>
           {{ "student.intern_department" | translate }}
         </label>
-        <p-select
-          [options]="departments"
+        <input
+          pInputText
+          type="text"
           [(ngModel)]="student.intern_department"
-          optionLabel="name"
-          optionValue="name"
-          [placeholder]="'common.message.Pleaseselect' | translate"
-          class="w-full"
-        ></p-select>
+          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
+          class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
+        />
       </div>
 
       <!-- Internship Duration -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
+          <span class="text-red-500 mr-1">*</span>
           {{ "student.intern_duration" | translate }}
-        </label>
-        <p-select
-          [options]="durations"
-          [(ngModel)]="student.intern_duration"
-          optionLabel="name"
-          optionValue="name"
-          [placeholder]="'common.message.Pleaseselect' | translate"
-          class="w-full"
-        ></p-select>
-      </div>
-
-      <!-- Attached Project -->
-      <div class="lg:col-span-2 md:col-span-2 sm:col-span-1">
-        <label class="block font-semibold mb-1 text-blue-900">
-          {{ "student.attached_project" | translate }}
         </label>
         <input
           pInputText
           type="text"
-          [(ngModel)]="student.attached_project"
+          [(ngModel)]="student.intern_duration"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
@@ -161,6 +156,7 @@
       <!-- Upload Profile Image -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
+          <span class="text-red-500 mr-1">*</span>
           {{ "common.button.Upload" | translate }}
         </label>
         <label
@@ -175,6 +171,7 @@
             accept="image/*"
             class="hidden"
             (change)="onProfileChange($event)"
+            required
           />
         </label>
         <div *ngIf="profilePreview" class="mt-2">
@@ -186,30 +183,42 @@
         </div>
       </div>
 
-      <!-- Upload Project File -->
-      <div>
-        <label class="block font-semibold mb-1 text-blue-900">
-          {{ "common.button.Upload1" | translate }}
-        </label>
-        <label
-          class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200"
-        >
-          <i class="pi pi-cloud-upload text-blue-600 text-xl mr-2"></i>
-          <span class="text-blue-900">
-            {{ "common.button.Upload1" | translate }}
-          </span>
-          <input
-            type="file"
-            accept=".pdf,.doc,.docx,.zip"
-            class="hidden"
-            (change)="onProjectChange($event)"
-          />
-        </label>
-        <div *ngIf="projectFileName" class="mt-2 text-sm text-blue-900">
-          <i class="pi pi-file mr-1"></i> {{ projectFileName }}
-        </div>
-      </div>
-    </div>
+<!-- Upload Project File -->
+<div>
+  <label class="block font-semibold mb-1 text-blue-900">
+    <span class="text-red-500 mr-1">*</span>
+    {{ "common.button.Upload1" | translate }}
+  </label>
+  <label
+    class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200"
+  >
+    <i class="pi pi-cloud-upload text-blue-600 text-xl mr-2"></i>
+    <span class="text-blue-900">
+      {{ "common.button.Upload1" | translate }}
+    </span>
+    <input
+      type="file"
+      accept=".pdf,.doc,.docx,.zip"
+      class="hidden"
+      (change)="onProjectChange($event)"
+      required
+    />
+  </label>
+
+  <!-- แสดงชื่อไฟล์และกดดาวน์โหลดได้ -->
+  <div *ngIf="projectFileName" class="mt-2 text-sm text-blue-900">
+    <i class="pi pi-file mr-1"></i>
+    <a
+      href="javascript:void(0)"
+      (click)="downloadProjectFile()"
+      class="underline cursor-pointer hover:text-blue-700"
+      title="คลิกเพื่อดาวน์โหลด/เปิดไฟล์"
+    >
+      {{ projectFileName }}
+    </a>
+  </div>
+</div>
+
 
     <!-- Buttons -->
     <div class="flex justify-center gap-2 mt-8">
