@@ -18,7 +18,6 @@ interface Student {
   intern_duration: string;
   attached_project?: string | null;
   grade?: string | null;
-  // allow null because API may return null
   created_by?: number | null;
 }
 
@@ -76,11 +75,8 @@ export class StudentComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    // Get current user & role
     this.currentUser = this.authService.currentUserValue;
     this.isAdmin = this.authService.isAdmin();
-
-    // Load students from API
     this.loadStudents();
   }
 
@@ -88,7 +84,6 @@ export class StudentComponent implements OnInit {
     this.loading = true;
     this.studentApiService.getAll().subscribe({
       next: (data) => {
-        // สร้าง Student objects แบบชัดเจน (ไม่ใช้ spread ของ API object)
         this.students = data.map((apiStudent, index): Student => ({
           id: apiStudent.id ?? 0,
           rowNum: index + 1,
@@ -105,7 +100,6 @@ export class StudentComponent implements OnInit {
           created_by: apiStudent.created_by ?? null
         }));
 
-        // Filter students based on role
         if (this.isAdmin) {
           this.filteredStudents = [...this.students];
         } else {
@@ -121,7 +115,6 @@ export class StudentComponent implements OnInit {
       }
     });
   }
-
 
   onSearch(): void {
     this.filteredStudents = this.students.filter(student => {
@@ -152,33 +145,18 @@ export class StudentComponent implements OnInit {
     this.totalRecords = this.filteredStudents.length;
   }
 
-  // เช็คว่าเป็นข้อมูลของ User ที่ Login อยู่หรือไม่
   isMyStudent(student: Student): boolean {
     return student.created_by === this.currentUser?.id;
   }
 
+  // 🔥 แก้ไข: ใช้ updateGrade() แทน update()
   onGradeChange(student: Student): void {
-    if (!student.id) return;
+    if (!student.id || !student.grade) return;
 
     this.loading = true;
 
-    // Update grade via API
-    const updateData: StudentAPI = {
-      fullname: student.fullname,
-      university: student.university,
-      faculty: student.faculty,
-      major: student.major,
-      contact_number: student.contact_number,
-      email: student.email,
-      intern_department: student.intern_department,
-      intern_duration: student.intern_duration,
-      attached_project: student.attached_project ?? null,
-      grade: student.grade ?? null,
-      // ensure API gets number | null
-      created_by: student.created_by ?? null
-    };
-
-    this.studentApiService.update(student.id, updateData).subscribe({
+    // ใช้ API endpoint updateGrade แทน
+    this.studentApiService.updateGrade(student.id, student.grade).subscribe({
       next: (updatedStudent) => {
         console.log(`Updated grade for ${student.fullname}: ${student.grade}`);
         this.loading = false;
@@ -188,11 +166,17 @@ export class StudentComponent implements OnInit {
         if (index !== -1) {
           this.students[index].grade = updatedStudent.grade;
         }
+
+        // แสดงข้อความสำเร็จ
+        alert('อัปเดตเกรดสำเร็จ');
       },
       error: (err) => {
         console.error('Error updating grade:', err);
         this.loading = false;
-        alert('เกิดข้อผิดพลาดในการอัพเดทเกรด');
+        alert('เกิดข้อผิดพลาดในการอัปเดทเกรด');
+
+        // โหลดข้อมูลใหม่เพื่อให้แน่ใจว่าข้อมูลถูกต้อง
+        this.loadStudents();
       }
     });
   }
@@ -231,7 +215,6 @@ export class StudentComponent implements OnInit {
   deleteStudent(id: number): void {
     const student = this.students.find(s => s.id === id);
 
-    // เช็คว่า User สามารถลบได้หรือไม่
     if (!this.isAdmin && student?.created_by !== this.currentUser?.id) {
       alert('คุณไม่สามารถลบข้อมูลของผู้อื่นได้');
       return;
@@ -249,9 +232,8 @@ export class StudentComponent implements OnInit {
         next: () => {
           console.log(`Deleted student: ${this.selectedStudent!.fullname}`);
 
-          // Remove from local data
           this.students = this.students.filter(s => s.id !== this.selectedStudent!.id);
-          this.onSearch(); // Refresh filtered list
+          this.onSearch();
 
           this.loading = false;
           this.showDeleteDialog = false;
