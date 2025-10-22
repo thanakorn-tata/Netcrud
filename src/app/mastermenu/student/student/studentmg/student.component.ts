@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PrimeNgSharedModule } from "../../../../shared/prime-ng-shared.module";
+import { StudentApiService, StudentAPI } from '../../../../services/test/student-api.service';
 import { AuthService, User } from '../../../../services/test/auth.service';
 interface Student {
   id: number;
@@ -17,7 +18,8 @@ interface Student {
   intern_duration: string;
   attached_project?: string | null;
   grade?: string | null;
-  created_by?: number;
+  // allow null because API may return null
+  created_by?: number | null;
 }
 
 @Component({
@@ -32,11 +34,17 @@ export class StudentComponent implements OnInit {
   currentUser: User | null = null;
   isAdmin: boolean = false;
 
+  // Loading State
+  loading: boolean = false;
+
   // Grade Options
   gradeOptions = [
     { label: 'A', value: 'A' },
+    { label: 'B+', value: 'B+' },
     { label: 'B', value: 'B' },
+    { label: 'C+', value: 'C+' },
     { label: 'C', value: 'C' },
+    { label: 'D+', value: 'D+' },
     { label: 'D', value: 'D' },
     { label: 'F', value: 'F' }
   ];
@@ -63,88 +71,57 @@ export class StudentComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private studentApiService: StudentApiService,
+    ) {}
 
   ngOnInit(): void {
     // Get current user & role
     this.currentUser = this.authService.currentUserValue;
     this.isAdmin = this.authService.isAdmin();
 
-    // Load students from localStorage
+    // Load students from API
     this.loadStudents();
   }
 
   loadStudents(): void {
-    const storedStudents = localStorage.getItem('students');
-    if (storedStudents) {
-      this.students = JSON.parse(storedStudents);
-    } else {
-      this.students = [
-        {
-          id: 1,
-          rowNum: 1,
-          fullname: "นายสมชาย ใจดี",
-          university: "มหาวิทยาลัยศรีนครินทรวิโรฒ",
-          faculty: "คณะบริหารธุรกิจ",
-          major: "สาขาวิชาคอมพิวเตอร์ธุรกิจ",
-          contact_number: "0812345678",
-          email: "somchai@example.com",
-          intern_department: "ฝ่ายพัฒนาแอปพลิเคชัน",
-          intern_duration: "มกราคม - มีนาคม 2568",
-          attached_project: "ระบบจัดการข้อมูลนักศึกษา",
-          grade: "A",
-          created_by: 1
-        },
-        {
-          id: 2,
-          rowNum: 2,
-          fullname: "นางสาวสมหญิง รักเรียน",
-          university: "มหาวิทยาลัยเกษตรศาสตร์",
-          faculty: "คณะวิทยาศาสตร์",
-          major: "สาขาวิชาวิทยาการคอมพิวเตอร์",
-          contact_number: "0898765432",
-          email: "somying@example.com",
-          intern_department: "ฝ่ายวิเคราะห์ข้อมูล",
-          intern_duration: "เมษายน - มิถุนายน 2568",
-          attached_project: "ระบบวิเคราะห์ข้อมูลลูกค้า",
-          grade: "B+",
-          created_by: 2
-        },
-        {
-          id: 3,
-          rowNum: 3,
-          fullname: "นายทดสอบ ระบบ",
-          university: "จุฬาลงกรณ์มหาวิทยาลัย",
-          faculty: "คณะวิศวกรรมศาสตร์",
-          major: "สาขาวิชาวิศวกรรมคอมพิวเตอร์",
-          contact_number: "0856789012",
-          email: "test@example.com",
-          intern_department: "ฝ่ายเทคโนโลยีสารสนเทศ",
-          intern_duration: "กรกฎาคม - กันยายน 2568",
-          attached_project: null,
-          grade: null,
-          created_by: 1
+    this.loading = true;
+    this.studentApiService.getAll().subscribe({
+      next: (data) => {
+        // สร้าง Student objects แบบชัดเจน (ไม่ใช้ spread ของ API object)
+        this.students = data.map((apiStudent, index): Student => ({
+          id: apiStudent.id ?? 0,
+          rowNum: index + 1,
+          fullname: apiStudent.fullname ?? '',
+          university: apiStudent.university ?? '',
+          faculty: apiStudent.faculty ?? '',
+          major: apiStudent.major ?? '',
+          contact_number: apiStudent.contact_number ?? '',
+          email: apiStudent.email ?? '',
+          intern_department: apiStudent.intern_department ?? '',
+          intern_duration: apiStudent.intern_duration ?? '',
+          attached_project: apiStudent.attached_project ?? null,
+          grade: apiStudent.grade ?? null,
+          created_by: apiStudent.created_by ?? null
+        }));
+
+        // Filter students based on role
+        if (this.isAdmin) {
+          this.filteredStudents = [...this.students];
+        } else {
+          this.filteredStudents = [...this.students];
         }
-      ];
-      this.saveStudents();
-    }
 
-    // Filter students based on role
-    if (this.isAdmin) {
-      // Admin เห็นทั้งหมด
-      this.filteredStudents = [...this.students];
-    } else {
-      // User เห็นได้ทั้งหมด แต่แก้ไขได้เฉพาะของตัวเอง
-      this.filteredStudents = [...this.students];
-    }
-
-    this.totalRecords = this.filteredStudents.length;
+        this.totalRecords = this.filteredStudents.length;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error loading students:', err);
+        this.loading = false;
+      }
+    });
   }
 
-  saveStudents(): void {
-    localStorage.setItem('students', JSON.stringify(this.students));
-  }
 
   onSearch(): void {
     this.filteredStudents = this.students.filter(student => {
@@ -181,13 +158,43 @@ export class StudentComponent implements OnInit {
   }
 
   onGradeChange(student: Student): void {
-    // Update grade in localStorage
-    const index = this.students.findIndex(s => s.id === student.id);
-    if (index !== -1) {
-      this.students[index].grade = student.grade;
-      this.saveStudents();
-      console.log(`Updated grade for ${student.fullname}: ${student.grade}`);
-    }
+    if (!student.id) return;
+
+    this.loading = true;
+
+    // Update grade via API
+    const updateData: StudentAPI = {
+      fullname: student.fullname,
+      university: student.university,
+      faculty: student.faculty,
+      major: student.major,
+      contact_number: student.contact_number,
+      email: student.email,
+      intern_department: student.intern_department,
+      intern_duration: student.intern_duration,
+      attached_project: student.attached_project ?? null,
+      grade: student.grade ?? null,
+      // ensure API gets number | null
+      created_by: student.created_by ?? null
+    };
+
+    this.studentApiService.update(student.id, updateData).subscribe({
+      next: (updatedStudent) => {
+        console.log(`Updated grade for ${student.fullname}: ${student.grade}`);
+        this.loading = false;
+
+        // Update local data
+        const index = this.students.findIndex(s => s.id === student.id);
+        if (index !== -1) {
+          this.students[index].grade = updatedStudent.grade;
+        }
+      },
+      error: (err) => {
+        console.error('Error updating grade:', err);
+        this.loading = false;
+        alert('เกิดข้อผิดพลาดในการอัพเดทเกรด');
+      }
+    });
   }
 
   getGradeColor(grade: string | undefined | null): string {
@@ -235,13 +242,27 @@ export class StudentComponent implements OnInit {
   }
 
   confirmDelete(): void {
-    if (this.selectedStudent) {
-      this.students = this.students.filter(s => s.id !== this.selectedStudent!.id);
-      this.saveStudents();
-      this.onSearch(); // Refresh filtered list
-      console.log(`Deleted student: ${this.selectedStudent.fullname}`);
+    if (this.selectedStudent && this.selectedStudent.id) {
+      this.loading = true;
+
+      this.studentApiService.delete(this.selectedStudent.id).subscribe({
+        next: () => {
+          console.log(`Deleted student: ${this.selectedStudent!.fullname}`);
+
+          // Remove from local data
+          this.students = this.students.filter(s => s.id !== this.selectedStudent!.id);
+          this.onSearch(); // Refresh filtered list
+
+          this.loading = false;
+          this.showDeleteDialog = false;
+          this.selectedStudent = null;
+        },
+        error: (err) => {
+          console.error('Error deleting student:', err);
+          this.loading = false;
+          alert('เกิดข้อผิดพลาดในการลบข้อมูล');
+        }
+      });
     }
-    this.showDeleteDialog = false;
-    this.selectedStudent = null;
   }
 }

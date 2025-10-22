@@ -1,7 +1,12 @@
 <div class="container mx-auto max-w-full">
   <p-toast></p-toast>
 
-  <div class="card p-4 bg-blue-50 rounded-lg">
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="flex justify-center items-center h-64">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+
+  <div *ngIf="!loading" class="card p-4 bg-blue-50 rounded-lg">
     <!-- Header -->
     <h4 class="text-blue-900 font-bold mt-2 text-4xl mb-2">
       {{
@@ -17,17 +22,19 @@
 
     <!-- Student Form -->
     <div class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-4">
+
       <!-- Full Name -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span
-          >{{ "student.fullname" | translate }}
+          <span class="text-red-500 mr-1">*</span>
+          {{ "student.fullname" | translate }}
         </label>
         <input
           pInputText
           type="text"
           [(ngModel)]="student.fullname"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
@@ -35,14 +42,15 @@
       <!-- University -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span
-          >{{ "student.university" | translate }}
+          <span class="text-red-500 mr-1">*</span>
+          {{ "student.university" | translate }}
         </label>
         <input
           pInputText
           type="text"
           [(ngModel)]="student.university"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
@@ -50,14 +58,15 @@
       <!-- Faculty -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span
-          >{{ "student.faculty" | translate }}
+          <span class="text-red-500 mr-1">*</span>
+          {{ "student.faculty" | translate }}
         </label>
         <input
           pInputText
           type="text"
           [(ngModel)]="student.faculty"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
@@ -65,14 +74,15 @@
       <!-- Major -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span
-          >{{ "student.major" | translate }}
+          <span class="text-red-500 mr-1">*</span>
+          {{ "student.major" | translate }}
         </label>
         <input
           pInputText
           type="text"
           [(ngModel)]="student.major"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
@@ -80,14 +90,15 @@
       <!-- Contact Number -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span
-          >{{ "student.contact_number" | translate }}
+          <span class="text-red-500 mr-1">*</span>
+          {{ "student.contact_number" | translate }}
         </label>
         <input
           pInputText
           type="tel"
           [(ngModel)]="student.contact_number"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
@@ -95,80 +106,72 @@
       <!-- Email -->
       <div>
         <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span
-          >{{ "student.email" | translate }}
+          <span class="text-red-500 mr-1">*</span>
+          {{ "student.email" | translate }}
         </label>
         <input
           pInputText
           type="email"
           [(ngModel)]="student.email"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
           class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
         />
       </div>
 
       <!-- Internship Department -->
       <div>
-        <label class="block font-semibold mb-1 text-blue-900">{{
-          "student.intern_department" | translate
-        }}</label>
-        <p-select
-          [options]="departments"
+        <label class="block font-semibold mb-1 text-blue-900">
+          <span class="text-red-500 mr-1">*</span>
+          {{ "student.intern_department" | translate }}
+        </label>
+        <input
+          pInputText
+          type="text"
           [(ngModel)]="student.intern_department"
-          optionLabel="name"
-          optionValue="name"
-          [placeholder]="'common.message.Pleaseselect' | translate"
-          class="w-full"
-        ></p-select>
+          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+          required
+          class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
+        />
       </div>
 
       <!-- Internship Duration -->
       <div>
-        <label class="block font-semibold mb-1 text-blue-900">{{
-          "student.intern_duration" | translate
-        }}</label>
-        <p-select
-          [options]="durations"
+        <label class="block font-semibold mb-1 text-blue-900">
+          <span class="text-red-500 mr-1">*</span>
+          {{ "student.intern_duration" | translate }}
+        </label>
+        <input
+          pInputText
+          type="text"
           [(ngModel)]="student.intern_duration"
-          optionLabel="name"
-          optionValue="name"
-          [placeholder]="'common.message.Pleaseselect' | translate"
-          class="w-full"
-        ></p-select>
-      </div>
-
-      <!-- Description -->
-      <div class="lg:col-span-2 md:col-span-2 sm:col-span-1">
-        <label class="block font-semibold mb-1 text-blue-900">{{
-          "common.table.description" | translate
-        }}</label>
-        <textarea
-          rows="4"
-          [(ngModel)]="student.description"
           placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-          class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md resize-none"
-        ></textarea>
+          required
+          class="w-full p-2 text-blue-900 bg-blue-100 border border-blue-300 rounded-md"
+        />
       </div>
 
       <p-divider class="col-span-2 border-blue-500 border-t-1"></p-divider>
 
       <!-- Upload Profile Image -->
       <div>
-        <label class="block font-semibold mb-1 text-blue-900">{{
-          "common.button.Upload" | translate
-        }}</label>
+        <label class="block font-semibold mb-1 text-blue-900">
+          <span class="text-red-500 mr-1">*</span>
+          {{ "common.button.Upload" | translate }}
+        </label>
         <label
           class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200"
         >
           <i class="pi pi-image text-blue-600 text-xl mr-2"></i>
-          <span class="text-blue-900">{{
-            "common.button.Upload" | translate
-          }}</span>
+          <span class="text-blue-900">
+            {{ "common.button.Upload" | translate }}
+          </span>
           <input
             type="file"
             accept="image/*"
             class="hidden"
             (change)="onProfileChange($event)"
+            required
           />
         </label>
         <div *ngIf="profilePreview" class="mt-2">
@@ -180,30 +183,42 @@
         </div>
       </div>
 
-      <!-- Upload Project File -->
-      <div>
-        <label class="block font-semibold mb-1 text-blue-900">{{
-          "common.button.Upload1" | translate
-        }}</label>
-        <label
-          class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200"
-        >
-          <i class="pi pi-cloud-upload text-blue-600 text-xl mr-2"></i>
-          <span class="text-blue-900">{{
-            "common.button.Upload1" | translate
-          }}</span>
-          <input
-            type="file"
-            accept=".pdf,.doc,.docx,.zip"
-            class="hidden"
-            (change)="onProjectChange($event)"
-          />
-        </label>
-        <div *ngIf="projectFileName" class="mt-2 text-sm text-blue-900">
-          <i class="pi pi-file mr-1"></i> {{ projectFileName }}
-        </div>
-      </div>
-    </div>
+<!-- Upload Project File -->
+<div>
+  <label class="block font-semibold mb-1 text-blue-900">
+    <span class="text-red-500 mr-1">*</span>
+    {{ "common.button.Upload1" | translate }}
+  </label>
+  <label
+    class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200"
+  >
+    <i class="pi pi-cloud-upload text-blue-600 text-xl mr-2"></i>
+    <span class="text-blue-900">
+      {{ "common.button.Upload1" | translate }}
+    </span>
+    <input
+      type="file"
+      accept=".pdf,.doc,.docx,.zip"
+      class="hidden"
+      (change)="onProjectChange($event)"
+      required
+    />
+  </label>
+
+  <!-- แสดงชื่อไฟล์และกดดาวน์โหลดได้ -->
+  <div *ngIf="projectFileName" class="mt-2 text-sm text-blue-900">
+    <i class="pi pi-file mr-1"></i>
+    <a
+      href="javascript:void(0)"
+      (click)="downloadProjectFile()"
+      class="underline cursor-pointer hover:text-blue-700"
+      title="คลิกเพื่อดาวน์โหลด/เปิดไฟล์"
+    >
+      {{ projectFileName }}
+    </a>
+  </div>
+</div>
+
 
     <!-- Buttons -->
     <div class="flex justify-center gap-2 mt-8">
@@ -211,6 +226,7 @@
         [label]="'common.button.save' | translate"
         icon="pi pi-save"
         (onClick)="onSave()"
+        [loading]="loading"
         styleClass="p-button-primary p-button-sm"
       ></p-button>
       <p-button
@@ -218,6 +234,7 @@
         icon="pi pi-times"
         (onClick)="onCancel()"
         variant="outlined"
+        [disabled]="loading"
         styleClass="p-button-primary p-button-sm"
       ></p-button>
     </div>
