@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PrimeNgSharedModule } from '../../../../shared/prime-ng-shared.module';
-import { StudentApiService, StudentAPI } from '../../../../services/test/student-api.service';
+import {
+  StudentApiService,
+  StudentAPI,
+} from '../../../../services/test/student-api.service';
 import { MessageService } from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
 
 @Component({
   selector: 'app-student-manage',
   templateUrl: './student-manage.component.html',
   styleUrls: ['./student-manage.component.scss'],
   imports: [PrimeNgSharedModule, ProgressSpinnerModule],
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class StudentmanageComponent implements OnInit {
   studentId?: number;
@@ -28,7 +30,7 @@ export class StudentmanageComponent implements OnInit {
     intern_department: '',
     intern_duration: '',
     attached_project: '',
-    description: ''
+    description: '',
   };
 
   profilePreview: string | ArrayBuffer | null = null;
@@ -49,7 +51,7 @@ export class StudentmanageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
         this.isEditMode = true;
@@ -75,7 +77,7 @@ export class StudentmanageComponent implements OnInit {
           intern_department: student.intern_department,
           intern_duration: student.intern_duration,
           attached_project: student.attached_project || '',
-          description: ''
+          description: '',
         };
 
         // แสดง preview ของรูปถ้ามี
@@ -96,10 +98,10 @@ export class StudentmanageComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'ข้อผิดพลาด',
-          detail: 'ไม่สามารถโหลดข้อมูลนักศึกษาได้'
+          detail: 'ไม่สามารถโหลดข้อมูลนักศึกษาได้',
         });
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -126,107 +128,112 @@ export class StudentmanageComponent implements OnInit {
     }
   }
 
-downloadProjectFile() {
-  if (this.existingProjectFileUrl) {
-    window.open(this.existingProjectFileUrl, '_blank');
-  } else if (this.projectFile) {
-    // ถ้าเพิ่งอัปโหลดไฟล์ใหม่ แต่ยังไม่ save สามารถเปิด preview หรือดาวน์โหลดไฟล์ชั่วคราวได้ (optional)
-    const url = URL.createObjectURL(this.projectFile);
-    window.open(url, '_blank');
+  downloadProjectFile() {
+    if (this.existingProjectFileUrl) {
+      window.open(this.existingProjectFileUrl, '_blank');
+    } else if (this.projectFile) {
+      // ถ้าเพิ่งอัปโหลดไฟล์ใหม่ แต่ยังไม่ save สามารถเปิด preview หรือดาวน์โหลดไฟล์ชั่วคราวได้ (optional)
+      const url = URL.createObjectURL(this.projectFile);
+      window.open(url, '_blank');
+    }
   }
-}
-
 
   onSave() {
-  // Validate required fields
-  if (!this.student.fullname || !this.student.university ||
-      !this.student.faculty || !this.student.major ||
-      !this.student.contact_number || !this.student.email) {
+    // Validate required fields
+    if (
+      !this.student.fullname ||
+      !this.student.university ||
+      !this.student.faculty ||
+      !this.student.major ||
+      !this.student.contact_number ||
+      !this.student.email
+    ) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'ข้อผิดพลาด',
+        detail: 'กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน',
+      });
+      return;
+    }
 
-    this.messageService.add({
-      severity: 'error',
-      summary: 'ข้อผิดพลาด',
-      detail: 'กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน'
-    });
-    return;
+    this.loading = true;
+
+    const formData = new FormData();
+
+    const studentData: StudentAPI = {
+      fullname: this.student.fullname,
+      university: this.student.university,
+      faculty: this.student.faculty,
+      major: this.student.major,
+      contact_number: this.student.contact_number,
+      email: this.student.email,
+      intern_department: this.student.intern_department,
+      intern_duration: this.student.intern_duration,
+      attached_project: this.student.attached_project || null,
+      grade: null,
+      created_by: 1, // TODO: ใช้ User ID จาก AuthService
+    };
+
+    formData.append('student', JSON.stringify(studentData));
+
+    if (this.profileFile) {
+      formData.append('profileFile', this.profileFile);
+    }
+
+    if (this.projectFile) {
+      formData.append('projectFile', this.projectFile);
+    }
+
+    if (this.isEditMode && this.studentId) {
+      // ✅ Update existing student
+      this.studentApiService
+        .updateWithFiles(this.studentId, formData)
+        .subscribe({
+          next: (response) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'สำเร็จ',
+              detail: 'แก้ไขข้อมูลนักศึกษาเรียบร้อยแล้ว',
+            });
+            this.loading = false;
+            setTimeout(() => this.router.navigate(['/student']), 1000);
+          },
+          error: (err) => {
+            console.error('Error updating student:', err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'ข้อผิดพลาด',
+              detail: 'ไม่สามารถแก้ไขข้อมูลได้',
+            });
+            this.loading = false;
+          },
+        });
+    } else {
+      // ✅ Create new student
+      this.studentApiService.createWithFiles(formData).subscribe({
+        next: (response) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'สำเร็จ',
+            detail: 'เพิ่มข้อมูลนักศึกษาเรียบร้อยแล้ว',
+          });
+          this.loading = false;
+          setTimeout(() => this.router.navigate(['/student']), 1000);
+        },
+        error: (err) => {
+          console.error('Error creating student:', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'ข้อผิดพลาด',
+            detail: 'ไม่สามารถเพิ่มข้อมูลได้',
+          });
+          this.loading = false;
+        },
+      });
+    }
   }
 
-  this.loading = true;
-
-  const formData = new FormData();
-
-  const studentData: StudentAPI = {
-    fullname: this.student.fullname,
-    university: this.student.university,
-    faculty: this.student.faculty,
-    major: this.student.major,
-    contact_number: this.student.contact_number,
-    email: this.student.email,
-    intern_department: this.student.intern_department,
-    intern_duration: this.student.intern_duration,
-    attached_project: this.student.attached_project || null,
-    grade: null,
-    created_by: 1 // TODO: ใช้ User ID จาก AuthService
-  };
-
-  formData.append('student', JSON.stringify(studentData));
-
-  if (this.profileFile) {
-    formData.append('profileFile', this.profileFile);
+  onCancel() {
+    this.router.navigate(['/student']);
   }
-
-  if (this.projectFile) {
-    formData.append('projectFile', this.projectFile);
-  }
-
-  if (this.isEditMode && this.studentId) {
-    // ✅ Update existing student
-    this.studentApiService.updateWithFiles(this.studentId, formData).subscribe({
-      next: (response) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'สำเร็จ',
-          detail: 'แก้ไขข้อมูลนักศึกษาเรียบร้อยแล้ว'
-        });
-        this.loading = false;
-        setTimeout(() => this.router.navigate(['/student']), 1000);
-      },
-      error: (err) => {
-        console.error('Error updating student:', err);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'ข้อผิดพลาด',
-          detail: 'ไม่สามารถแก้ไขข้อมูลได้'
-        });
-        this.loading = false;
-      }
-    });
-  } else {
-    // ✅ Create new student
-    this.studentApiService.createWithFiles(formData).subscribe({
-      next: (response) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'สำเร็จ',
-          detail: 'เพิ่มข้อมูลนักศึกษาเรียบร้อยแล้ว'
-        });
-        this.loading = false;
-        setTimeout(() => this.router.navigate(['/student']), 1000);
-      },
-      error: (err) => {
-        console.error('Error creating student:', err);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'ข้อผิดพลาด',
-          detail: 'ไม่สามารถเพิ่มข้อมูลได้'
-        });
-        this.loading = false;
-      }
-    });
-  }
-}
-
-onCancel() {
-  this.router.navigate(['/student']);
-}
 }

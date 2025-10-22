@@ -11,9 +11,7 @@
         <div class="text-2xl font-semibold text-gray-800">
           Student Internship Dashboard
         </div>
-        <p class="mt-1 text-gray-600">
-          ภาพรวมข้อมูลนักศึกษาฝึกงาน
-        </p>
+        <p class="mt-1 text-gray-600">ภาพรวมข้อมูลนักศึกษาฝึกงาน</p>
       </div>
       <button
         (click)="refresh()"
@@ -127,7 +125,9 @@
       </div>
 
       <!-- Department Distribution -->
-      <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card">
+      <div
+        class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card"
+      >
         <div class="mb-4 text-xl font-semibold">การกระจายตามฝ่าย</div>
         <p-chart
           type="pie"
@@ -141,7 +141,9 @@
     <!-- Grade Distribution and Duration Charts -->
     <div class="grid grid-cols-1 gap-6 mb-6 xl:grid-cols-2">
       <!-- Grade Distribution Chart -->
-      <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card">
+      <div
+        class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card"
+      >
         <div class="mb-4 text-xl font-semibold">การกระจายของเกรด</div>
         <p-chart
           type="bar"
@@ -152,7 +154,9 @@
       </div>
 
       <!-- Duration Chart -->
-      <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card">
+      <div
+        class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card"
+      >
         <div class="mb-4 text-xl font-semibold">ระยะเวลาฝึกงาน</div>
         <p-chart
           type="doughnut"
@@ -166,7 +170,9 @@
     <!-- Top 10 Students Table -->
     <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card">
       <div class="mb-4 flex justify-between items-center">
-        <div class="text-xl font-semibold">🏆 Top 10 นักศึกษาที่ได้เกรดดีที่สุด</div>
+        <div class="text-xl font-semibold">
+          🏆 Top 10 นักศึกษาที่ได้เกรดดีที่สุด
+        </div>
         <span class="text-sm text-gray-600">เรียงตามเกรด A → F</span>
       </div>
 
@@ -188,8 +194,20 @@
           <tr>
             <td class="text-center">
               <span
-                [class]="student.rank <= 3 ? 'inline-flex items-center justify-center w-10 h-10 font-bold text-white rounded-full' : 'inline-flex items-center justify-center w-10 h-10 font-semibold text-purple-800 bg-purple-100 rounded-full'"
-                [style.background]="student.rank === 1 ? '#FFD700' : student.rank === 2 ? '#C0C0C0' : student.rank === 3 ? '#CD7F32' : ''"
+                [class]="
+                  student.rank <= 3
+                    ? 'inline-flex items-center justify-center w-10 h-10 font-bold text-white rounded-full'
+                    : 'inline-flex items-center justify-center w-10 h-10 font-semibold text-purple-800 bg-purple-100 rounded-full'
+                "
+                [style.background]="
+                  student.rank === 1
+                    ? '#FFD700'
+                    : student.rank === 2
+                    ? '#C0C0C0'
+                    : student.rank === 3
+                    ? '#CD7F32'
+                    : ''
+                "
               >
                 <span *ngIf="student.rank === 1">🥇</span>
                 <span *ngIf="student.rank === 2">🥈</span>
@@ -204,11 +222,16 @@
               <span class="text-gray-700">{{ student.university }}</span>
             </td>
             <td>
-              <span class="text-sm text-gray-600">{{ student.department }}</span>
+              <span class="text-sm text-gray-600">{{
+                student.department
+              }}</span>
             </td>
             <td class="text-center">
               <span
-                [class]="'inline-flex items-center px-3 py-1 font-bold rounded-full ' + getGradeBadgeClass(student.grade)"
+                [class]="
+                  'inline-flex items-center px-3 py-1 font-bold rounded-full ' +
+                  getGradeBadgeClass(student.grade)
+                "
               >
                 {{ student.grade }}
               </span>

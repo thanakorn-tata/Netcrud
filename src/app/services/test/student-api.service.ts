@@ -20,7 +20,7 @@ export interface StudentAPI {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StudentApiService {
   private apiUrl = 'http://localhost:8080/api/student';
@@ -55,10 +55,9 @@ export class StudentApiService {
 
   // สำหรับการอัปเดตเฉพาะเกรด
   updateGrade(id: number, grade: string): Observable<StudentAPI> {
-    return this.http.patch<StudentAPI>(
-      `${this.apiUrl}/${id}/grade`,
-      { grade: grade }
-    );
+    return this.http.patch<StudentAPI>(`${this.apiUrl}/${id}/grade`, {
+      grade: grade,
+    });
   }
 
   delete(id: number): Observable<void> {
