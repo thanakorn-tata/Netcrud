@@ -2,49 +2,68 @@
   "common": {
     "table": {
       "no": "No.",
-      "description": "description",
+      "description": "Description",
       "manage": "Manage",
-      "EmptyMessege": "No data found"
+      "emptyMessage": "No student data found"
     },
     "status": "Status",
     "message": {
       "Pleaseselect": "Please select",
-      "Pleaseenter": "Please enter"
+      "Pleaseenter": "Please enter",
+      "placeholder": "Please fill in all required fields"
     },
     "button": {
       "save": "Save",
       "edit": "Edit",
-      "search": "search",
+      "delete": "Delete",
+      "search": "Search",
       "cancel": "Cancel",
       "add": "Add",
-      "Upload": "uploadProfile",
-      "Upload1": "uploadProject"
+      "Upload": "Upload profile image",
+      "Upload1": "Upload project/work",
+      "clear": "Clear",
+      "view": "View"
+    },
+    "dialog": {
+      "deleteHeader": "Delete Confirmation",
+      "deleteMessage": "Do you want to delete student <strong>{{name}}</strong>?"
     }
   },
+  "role": {
+  "Permission": "Permission",
+  "types": {
+    "admin": "Administrator",
+    "user": "General User"
+  }
+},
+  "student": {
+    "search": {
+      "header": "Search",
+      "headermanage": "Add Student Information",
+      "editheader": "Edit Student Information"
+    },
+    "list": {
+      "header": "Intern Students List",
+      "userinfo": "Your data"
+    },
+    "fullname": "Full Name",
+    "university": "University",
+    "faculty": "Faculty",
+    "major": "Major",
+    "contact_number": "Contact Number",
+    "email": "Email",
+    "intern_department": "Intern Department",
+    "intern_duration": "Duration",
+    "grade": {
+      "placeholder": "Select Grade"
+    }
+  },
+
   "sidebar": {
     "menu1": "Dashboard",
     "menu2": "Student",
     "menu3": "ฺBudget",
     "menu4": "Restaurant"
-  },
-  "student": {
-    "fullname": "Full Name",
-      "university": "University",
-      "faculty": "Faculty",
-      "major": "Field of Study / Major",
-      "contact_number": "Contact Number",
-      "email": "Email Address",
-      "intern_department": "Internship Department",
-      "intern_duration": "Internship Duration",
-      "attached_project": "Attached Project or Work Sample (if any)",
-      "description": "Additional Description",
-      "student_photo": "Student Photo",
-      "uploadProfile": "Upload Profile Picture",
-      "uploadProject": "Upload Project or Work Sample (if any)",
-      "manage":{
-        "header": "Add Student Information",
-        "title": "Please fill in the student information completely"
-      }
   },
   "dashboard": {
     "tab": {

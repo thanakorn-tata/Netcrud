@@ -1,24 +1,34 @@
 /* ========================================================== */
-/* 🎓 STUDENT DATA TABLE, FORM & DROPDOWN — BLUE THEME       */
+/* 🎓 STUDENT DATA TABLE, FORM & DROPDOWN — PURPLE-BLUE THEME*/
 /* ========================================================== */
 
 /* ============================= */
 /* 🔹 DataTable Header & Rows */
 :host ::ng-deep .p-datatable-thead > tr > th {
-  background-color: #3b82f6 !important; /* ฟ้าเข้มเหมือน Accordion header */
+  background-color: #8b5cf6 !important; /* ม่วงฟ้าเข้ม */
   color: #ffffff !important;            /* ตัวอักษรขาว */
   font-weight: 600;
   text-align: center;
+  padding: 1rem;
+  border-bottom: 2px solid #c4b5fd !important;
 }
 
 :host ::ng-deep .p-datatable-tbody > tr:nth-child(even),
 :host ::ng-deep .p-datatable-tbody > tr:nth-child(odd) {
-  background-color: #dbeafe !important; /* ฟ้าอ่อนเหมือนช่องฟอร์ม */
+  background-color: #ede9fe !important; /* ม่วงฟ้าอ่อน */
 }
 
 :host ::ng-deep .p-datatable-tbody > tr > td {
-  color: #1e3a8a !important; /* ฟ้าน้ำเงินเข้ม */
-  background-color: #dbeafe !important; /* ฟ้าอ่อนเหมือนช่องฟอร์ม */
+  color: #5d3b80 !important; /* ตัวอักษรม่วงเข้ม */
+  background-color: #ede9fe !important;
+  padding: 1rem;
+  border-bottom: 1px solid #d8b4fe !important;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:hover {
+  background-color: #8b5cf6 !important; /* hover ม่วงฟ้าเข้ม */
+  color: #ffffff !important;
+  transition: all 0.2s;
 }
 
 /* ============================= */
@@ -30,9 +40,9 @@
 :host ::ng-deep input[type="password"],
 :host ::ng-deep textarea,
 :host ::ng-deep .p-inputtext {
-  background-color: #dbeafe !important; /* ฟ้าอ่อน */
-  color: #1e3a8a !important;           /* ฟ้าน้ำเงินเข้ม */
-  border: 1px solid #60a5fa !important;
+  background-color: #ede9fe !important; /* ม่วงฟ้าอ่อน */
+  color: #5d3b80 !important;           /* ตัวอักษรม่วงเข้ม */
+  border: 1px solid #c4b5fd !important;
   border-radius: 0.5rem !important;
   padding: 0.5rem !important;
   font-weight: 500;
@@ -43,76 +53,76 @@
 :host ::ng-deep textarea:focus,
 :host ::ng-deep .p-inputtext:focus {
   outline: none !important;
-  border-color: #3b82f6 !important; /* ฟ้าเข้ม */
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
-  background-color: #dbeafe !important; /* ฟ้าอ่อนคงที่ */
+  border-color: #8b5cf6 !important; /* ม่วงฟ้าเข้ม */
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3) !important;
+  background-color: #ede9fe !important;
 }
 
 /* ============================= */
 /* 🔹 PrimeNG p-select (Dropdown) */
 :host ::ng-deep .p-select {
-  background-color: #dbeafe !important; /* ฟ้าอ่อนเหมือนช่องฟอร์ม */
-  color: #1e3a8a !important;
-  border: 1px solid #60a5fa !important;
+  background-color: #ede9fe !important; /* ม่วงฟ้าอ่อน */
+  color: #5d3b80 !important;
+  border: 1px solid #c4b5fd !important;
   border-radius: 0.5rem !important;
   width: 100% !important;
 }
 
 :host ::ng-deep .p-select-label {
-  color: #1e3a8a !important;
-  background-color: #dbeafe !important;
+  color: #5d3b80 !important;
+  background-color: #ede9fe !important;
 }
 
 :host ::ng-deep .p-select-list-container {
-  background-color: #dbeafe !important;
-  color: #1e3a8a !important;
+  background-color: #ede9fe !important;
+  color: #5d3b80 !important;
   border-radius: 0.5rem !important;
-  border: 1px solid #93c5fd !important;
+  border: 1px solid #d8b4fe !important;
   z-index: 9999 !important;
 }
 
 :host ::ng-deep .p-select-option {
-  background-color: #dbeafe !important;
-  color: #1e3a8a !important;
+  background-color: #ede9fe !important;
+  color: #5d3b80 !important;
   transition: background-color 0.2s;
 }
 
 :host ::ng-deep .p-select-option.p-focus,
 :host ::ng-deep .p-select-option:hover {
-  background-color: #60a5fa !important; /* ฟ้าเข้ม hover */
+  background-color: #8b5cf6 !important; /* hover ม่วงฟ้าเข้ม */
   color: #ffffff !important;
 }
 
 /* ============================= */
 /* 🔹 Paginator Styling */
 :host ::ng-deep .p-paginator {
-  background-color: #dbeafe !important; /* ฟ้าอ่อนเหมือนช่อง */
-  color: #1e3a8a !important;
-  border-top: 1px solid #60a5fa !important;
+  background-color: #ede9fe !important; /* ม่วงฟ้าอ่อน */
+  color: #5d3b80 !important;
+  border-top: 1px solid #c4b5fd !important;
 }
 
 :host ::ng-deep .p-paginator .p-paginator-page,
 :host ::ng-deep .p-paginator .p-paginator-prev,
 :host ::ng-deep .p-paginator .p-paginator-next {
-  color: #1e3a8a !important;
+  color: #5d3b80 !important;
 }
 
 :host ::ng-deep .p-paginator .p-paginator-page.p-highlight {
-  background-color: #3b82f6 !important;
+  background-color: #8b5cf6 !important;
   color: #ffffff !important;
 }
 
 :host ::ng-deep .p-paginator .p-paginator-page:hover,
 :host ::ng-deep .p-paginator .p-paginator-prev:hover,
 :host ::ng-deep .p-paginator .p-paginator-next:hover {
-  background-color: #60a5fa !important;
-  color: #ffffff !important;
+  background-color: #c4b5fd !important;
+  color: #5d3b80 !important;
 }
 
 /* ============================= */
 /* 🔹 Table Scrollbar */
 :host ::ng-deep .p-datatable-wrapper {
-  scrollbar-color: #60a5fa #dbeafe !important;
+  scrollbar-color: #c4b5fd #ede9fe !important;
   scrollbar-width: thin;
 }
 

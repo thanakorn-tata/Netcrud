@@ -1,3 +1,4 @@
+import { PrimeNgSharedModule } from './shared/prime-ng-shared.module';
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -6,7 +7,8 @@ import { routes } from './app.routes';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import Aura from '@primeng/themes/aura';
+
+import BlueAura from './shared/theme/blue-aura.theme'; // 👈 ตรงนี้ต้องเป็น path ของไฟล์ที่คุณสร้างเอง
 
 import { translationProviders } from './translation.config';
 
@@ -19,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Aura
+        preset: BlueAura
       }
     }),
     ...translationProviders

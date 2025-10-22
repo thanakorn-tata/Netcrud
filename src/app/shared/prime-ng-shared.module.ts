@@ -59,7 +59,7 @@ import { TagModule } from 'primeng/tag';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { TranslateModule } from '@ngx-translate/core';
 import { DividerModule } from 'primeng/divider';
-
+import { MessagesModule } from 'primeng/messages';
 @NgModule({
     exports: [
         CommonModule,
@@ -127,6 +127,7 @@ import { DividerModule } from 'primeng/divider';
         ProgressBarModule,
         SkeletonModule,
         ToastModule,
+        MessagesModule,
         /* 🗃️ Miscellaneous */
         TagModule,
         ScrollPanelModule,

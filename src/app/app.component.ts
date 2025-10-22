@@ -9,5 +9,5 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'NetCrud';
+  title = 'ARInternship';
 }

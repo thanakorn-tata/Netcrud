@@ -1,194 +1,229 @@
 <div class="p-6">
-  <!-- Header -->
-  <div class="mb-6">
-    <div class="text-2xl font-semibold text-gray-800">
-      Student Internship Dashboard
-    </div>
-    <p class="mt-1 text-gray-600">
-      Overview of intern students by university and quarter
-    </p>
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="flex justify-center items-center h-64">
+    <p-progressSpinner></p-progressSpinner>
   </div>
 
-  <!-- Summary Cards -->
-  <div class="grid grid-cols-1 gap-4 mb-6 md:grid-cols-2 xl:grid-cols-4">
-    <!-- Total Interns Card -->
-    <div
-      class="p-6 transition-shadow bg-white border-l-4 border-purple-600 rounded-lg shadow-sm cursor-pointer hover:shadow-md"
-    >
-      <div class="flex items-center justify-between gap-4">
-        <div class="flex flex-col w-full gap-1">
-          <div class="flex items-center justify-between w-full gap-2">
-            <div class="p-3 bg-purple-100 rounded-lg">
-              <i class="pi pi-users text-purple-600 !text-3xl"></i>
+  <div *ngIf="!loading">
+    <!-- Header -->
+    <div class="mb-6 flex justify-between items-center">
+      <div>
+        <div class="text-2xl font-semibold text-gray-800">
+          Student Internship Dashboard
+        </div>
+        <p class="mt-1 text-gray-600">
+          ภาพรวมข้อมูลนักศึกษาฝึกงาน
+        </p>
+      </div>
+      <button
+        (click)="refresh()"
+        class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+      >
+        <i class="pi pi-refresh mr-2"></i>
+        รีเฟรช
+      </button>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 gap-4 mb-6 md:grid-cols-2 xl:grid-cols-4">
+      <!-- Total Interns Card -->
+      <div
+        class="p-6 transition-shadow bg-white border-l-4 border-purple-600 rounded-lg shadow-sm hover:shadow-md"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col w-full gap-1">
+            <div class="flex items-center justify-between w-full gap-2">
+              <div class="p-3 bg-purple-100 rounded-lg">
+                <i class="pi pi-users text-purple-600 !text-3xl"></i>
+              </div>
+              <span class="text-3xl font-bold text-gray-800">{{
+                totalInterns
+              }}</span>
             </div>
-            <span class="text-3xl font-bold text-gray-800">{{
-              totalInterns
-            }}</span>
+            <span class="text-sm font-medium text-right text-gray-600"
+              >นักศึกษาทั้งหมด</span
+            >
           </div>
-          <span class="text-sm font-medium text-right text-gray-600"
-            >Total Interns</span
-          >
+        </div>
+      </div>
+
+      <!-- Universities Card -->
+      <div
+        class="p-6 transition-shadow bg-white border-l-4 border-indigo-600 rounded-lg shadow-sm hover:shadow-md"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col w-full gap-1">
+            <div class="flex items-center justify-between w-full gap-2">
+              <div class="p-3 bg-indigo-100 rounded-lg">
+                <i class="pi pi-building text-indigo-600 !text-3xl"></i>
+              </div>
+              <span class="text-3xl font-bold text-gray-800">{{
+                totalUniversities
+              }}</span>
+            </div>
+            <span class="text-sm font-medium text-right text-gray-600"
+              >มหาวิทยาลัย</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Departments Card -->
+      <div
+        class="p-6 transition-shadow bg-white border-l-4 rounded-lg shadow-sm hover:shadow-md border-violet-600"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col w-full gap-1">
+            <div class="flex items-center justify-between w-full gap-2">
+              <div class="p-3 rounded-lg bg-violet-100">
+                <i class="pi pi-briefcase text-violet-600 !text-3xl"></i>
+              </div>
+              <span class="text-3xl font-bold text-gray-800">{{
+                totalDepartments
+              }}</span>
+            </div>
+            <span class="text-sm font-medium text-right text-gray-600"
+              >ฝ่ายที่เปิดรับ</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Average Grade Card -->
+      <div
+        class="p-6 transition-shadow bg-white border-l-4 border-pink-600 rounded-lg shadow-sm hover:shadow-md"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col w-full gap-1">
+            <div class="flex items-center justify-between w-full gap-2">
+              <div class="p-3 bg-pink-100 rounded-lg">
+                <i class="pi pi-chart-line text-pink-600 !text-3xl"></i>
+              </div>
+              <span class="text-3xl font-bold text-gray-800">{{
+                averageGrade
+              }}</span>
+            </div>
+            <span class="text-sm font-medium text-right text-gray-600"
+              >เกรดเฉลี่ย</span
+            >
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Universities Card -->
-    <div
-      class="p-6 transition-shadow bg-white border-l-4 border-indigo-600 rounded-lg shadow-sm cursor-pointer hover:shadow-md"
-    >
-      <div class="flex items-center justify-between gap-4">
-        <div class="flex flex-col w-full gap-1">
-          <div class="flex items-center justify-between w-full gap-2">
-            <div class="p-3 bg-indigo-100 rounded-lg">
-              <i class="pi pi-building text-indigo-600 !text-3xl"></i>
-            </div>
-            <span class="text-3xl font-bold text-gray-800">{{
-              totalUniversities
-            }}</span>
-          </div>
-          <span class="text-sm font-medium text-right text-gray-600"
-            >Universities</span
-          >
-        </div>
+    <!-- Main Charts Row -->
+    <div class="grid grid-cols-1 gap-6 mb-6 xl:grid-cols-3">
+      <!-- Top 10 Universities Chart -->
+      <div
+        class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg xl:col-span-2 card"
+      >
+        <div class="mb-4 text-xl font-semibold">Top 10 มหาวิทยาลัย</div>
+        <p-chart
+          type="bar"
+          [data]="universityChartData"
+          [options]="universityChartOptions"
+          height="400px"
+        ></p-chart>
+      </div>
+
+      <!-- Department Distribution -->
+      <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card">
+        <div class="mb-4 text-xl font-semibold">การกระจายตามฝ่าย</div>
+        <p-chart
+          type="pie"
+          [data]="departmentChartData"
+          [options]="departmentChartOptions"
+          height="400px"
+        ></p-chart>
       </div>
     </div>
 
-    <!-- Active Interns Card -->
-    <div
-      class="p-6 transition-shadow bg-white border-l-4 rounded-lg shadow-sm cursor-pointer hover:shadow-md border-violet-600"
-    >
-      <div class="flex items-center justify-between gap-4">
-        <div class="flex flex-col w-full gap-1">
-          <div class="flex items-center justify-between w-full gap-2">
-            <div class="p-3 rounded-lg bg-violet-100">
-              <i class="pi pi-check-circle text-violet-600 !text-3xl"></i>
-            </div>
-            <span class="text-3xl font-bold text-gray-800">{{
-              activeInterns
-            }}</span>
-          </div>
-          <span class="text-sm font-medium text-right text-gray-600"
-            >Active (Q4)</span
-          >
-        </div>
+    <!-- Grade Distribution and Duration Charts -->
+    <div class="grid grid-cols-1 gap-6 mb-6 xl:grid-cols-2">
+      <!-- Grade Distribution Chart -->
+      <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card">
+        <div class="mb-4 text-xl font-semibold">การกระจายของเกรด</div>
+        <p-chart
+          type="bar"
+          [data]="gradeDistributionData"
+          [options]="gradeDistributionOptions"
+          height="300px"
+        ></p-chart>
+      </div>
+
+      <!-- Duration Chart -->
+      <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card">
+        <div class="mb-4 text-xl font-semibold">ระยะเวลาฝึกงาน</div>
+        <p-chart
+          type="doughnut"
+          [data]="durationChartData"
+          [options]="durationChartOptions"
+          height="300px"
+        ></p-chart>
       </div>
     </div>
 
-    <!-- Average Card -->
-    <div
-      class="p-6 transition-shadow bg-white border-l-4 border-pink-600 rounded-lg shadow-sm cursor-pointer hover:shadow-md"
-    >
-      <div class="flex items-center justify-between gap-4">
-        <div class="flex flex-col w-full gap-1">
-          <div class="flex items-center justify-between w-full gap-2">
-            <div class="p-3 bg-pink-100 rounded-lg">
-              <i class="pi pi-chart-line text-pink-600 !text-3xl"></i>
-            </div>
-            <span class="text-3xl font-bold text-gray-800">{{
-              averagePerQuarter
-            }}</span>
-          </div>
-          <span class="text-sm font-medium text-right text-gray-600"
-            >Avg per Quarter</span
-          >
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Charts Row -->
-  <div class="grid grid-cols-1 gap-6 mb-6 xl:grid-cols-3">
-    <!-- Top 10 Universities Chart -->
-    <div
-      class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg xl:col-span-2 card"
-    >
-      <div class="mb-4 text-xl font-semibold">Top 10 Universities</div>
-      <p-chart
-        type="bar"
-        [data]="universityChartData"
-        [options]="universityChartOptions"
-        height="400px"
-      ></p-chart>
-    </div>
-
-    <!-- Department Distribution -->
+    <!-- Top 10 Students Table -->
     <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card">
-      <div class="mb-4 text-xl font-semibold">Department Distribution</div>
-      <p-chart
-        type="pie"
-        [data]="departmentChartData"
-        [options]="departmentChartOptions"
-        height="400px"
-      ></p-chart>
-    </div>
-  </div>
-
-  <!-- Quarterly Trends -->
-  <div
-    class="p-6 mb-6 bg-white border border-gray-200 rounded-lg shadow-lg card"
-  >
-    <div class="flex items-center justify-between mb-4">
-      <div class="text-xl font-semibold">Quarterly Trends</div>
-      <div class="card">
-        <p-select
-          [options]="years"
-          [(ngModel)]="selectedYear"
-          optionLabel="label"
-          optionValue="value"
-          class="w-32"
-        />
+      <div class="mb-4 flex justify-between items-center">
+        <div class="text-xl font-semibold">🏆 Top 10 นักศึกษาที่ได้เกรดดีที่สุด</div>
+        <span class="text-sm text-gray-600">เรียงตามเกรด A → F</span>
       </div>
-    </div>
-    <p-chart
-      type="line"
-      [data]="quarterlyChartData"
-      [options]="quarterlyChartOptions"
-      height="350px"
-    ></p-chart>
-  </div>
 
-  <!-- Top 10 Universities Table -->
-  <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg card">
-    <div class="mb-4 text-xl font-semibold">Top 10 Universities Details</div>
-    <p-table [value]="universities" [tableStyle]="{ 'min-width': '50rem' }">
-      <ng-template pTemplate="header">
-        <tr>
-          <th class="text-center" style="width: 10%">Rank</th>
-          <th style="width: 50%">University Name</th>
-          <th class="text-center" style="width: 20%">Students</th>
-          <th class="text-center" style="width: 20%">Trend</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-university>
-        <tr>
-          <td class="text-center">
-            <span
-              class="inline-flex items-center justify-center w-8 h-8 font-semibold text-purple-800 bg-purple-100 rounded-full"
-            >
-              {{ university.rank }}
-            </span>
-          </td>
-          <td>
-            <span class="font-medium">{{ university.name }}</span>
-          </td>
-          <td class="text-center">
-            <span
-              class="inline-flex items-center px-3 py-1 font-semibold text-purple-800 bg-purple-100 rounded-full"
-            >
-              {{ university.students }}
-            </span>
-          </td>
-          <td class="text-center">
-            <span
-              [class]="getTrendClass(university.trend)"
-              class="text-2xl font-bold"
-            >
-              {{ university.trend }}
-            </span>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+      <p-table
+        [value]="topStudents"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        styleClass="p-datatable-striped"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="text-center" style="width: 8%">อันดับ</th>
+            <th style="width: 25%">ชื่อ-นามสกุล</th>
+            <th style="width: 30%">มหาวิทยาลัย</th>
+            <th style="width: 22%">ฝ่ายฝึกงาน</th>
+            <th class="text-center" style="width: 15%">เกรด</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-student>
+          <tr>
+            <td class="text-center">
+              <span
+                [class]="student.rank <= 3 ? 'inline-flex items-center justify-center w-10 h-10 font-bold text-white rounded-full' : 'inline-flex items-center justify-center w-10 h-10 font-semibold text-purple-800 bg-purple-100 rounded-full'"
+                [style.background]="student.rank === 1 ? '#FFD700' : student.rank === 2 ? '#C0C0C0' : student.rank === 3 ? '#CD7F32' : ''"
+              >
+                <span *ngIf="student.rank === 1">🥇</span>
+                <span *ngIf="student.rank === 2">🥈</span>
+                <span *ngIf="student.rank === 3">🥉</span>
+                <span *ngIf="student.rank > 3">{{ student.rank }}</span>
+              </span>
+            </td>
+            <td>
+              <span class="font-medium">{{ student.fullname }}</span>
+            </td>
+            <td>
+              <span class="text-gray-700">{{ student.university }}</span>
+            </td>
+            <td>
+              <span class="text-sm text-gray-600">{{ student.department }}</span>
+            </td>
+            <td class="text-center">
+              <span
+                [class]="'inline-flex items-center px-3 py-1 font-bold rounded-full ' + getGradeBadgeClass(student.grade)"
+              >
+                {{ student.grade }}
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5" class="text-center py-6 text-gray-500">
+              ยังไม่มีข้อมูลนักศึกษาที่ได้รับเกรด
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
 </div>
-*/
+กกกก

@@ -12,19 +12,19 @@
 
 body {
   margin: 0;
-  background-color: #edf2f7; /* ฟ้าอ่อนเทา */
-  color: #003f5c; /* ฟ้าเข้ม */
+  background-color: #ede9fe; /* ม่วงฟ้าอ่อน */
+  color: #5d3b80; /* ม่วงเข้ม */
 }
 
 /* Accordion */
 .p-accordion-header {
-  background-color: #40c4ff !important; /* ฟ้าน้ำทะเล */
+  background-color: #8b5cf6 !important; /* ม่วงฟ้าเข้ม */
   color: #fff !important;
 }
 
 .p-accordion-content {
-  background-color: #b3e5fc !important; /* ฟ้าอ่อน */
-  color: #003f5c !important;
+  background-color: #ede9fe !important; /* ม่วงฟ้าอ่อน */
+  color: #5d3b80 !important;
 }
 
 /* Tabs */
@@ -34,62 +34,62 @@ body {
 }
 
 .p-tablist-active-bar {
-  background: #38bdf8 !important; /* ฟ้าน้ำทะเล */
+  background: #8b5cf6 !important; /* ม่วงฟ้าเข้ม */
 }
 
 .p-tab {
   border-color: transparent !important;
-  color: #003f5c !important;
+  color: #5d3b80 !important;
 }
 
 .p-tab-active {
-  color: #003f5c !important;
-  border-color: #38bdf8 !important; /* ฟ้าน้ำทะเล */
+  color: #5d3b80 !important;
+  border-color: #8b5cf6 !important;
 }
 
 /* Select / Dropdown */
 .p-select .p-dropdown {
-  border: 1px solid #40c4ff !important;
+  border: 1px solid #c4b5fd !important;
   border-radius: 0.375rem !important;
   background-color: #ffffff !important;
-  color: #003f5c !important;
+  color: #5d3b80 !important;
 }
 
 .p-select.p-focus .p-dropdown {
-  border-color: #ffffff !important;
+  border-color: #8b5cf6 !important;
 }
 
 .p-select-label {
-  color: #003f5c !important;
+  color: #5d3b80 !important;
 }
 
 .p-select-list-container {
-  background-color: #e1f5fe !important;
-  color: #003f5c !important;
+  background-color: #ede9fe !important;
+  color: #5d3b80 !important;
 }
 
 .p-select-option {
-  background-color: #e1f5fe !important;
-  color: #003f5c !important;
+  background-color: #ede9fe !important;
+  color: #5d3b80 !important;
 }
 
 .p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus {
-  background-color: #40c4ff !important;
+  background-color: #8b5cf6 !important;
   color: #fff !important;
 }
 
 /* Datepicker */
 .p-datepicker {
-  border: 1px solid #40c4ff !important;
+  border: 1px solid #c4b5fd !important;
   border-radius: 0.375rem !important;
-  background-color: #b3e5fc !important;
-  color: #003f5c !important;
+  background-color: #ede9fe !important;
+  color: #5d3b80 !important;
 }
 
 /* Card / รูปภาพ */
 .card {
-  background-color: #e1f5fe !important; /* ฟ้าอ่อน */
-  border: 1px solid #40c4ff !important;
+  background-color: #ede9fe !important; /* ม่วงฟ้าอ่อน */
+  border: 1px solid #c4b5fd !important;
   border-radius: 0.5rem !important;
 }
 
@@ -101,19 +101,19 @@ body {
 
 /* ปุ่ม */
 .p-button {
-  background-color: #3b82f6 !important;
-  border-color: #40c4ff !important;
+  background-color: #8b5cf6 !important;
+  border-color: #c4b5fd !important;
   color: #fff !important;
 }
 
 .p-button:hover {
-  background-color: #1a6b8d !important;
-  border-color: #38bdf8 !important;
+  background-color: #5b21b6 !important;
+  border-color: #8b5cf6 !important;
   color: #fff !important;
 }
 
 /* เส้น hr */
 hr {
-  color: #003f5c;
+  color: #5d3b80;
   opacity: 0.2;
 }
