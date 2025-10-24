@@ -149,37 +149,31 @@ export class StudentComponent implements OnInit {
     return student.created_by === this.currentUser?.id;
   }
 
-  // 🔥 แก้ไข: ใช้ updateGrade() แทน update()
-  onGradeChange(student: Student): void {
-    if (!student.id || !student.grade) return;
+ onGradeChange(student: Student): void {
+  if (!student.id || !student.grade) return;
 
-    this.loading = true;
+  this.loading = true;
 
-    // ใช้ API endpoint updateGrade แทน
-    this.studentApiService.updateGrade(student.id, student.grade).subscribe({
-      next: (updatedStudent) => {
-        console.log(`Updated grade for ${student.fullname}: ${student.grade}`);
-        this.loading = false;
+  // เรียกใช้ update() แทน updateGrade()
+  this.studentApiService.update(student.id, { grade: student.grade }).subscribe({
+    next: (updatedStudent) => {
+      this.loading = false;
 
-        // Update local data
-        const index = this.students.findIndex(s => s.id === student.id);
-        if (index !== -1) {
-          this.students[index].grade = updatedStudent.grade;
-        }
+      // Update local data immutably
+      this.students = this.students.map(s =>
+        s.id === student.id ? { ...s, grade: updatedStudent.grade } : s
+      );
 
-        // แสดงข้อความสำเร็จ
-        alert('อัปเดตเกรดสำเร็จ');
-      },
-      error: (err) => {
-        console.error('Error updating grade:', err);
-        this.loading = false;
-        alert('เกิดข้อผิดพลาดในการอัปเดทเกรด');
+      console.log(`✅ Updated grade for ${student.fullname}: ${updatedStudent.grade}`);
+    },
+    error: (err) => {
+      this.loading = false;
+      console.error('❌ Error updating grade:', err);
+    }
+  });
+}
 
-        // โหลดข้อมูลใหม่เพื่อให้แน่ใจว่าข้อมูลถูกต้อง
-        this.loadStudents();
-      }
-    });
-  }
+
 
   getGradeColor(grade: string | undefined | null): string {
     if (!grade) return 'text-gray-400';

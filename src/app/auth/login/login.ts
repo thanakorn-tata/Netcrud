@@ -36,13 +36,6 @@ export class LoginComponent implements OnInit {
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
-
-    // Check if redirected from registration
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras?.state?.['registered']) {
-      this.errorMessage = '';
-      // You could show a success message here if needed
-    }
   }
 
   onSubmit(): void {
@@ -56,20 +49,37 @@ export class LoginComponent implements OnInit {
 
     const { username, password } = this.loginForm.value;
 
-    // Simulate API delay
-    setTimeout(() => {
-      const success = this.authService.login(username, password);
+    // เรียก API Backend
+    this.authService.login(username, password).subscribe({
+      next: (response) => {
+        console.log('Login response:', response);
 
-      if (success) {
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.errorMessage = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
+        if (response.success) {
+          // Login สำเร็จ
+          console.log('✅ Login successful, redirecting to dashboard...');
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.errorMessage = 'เข้าสู่ระบบไม่สำเร็จ';
+          this.loading = false;
+        }
+      },
+      error: (error) => {
+        console.error('Login error:', error);
+
+        // แสดง error message จาก Backend
+        if (error.error?.message) {
+          this.errorMessage = error.error.message;
+        } else if (error.status === 0) {
+          this.errorMessage = 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้ กรุณาตรวจสอบว่า Backend กำลังทำงานอยู่';
+        } else {
+          this.errorMessage = 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ';
+        }
+
         this.loading = false;
       }
-    }, 800);
+    });
   }
 
-  // Helper function to mark all fields as touched
   private markFormGroupTouched(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(key => {
       const control = formGroup.get(key);

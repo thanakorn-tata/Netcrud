@@ -11,7 +11,7 @@ import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-register',
   standalone: true,
-imports: [CommonModule, ReactiveFormsModule, PrimeNgSharedModule, MessagesModule, MessageModule],
+  imports: [CommonModule, ReactiveFormsModule, PrimeNgSharedModule, MessagesModule, MessageModule],
   templateUrl: './register.html',
   styleUrls: ['./register.scss']
 })
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       fullname: ['', [Validators.required, Validators.minLength(2)]],
-      username: ['', [Validators.required, Validators.minLength(4)]],
+      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
@@ -43,7 +43,6 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  // Custom validator to check if passwords match
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
@@ -66,37 +65,55 @@ export class RegisterComponent implements OnInit {
 
     const { confirmPassword, ...userData } = this.registerForm.value;
 
-    // Simulate API delay
-    setTimeout(() => {
-      const success = this.authService.register(userData);
+    // เรียก API Backend
+    this.authService.register(userData).subscribe({
+      next: (response) => {
+        console.log('Register response:', response);
 
-      if (success) {
-        this.messages = [{
-          severity: 'success',
-          summary: 'สำเร็จ',
-          detail: 'สมัครสมาชิกสำเร็จ! กำลังนำคุณไปยังหน้าเข้าสู่ระบบ...'
-        }];
+        if (response.success) {
+          // สมัครสมาชิกสำเร็จ
+          this.messages = [{
+            severity: 'success',
+            summary: 'สำเร็จ',
+            detail: 'สมัครสมาชิกสำเร็จ! กำลังนำคุณไปยังหน้าเข้าสู่ระบบ...'
+          }];
 
-        setTimeout(() => {
-          this.router.navigate(['/login'], {
-            state: {
-              registered: true,
-              username: userData.username
-            }
-          });
-        }, 2000);
-      } else {
+          // รอ 2 วินาทีแล้ว redirect ไปหน้า login
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
+        } else {
+          this.messages = [{
+            severity: 'error',
+            summary: 'เกิดข้อผิดพลาด',
+            detail: response.message || 'สมัครสมาชิกไม่สำเร็จ'
+          }];
+          this.loading = false;
+        }
+      },
+      error: (error) => {
+        console.error('Register error:', error);
+
+        // แสดง error message จาก Backend
+        let errorDetail = 'เกิดข้อผิดพลาดในการสมัครสมาชิก';
+
+        if (error.error?.message) {
+          errorDetail = error.error.message;
+        } else if (error.status === 0) {
+          errorDetail = 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้';
+        }
+
         this.messages = [{
           severity: 'error',
           summary: 'เกิดข้อผิดพลาด',
-          detail: 'ชื่อผู้ใช้นี้มีอยู่ในระบบแล้ว กรุณาใช้ชื่อผู้ใช้อื่น'
+          detail: errorDetail
         }];
+
         this.loading = false;
       }
-    }, 800);
+    });
   }
 
-  // Helper function to mark all fields as touched
   private markFormGroupTouched(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach(key => {
       const control = formGroup.get(key);
