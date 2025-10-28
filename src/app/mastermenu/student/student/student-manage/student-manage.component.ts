@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PrimeNgSharedModule } from '../../../../shared/prime-ng-shared.module';
-import { StudentApiService, StudentAPI } from '../../../../services/test/student-api.service';
+import {
+  StudentApiService,
+  StudentAPI,
+} from '../../../../services/test/student-api.service';
 import { MessageService } from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+<<<<<<< HEAD
 import { AuthService } from '../../../../services/test/auth.service';
+=======
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
 
 @Component({
   selector: 'app-student-manage',
@@ -12,7 +18,7 @@ import { AuthService } from '../../../../services/test/auth.service';
   templateUrl: './student-manage.component.html',
   styleUrls: ['./student-manage.component.scss'],
   imports: [PrimeNgSharedModule, ProgressSpinnerModule],
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class StudentmanageComponent implements OnInit {
   studentId?: number;
@@ -31,6 +37,10 @@ export class StudentmanageComponent implements OnInit {
     intern_department: '',
     intern_duration: '',
     attached_project: '',
+<<<<<<< HEAD
+=======
+    description: '',
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
   };
 
   profilePreview: string | ArrayBuffer | null = null;
@@ -49,6 +59,7 @@ export class StudentmanageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+<<<<<<< HEAD
     // 🔍 Debug: แสดงข้อมูล User ปัจจุบัน
     const currentUser = this.authService.currentUserValue;
     console.log('🔍 Current User:', currentUser);
@@ -69,6 +80,9 @@ export class StudentmanageComponent implements OnInit {
     }
 
     this.route.paramMap.subscribe(params => {
+=======
+    this.route.paramMap.subscribe((params) => {
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
       const id = params.get('id');
       if (id) {
         this.isEditMode = true;
@@ -176,7 +190,12 @@ export class StudentmanageComponent implements OnInit {
           email: student.email,
           intern_department: student.intern_department,
           intern_duration: student.intern_duration,
+<<<<<<< HEAD
           attached_project: student.attached_project || ''
+=======
+          attached_project: student.attached_project || '',
+          description: '',
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
         };
 
         if (student.profile_file) {
@@ -195,10 +214,14 @@ export class StudentmanageComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'ข้อผิดพลาด',
+<<<<<<< HEAD
           detail: err.message || 'ไม่สามารถโหลดข้อมูลนักศึกษาได้'
+=======
+          detail: 'ไม่สามารถโหลดข้อมูลนักศึกษาได้',
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
         });
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -329,16 +352,44 @@ export class StudentmanageComponent implements OnInit {
     }
   }
 
+<<<<<<< HEAD
   onSave() {
     if (this.isViewOnly) {
       this.messageService.add({
         severity: 'error',
         summary: 'ไม่อนุญาต',
         detail: 'คุณไม่มีสิทธิ์แก้ไขข้อมูลนี้'
+=======
+  downloadProjectFile() {
+    if (this.existingProjectFileUrl) {
+      window.open(this.existingProjectFileUrl, '_blank');
+    } else if (this.projectFile) {
+      // ถ้าเพิ่งอัปโหลดไฟล์ใหม่ แต่ยังไม่ save สามารถเปิด preview หรือดาวน์โหลดไฟล์ชั่วคราวได้ (optional)
+      const url = URL.createObjectURL(this.projectFile);
+      window.open(url, '_blank');
+    }
+  }
+
+  onSave() {
+    // Validate required fields
+    if (
+      !this.student.fullname ||
+      !this.student.university ||
+      !this.student.faculty ||
+      !this.student.major ||
+      !this.student.contact_number ||
+      !this.student.email
+    ) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'ข้อผิดพลาด',
+        detail: 'กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน',
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
       });
       return;
     }
 
+<<<<<<< HEAD
     if (!this.student.fullname || !this.student.university ||
         !this.student.faculty || !this.student.major ||
         !this.student.contact_number || !this.student.email) {
@@ -382,10 +433,29 @@ export class StudentmanageComponent implements OnInit {
       attached_project: this.student.attached_project || null,
       grade: null,
       created_by: createdBy
+=======
+    this.loading = true;
+
+    const formData = new FormData();
+
+    const studentData: StudentAPI = {
+      fullname: this.student.fullname,
+      university: this.student.university,
+      faculty: this.student.faculty,
+      major: this.student.major,
+      contact_number: this.student.contact_number,
+      email: this.student.email,
+      intern_department: this.student.intern_department,
+      intern_duration: this.student.intern_duration,
+      attached_project: this.student.attached_project || null,
+      grade: null,
+      created_by: 1, // TODO: ใช้ User ID จาก AuthService
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
     };
 
     formData.append('student', JSON.stringify(studentData));
 
+<<<<<<< HEAD
     if (this.profileFile) formData.append('profileFile', this.profileFile);
     if (this.projectFile) formData.append('projectFile', this.projectFile);
 
@@ -474,4 +544,66 @@ export class StudentmanageComponent implements OnInit {
   onCancel() {
     this.router.navigate(['/student']);
   }
+=======
+    if (this.profileFile) {
+      formData.append('profileFile', this.profileFile);
+    }
+
+    if (this.projectFile) {
+      formData.append('projectFile', this.projectFile);
+    }
+
+    if (this.isEditMode && this.studentId) {
+      // ✅ Update existing student
+      this.studentApiService
+        .updateWithFiles(this.studentId, formData)
+        .subscribe({
+          next: (response) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'สำเร็จ',
+              detail: 'แก้ไขข้อมูลนักศึกษาเรียบร้อยแล้ว',
+            });
+            this.loading = false;
+            setTimeout(() => this.router.navigate(['/student']), 1000);
+          },
+          error: (err) => {
+            console.error('Error updating student:', err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'ข้อผิดพลาด',
+              detail: 'ไม่สามารถแก้ไขข้อมูลได้',
+            });
+            this.loading = false;
+          },
+        });
+    } else {
+      // ✅ Create new student
+      this.studentApiService.createWithFiles(formData).subscribe({
+        next: (response) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'สำเร็จ',
+            detail: 'เพิ่มข้อมูลนักศึกษาเรียบร้อยแล้ว',
+          });
+          this.loading = false;
+          setTimeout(() => this.router.navigate(['/student']), 1000);
+        },
+        error: (err) => {
+          console.error('Error creating student:', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'ข้อผิดพลาด',
+            detail: 'ไม่สามารถเพิ่มข้อมูลได้',
+          });
+          this.loading = false;
+        },
+      });
+    }
+  }
+
+  onCancel() {
+    this.router.navigate(['/student']);
+  }
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
 }

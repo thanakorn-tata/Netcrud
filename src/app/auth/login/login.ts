@@ -7,9 +7,18 @@ import { AuthService } from '../../services/test/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
+<<<<<<< HEAD
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
+=======
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    PrimeNgSharedModule,
+  ],
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
   templateUrl: './login.html',
-  styleUrls: ['./login.scss']
+  styleUrls: ['./login.scss'],
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
@@ -30,9 +39,15 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+<<<<<<< HEAD
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
+=======
+    this.loginForm = this.formBuilder.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
     });
   }
 
@@ -73,6 +88,21 @@ export class LoginComponent implements OnInit {
         this.errorMessage = err.message || 'เข้าสู่ระบบไม่สำเร็จ';
         this.loading = false;
       }
+<<<<<<< HEAD
+=======
+    }, 800);
+  }
+
+  // Helper function to mark all fields as touched
+  private markFormGroupTouched(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach((key) => {
+      const control = formGroup.get(key);
+      control?.markAsTouched();
+
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
     });
   }
 

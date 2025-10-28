@@ -54,6 +54,7 @@ export class StudentApiService {
     });
   }
 
+<<<<<<< HEAD
   update(id: number, student: Partial<StudentAPI>): Observable<StudentAPI> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, student, {
       withCredentials: true // ✅ เพิ่ม
@@ -65,6 +66,27 @@ export class StudentApiService {
         return response;
       })
     );
+=======
+  // สำหรับการสร้างพร้อมไฟล์
+  createWithFiles(formData: FormData): Observable<StudentAPI> {
+    return this.http.post<StudentAPI>(this.apiUrl, formData);
+  }
+
+  update(id: number, student: StudentAPI): Observable<StudentAPI> {
+    return this.http.put<StudentAPI>(`${this.apiUrl}/${id}`, student);
+  }
+
+  // สำหรับการอัปเดตพร้อมไฟล์
+  updateWithFiles(id: number, formData: FormData): Observable<StudentAPI> {
+    return this.http.put<StudentAPI>(`${this.apiUrl}/${id}`, formData);
+  }
+
+  // สำหรับการอัปเดตเฉพาะเกรด
+  updateGrade(id: number, grade: string): Observable<StudentAPI> {
+    return this.http.patch<StudentAPI>(`${this.apiUrl}/${id}/grade`, {
+      grade: grade,
+    });
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
   }
 
   delete(id: number): Observable<void> {

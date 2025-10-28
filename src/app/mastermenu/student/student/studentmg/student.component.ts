@@ -2,8 +2,11 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PrimeNgSharedModule } from "../../../../shared/prime-ng-shared.module";
-import { StudentApiService, StudentAPI } from '../../../../services/test/student-api.service';
+import { PrimeNgSharedModule } from '../../../../shared/prime-ng-shared.module';
+import {
+  StudentApiService,
+  StudentAPI,
+} from '../../../../services/test/student-api.service';
 import { AuthService, User } from '../../../../services/test/auth.service';
 interface Student {
   id: number;
@@ -26,7 +29,7 @@ interface Student {
   standalone: true,
   imports: [CommonModule, FormsModule, PrimeNgSharedModule],
   templateUrl: './student.component.html',
-  styleUrls: ['./student.component.scss']
+  styleUrls: ['./student.component.scss'],
 })
 export class StudentComponent implements OnInit {
   // User & Role
@@ -45,7 +48,7 @@ export class StudentComponent implements OnInit {
     { label: 'C', value: 'C' },
     { label: 'D+', value: 'D+' },
     { label: 'D', value: 'D' },
-    { label: 'F', value: 'F' }
+    { label: 'F', value: 'F' },
   ];
 
   // Search Filters
@@ -55,7 +58,7 @@ export class StudentComponent implements OnInit {
     faculty: '',
     major: '',
     contact_number: '',
-    email: ''
+    email: '',
   };
 
   // Data
@@ -71,8 +74,8 @@ export class StudentComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private studentApiService: StudentApiService,
-    ) {}
+    private studentApiService: StudentApiService
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
@@ -84,21 +87,23 @@ export class StudentComponent implements OnInit {
     this.loading = true;
     this.studentApiService.getAll().subscribe({
       next: (data) => {
-        this.students = data.map((apiStudent, index): Student => ({
-          id: apiStudent.id ?? 0,
-          rowNum: index + 1,
-          fullname: apiStudent.fullname ?? '',
-          university: apiStudent.university ?? '',
-          faculty: apiStudent.faculty ?? '',
-          major: apiStudent.major ?? '',
-          contact_number: apiStudent.contact_number ?? '',
-          email: apiStudent.email ?? '',
-          intern_department: apiStudent.intern_department ?? '',
-          intern_duration: apiStudent.intern_duration ?? '',
-          attached_project: apiStudent.attached_project ?? null,
-          grade: apiStudent.grade ?? null,
-          created_by: apiStudent.created_by ?? null
-        }));
+        this.students = data.map(
+          (apiStudent, index): Student => ({
+            id: apiStudent.id ?? 0,
+            rowNum: index + 1,
+            fullname: apiStudent.fullname ?? '',
+            university: apiStudent.university ?? '',
+            faculty: apiStudent.faculty ?? '',
+            major: apiStudent.major ?? '',
+            contact_number: apiStudent.contact_number ?? '',
+            email: apiStudent.email ?? '',
+            intern_department: apiStudent.intern_department ?? '',
+            intern_duration: apiStudent.intern_duration ?? '',
+            attached_project: apiStudent.attached_project ?? null,
+            grade: apiStudent.grade ?? null,
+            created_by: apiStudent.created_by ?? null,
+          })
+        );
 
         if (this.isAdmin) {
           this.filteredStudents = [...this.students];
@@ -112,21 +117,29 @@ export class StudentComponent implements OnInit {
       error: (err) => {
         console.error('Error loading students:', err);
         this.loading = false;
-      }
+      },
     });
   }
 
   onSearch(): void {
-    this.filteredStudents = this.students.filter(student => {
+    this.filteredStudents = this.students.filter((student) => {
       return (
         (!this.searchFilters.fullname ||
-          student.fullname.toLowerCase().includes(this.searchFilters.fullname.toLowerCase())) &&
+          student.fullname
+            .toLowerCase()
+            .includes(this.searchFilters.fullname.toLowerCase())) &&
         (!this.searchFilters.university ||
-          student.university.toLowerCase().includes(this.searchFilters.university.toLowerCase())) &&
+          student.university
+            .toLowerCase()
+            .includes(this.searchFilters.university.toLowerCase())) &&
         (!this.searchFilters.faculty ||
-          student.faculty.toLowerCase().includes(this.searchFilters.faculty.toLowerCase())) &&
+          student.faculty
+            .toLowerCase()
+            .includes(this.searchFilters.faculty.toLowerCase())) &&
         (!this.searchFilters.major ||
-          student.major.toLowerCase().includes(this.searchFilters.major.toLowerCase()))
+          student.major
+            .toLowerCase()
+            .includes(this.searchFilters.major.toLowerCase()))
       );
     });
     this.totalRecords = this.filteredStudents.length;
@@ -139,7 +152,7 @@ export class StudentComponent implements OnInit {
       faculty: '',
       major: '',
       contact_number: '',
-      email: ''
+      email: '',
     };
     this.filteredStudents = [...this.students];
     this.totalRecords = this.filteredStudents.length;
@@ -149,10 +162,43 @@ export class StudentComponent implements OnInit {
     return student.created_by === this.currentUser?.id;
   }
 
+<<<<<<< HEAD
  onGradeChange(student: Student): void {
   if (!student.id) {
     console.error('❌ Student ID is missing');
     return;
+=======
+  // 🔥 แก้ไข: ใช้ updateGrade() แทน update()
+  onGradeChange(student: Student): void {
+    if (!student.id || !student.grade) return;
+
+    this.loading = true;
+
+    // ใช้ API endpoint updateGrade แทน
+    this.studentApiService.updateGrade(student.id, student.grade).subscribe({
+      next: (updatedStudent) => {
+        console.log(`Updated grade for ${student.fullname}: ${student.grade}`);
+        this.loading = false;
+
+        // Update local data
+        const index = this.students.findIndex((s) => s.id === student.id);
+        if (index !== -1) {
+          this.students[index].grade = updatedStudent.grade;
+        }
+
+        // แสดงข้อความสำเร็จ
+        alert('อัปเดตเกรดสำเร็จ');
+      },
+      error: (err) => {
+        console.error('Error updating grade:', err);
+        this.loading = false;
+        alert('เกิดข้อผิดพลาดในการอัปเดทเกรด');
+
+        // โหลดข้อมูลใหม่เพื่อให้แน่ใจว่าข้อมูลถูกต้อง
+        this.loadStudents();
+      },
+    });
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
   }
 
   if (!student.grade) {
@@ -194,14 +240,14 @@ export class StudentComponent implements OnInit {
     if (!grade) return 'text-gray-400';
 
     const gradeColors: { [key: string]: string } = {
-      'A': 'text-green-600',
+      A: 'text-green-600',
       'B+': 'text-green-500',
-      'B': 'text-blue-600',
+      B: 'text-blue-600',
       'C+': 'text-blue-500',
-      'C': 'text-yellow-600',
+      C: 'text-yellow-600',
       'D+': 'text-orange-500',
-      'D': 'text-orange-600',
-      'F': 'text-red-600'
+      D: 'text-orange-600',
+      F: 'text-red-600',
     };
 
     return gradeColors[grade] || 'text-gray-600';
@@ -217,12 +263,12 @@ export class StudentComponent implements OnInit {
 
   viewStudent(id: number): void {
     this.router.navigate(['/studentmanage', id], {
-      queryParams: { readonly: true }
+      queryParams: { readonly: true },
     });
   }
 
   deleteStudent(id: number): void {
-    const student = this.students.find(s => s.id === id);
+    const student = this.students.find((s) => s.id === id);
 
     if (!this.isAdmin && student?.created_by !== this.currentUser?.id) {
       alert('คุณไม่สามารถลบข้อมูลของผู้อื่นได้');
@@ -241,7 +287,9 @@ export class StudentComponent implements OnInit {
         next: () => {
           console.log(`Deleted student: ${this.selectedStudent!.fullname}`);
 
-          this.students = this.students.filter(s => s.id !== this.selectedStudent!.id);
+          this.students = this.students.filter(
+            (s) => s.id !== this.selectedStudent!.id
+          );
           this.onSearch();
 
           this.loading = false;
@@ -252,7 +300,7 @@ export class StudentComponent implements OnInit {
           console.error('Error deleting student:', err);
           this.loading = false;
           alert('เกิดข้อผิดพลาดในการลบข้อมูล');
-        }
+        },
       });
     }
   }

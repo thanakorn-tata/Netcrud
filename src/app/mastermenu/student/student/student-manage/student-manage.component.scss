@@ -6,7 +6,7 @@
 /* 🔹 DataTable Header & Rows */
 :host ::ng-deep .p-datatable-thead > tr > th {
   background-color: #3b82f6 !important; /* ฟ้าเข้มเหมือน Accordion header */
-  color: #ffffff !important;            /* ตัวอักษรขาว */
+  color: #ffffff !important; /* ตัวอักษรขาว */
   font-weight: 600;
   text-align: center;
 }
@@ -31,7 +31,7 @@
 :host ::ng-deep textarea,
 :host ::ng-deep .p-inputtext {
   background-color: #dbeafe !important; /* ฟ้าอ่อน */
-  color: #1e3a8a !important;           /* ฟ้าน้ำเงินเข้ม */
+  color: #1e3a8a !important; /* ฟ้าน้ำเงินเข้ม */
   border: 1px solid #60a5fa !important;
   border-radius: 0.5rem !important;
   padding: 0.5rem !important;
