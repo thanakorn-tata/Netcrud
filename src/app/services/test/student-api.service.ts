@@ -22,7 +22,6 @@ export interface StudentAPI {
   updated_at?: string;
 }
 
-// เพิ่ม interface สำหรับ response
 interface ApiResponse<T> {
   success: boolean;
   message?: string;
@@ -49,15 +48,12 @@ export class StudentApiService {
     return this.http.post<StudentAPI>(this.apiUrl, student);
   }
 
-  // ✅ แก้ไข update method
   update(id: number, student: Partial<StudentAPI>): Observable<StudentAPI> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, student).pipe(
       map(response => {
-        // ถ้า backend return { success: true, data: {...} }
         if (response && response.data) {
           return response.data;
         }
-        // ถ้า backend return object ตรงๆ
         return response;
       })
     );
@@ -67,7 +63,6 @@ export class StudentApiService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  // ✅ แก้ไข createWithFiles
   createWithFiles(formData: FormData): Observable<StudentAPI> {
     return this.http.post<ApiResponse<StudentAPI>>(`${this.apiUrl}/upload`, formData).pipe(
       map(response => {
@@ -79,7 +74,6 @@ export class StudentApiService {
     );
   }
 
-  // ✅ แก้ไข updateWithFiles
   updateWithFiles(id: number, formData: FormData): Observable<StudentAPI> {
     return this.http.put<ApiResponse<StudentAPI>>(`${this.apiUrl}/upload/${id}`, formData).pipe(
       map(response => {
@@ -89,5 +83,19 @@ export class StudentApiService {
         return response as any;
       })
     );
+  }
+
+  // ✅ Method สำหรับดาวน์โหลดไฟล์
+  downloadFile(type: string, filename: string): Observable<Blob> {
+    const url = `http://localhost:8080/uploads/${type}/${filename}`;
+    return this.http.get(url, {
+      responseType: 'blob',  // สำคัญมาก! ต้องเป็น blob
+      observe: 'body'
+    });
+  }
+
+  // ✅ Method สำหรับตรวจสอบสิทธิ์การแก้ไข
+  canEdit(id: number): Observable<{canEdit: boolean, reason?: string}> {
+    return this.http.get<{canEdit: boolean, reason?: string}>(`${this.apiUrl}/${id}/can-edit`);
   }
 }
