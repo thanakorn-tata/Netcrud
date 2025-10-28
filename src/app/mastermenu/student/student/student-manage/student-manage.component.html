@@ -46,12 +46,8 @@
     </section>
 
     <!-- Student Form -->
-<<<<<<< HEAD
     <div class="grid gap-4 mb-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1">
 
-=======
-    <div class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mb-4">
->>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
       <!-- Full Name -->
       <div>
         <label class="block mb-1 font-semibold text-blue-900">
@@ -246,7 +242,6 @@
 
       <!-- Upload Project File -->
       <div>
-<<<<<<< HEAD
         <label class="block mb-1 font-semibold text-blue-900">
           <span class="mr-1 text-red-500">*</span>
           {{ "common.button.Upload1" | translate }}
@@ -324,60 +319,6 @@
         [disabled]="loading"
         styleClass="p-button-primary p-button-sm"
       ></p-button>
-=======
-        <label class="block font-semibold mb-1 text-blue-900">
-          <span class="text-red-500 mr-1">*</span>
-          {{ "common.button.Upload1" | translate }}
-        </label>
-        <label
-          class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200"
-        >
-          <i class="pi pi-cloud-upload text-blue-600 text-xl mr-2"></i>
-          <span class="text-blue-900">
-            {{ "common.button.Upload1" | translate }}
-          </span>
-          <input
-            type="file"
-            accept=".pdf,.doc,.docx,.zip"
-            class="hidden"
-            (change)="onProjectChange($event)"
-            required
-          />
-        </label>
-
-        <!-- แสดงชื่อไฟล์และกดดาวน์โหลดได้ -->
-        <div *ngIf="projectFileName" class="mt-2 text-sm text-blue-900">
-          <i class="pi pi-file mr-1"></i>
-          <a
-            href="javascript:void(0)"
-            (click)="downloadProjectFile()"
-            class="underline cursor-pointer hover:text-blue-700"
-            title="คลิกเพื่อดาวน์โหลด/เปิดไฟล์"
-          >
-            {{ projectFileName }}
-          </a>
-        </div>
-      </div>
-
-      <!-- Buttons -->
-      <div class="flex justify-center gap-2 mt-8">
-        <p-button
-          [label]="'common.button.save' | translate"
-          icon="pi pi-save"
-          (onClick)="onSave()"
-          [loading]="loading"
-          styleClass="p-button-primary p-button-sm"
-        ></p-button>
-        <p-button
-          [label]="'common.button.cancel' | translate"
-          icon="pi pi-times"
-          (onClick)="onCancel()"
-          variant="outlined"
-          [disabled]="loading"
-          styleClass="p-button-primary p-button-sm"
-        ></p-button>
-      </div>
->>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
     </div>
   </div>
 </div>

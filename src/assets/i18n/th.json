@@ -61,7 +61,13 @@
   },
   "sidebar": {
     "menu1": "ภาพรวม",
-    "menu2": "นักเรียน/นักศึกษา"
+    "menu2": "นักเรียน/นักศึกษา",
+    "department": "Department",
+    "department_it": "IT Department",
+    "department_finance": "Finance Department",
+    "department_hr": "Human Resources",
+    "department_marketing": "Marketing Department",
+    "department_sales": "Sales Department"
   },
   "dashboard": {
     "tab": {
