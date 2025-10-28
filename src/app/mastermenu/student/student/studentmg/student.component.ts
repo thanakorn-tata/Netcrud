@@ -162,6 +162,12 @@ export class StudentComponent implements OnInit {
     return student.created_by === this.currentUser?.id;
   }
 
+<<<<<<< HEAD
+ onGradeChange(student: Student): void {
+  if (!student.id) {
+    console.error('❌ Student ID is missing');
+    return;
+=======
   // 🔥 แก้ไข: ใช้ updateGrade() แทน update()
   onGradeChange(student: Student): void {
     if (!student.id || !student.grade) return;
@@ -192,7 +198,43 @@ export class StudentComponent implements OnInit {
         this.loadStudents();
       },
     });
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
   }
+
+  if (!student.grade) {
+    console.warn('⚠️ Grade is empty');
+    return;
+  }
+
+  console.log(`🔄 Updating grade for ${student.fullname} to ${student.grade}`);
+  this.loading = true;
+
+  this.studentApiService.update(student.id, { grade: student.grade }).subscribe({
+    next: (updatedStudent) => {
+      console.log('✅ Grade updated successfully:', updatedStudent);
+
+      // อัพเดท local data
+      this.students = this.students.map(s =>
+        s.id === student.id ? { ...s, grade: updatedStudent.grade } : s
+      );
+
+      this.filteredStudents = this.filteredStudents.map(s =>
+        s.id === student.id ? { ...s, grade: updatedStudent.grade } : s
+      );
+
+      this.loading = false;
+      console.log(`✅ Grade updated: ${student.fullname} = ${updatedStudent.grade}`);
+    },
+    error: (err) => {
+      this.loading = false;
+      console.error('❌ Error updating grade:', err);
+      alert('เกิดข้อผิดพลาดในการบันทึกเกรด กรุณาลองใหม่อีกครั้ง');
+
+      // Reload เพื่อดึงค่าเดิมกลับมา
+      this.loadStudents();
+    }
+  });
+}
 
   getGradeColor(grade: string | undefined | null): string {
     if (!grade) return 'text-gray-400';

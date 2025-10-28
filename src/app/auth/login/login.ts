@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { PrimeNgSharedModule } from '../../shared/prime-ng-shared.module';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/test/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
+<<<<<<< HEAD
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+=======
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
     PrimeNgSharedModule,
   ],
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
   templateUrl: './login.html',
   styleUrls: ['./login.scss'],
 })
@@ -26,33 +27,33 @@ export class LoginComponent implements OnInit {
   showPassword = false;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private router: Router,
     private authService: AuthService
   ) {
-    // Redirect if already logged in
-    if (this.authService.isLoggedIn()) {
+    // ตรวจสอบว่า login แล้วหรือยัง
+    const user = this.authService.currentUserValue;
+    if (user) {
       this.router.navigate(['/dashboard']);
     }
   }
 
   ngOnInit(): void {
+<<<<<<< HEAD
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+=======
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
     });
-
-    // Check if redirected from registration
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras?.state?.['registered']) {
-      this.errorMessage = '';
-      // You could show a success message here if needed
-    }
   }
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
-      this.markFormGroupTouched(this.loginForm);
+      this.loginForm.markAllAsTouched();
       return;
     }
 
@@ -61,16 +62,34 @@ export class LoginComponent implements OnInit {
 
     const { username, password } = this.loginForm.value;
 
-    // Simulate API delay
-    setTimeout(() => {
-      const success = this.authService.login(username, password);
+    console.log('🔐 Attempting login...');
 
-      if (success) {
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.errorMessage = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
+    this.authService.login(username, password).subscribe({
+      next: (response) => {
+        console.log('✅ Login successful:', response);
+
+        // ✅ FIX: เรียก loadCurrentUser เพื่อดึง user.id ที่ถูกต้องจาก Backend
+        this.authService.loadCurrentUser().subscribe({
+          next: (user) => {
+            console.log('✅ User loaded with ID:', user.id);
+            this.loading = false;
+            this.router.navigate(['/dashboard']);
+          },
+          error: (err) => {
+            console.error('❌ Failed to load user details:', err);
+            // ถึงแม้ loadUser ไม่สำเร็จ ก็ยังให้เข้าระบบได้
+            this.loading = false;
+            this.router.navigate(['/dashboard']);
+          }
+        });
+      },
+      error: (err) => {
+        console.error('❌ Login error:', err);
+        this.errorMessage = err.message || 'เข้าสู่ระบบไม่สำเร็จ';
         this.loading = false;
       }
+<<<<<<< HEAD
+=======
     }, 800);
   }
 
@@ -83,6 +102,11 @@ export class LoginComponent implements OnInit {
       if (control instanceof FormGroup) {
         this.markFormGroupTouched(control);
       }
+>>>>>>> 15557ce36fc6be6a95003b0a49c0a3038c5c359f
     });
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }

@@ -5,9 +5,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { StudentComponent } from './mastermenu/student/student/studentmg/student.component';
 import { StudentmanageComponent } from './mastermenu/student/student/student-manage/student-manage.component';
 
-export const routes: Routes = [
-  // Public Routes (No Layout)
-  {
+export const routes: Routes = [  {
     path: 'login',
     loadComponent: () => import('./auth/login/login').then(m => m.LoginComponent)
   },
