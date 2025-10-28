@@ -55,6 +55,19 @@ export class StudentmanageComponent implements OnInit {
     console.log('🔍 User Role:', currentUser?.role);
     console.log('🔍 User ID:', currentUser?.id);
 
+    // ✅ ถ้า user.id = 0 แสดงว่ายังไม่ได้เรียก loadCurrentUser()
+    if (currentUser && currentUser.id === 0) {
+      console.warn('⚠️ User ID is 0, loading full user data...');
+      this.authService.loadCurrentUser().subscribe({
+        next: (user) => {
+          console.log('✅ User data reloaded:', user);
+        },
+        error: (err) => {
+          console.error('❌ Failed to reload user:', err);
+        }
+      });
+    }
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
@@ -78,8 +91,15 @@ export class StudentmanageComponent implements OnInit {
   checkEditPermission(studentId: number): void {
     const currentUser = this.authService.currentUserValue;
 
+    // ⚠️ ถ้ายังไม่มี user หรือ user.id = 0 ให้รอสักครู่
+    if (!currentUser || currentUser.id === 0) {
+      console.warn('⚠️ User not fully loaded, waiting...');
+      setTimeout(() => this.checkEditPermission(studentId), 500);
+      return;
+    }
+
     // ✅ ถ้าเป็น ADMIN ให้แก้ไขได้เลย
-    if (currentUser?.role === 'ADMIN') {
+    if (currentUser.role === 'ADMIN') {
       this.canEdit = true;
       this.isViewOnly = false;
       console.log('✅ Admin user - full access granted');
@@ -111,6 +131,25 @@ export class StudentmanageComponent implements OnInit {
       },
       error: (err) => {
         console.error('❌ Error checking permission:', err);
+
+        // ✅ ถ้า error 401 แสดงว่าไม่มี session
+        if (err.status === 401) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'ไม่มีสิทธิ์เข้าถึง',
+            detail: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+            life: 5000
+          });
+
+          // Redirect ไป login
+          setTimeout(() => {
+            this.authService.logout();
+            this.router.navigate(['/login']);
+          }, 2000);
+          return;
+        }
+
+        // ✅ Error อื่น ๆ ให้เป็น view-only
         this.canEdit = false;
         this.isViewOnly = true;
 
@@ -325,7 +364,11 @@ export class StudentmanageComponent implements OnInit {
 
     const formData = new FormData();
     const currentUser = this.authService.currentUserValue;
-    const createdBy = currentUser?.id || 1;
+
+    // ✅ ใช้ user.id ที่ถูกต้อง
+    const createdBy = currentUser?.id || 0;
+
+    console.log('💾 Saving with user ID:', createdBy);
 
     const studentData: StudentAPI = {
       fullname: this.student.fullname.trim(),
@@ -366,11 +409,25 @@ export class StudentmanageComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error creating student:', err);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'ข้อผิดพลาด',
-          detail: err.message || 'ไม่สามารถเพิ่มข้อมูลได้'
-        });
+
+        // ✅ ถ้า error 401 แสดงว่า session หมดอายุ
+        if (err.status === 401) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'ไม่มีสิทธิ์เข้าถึง',
+            detail: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง'
+          });
+          setTimeout(() => {
+            this.authService.logout();
+            this.router.navigate(['/login']);
+          }, 2000);
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'ข้อผิดพลาด',
+            detail: err.message || 'ไม่สามารถเพิ่มข้อมูลได้'
+          });
+        }
         this.loading = false;
       }
     });
@@ -389,12 +446,26 @@ export class StudentmanageComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error updating student:', err);
-        const errorMessage = err.error?.message || err.message || 'ไม่สามารถแก้ไขข้อมูลได้';
-        this.messageService.add({
-          severity: 'error',
-          summary: 'ข้อผิดพลาด',
-          detail: errorMessage
-        });
+
+        // ✅ ถ้า error 401 แสดงว่า session หมดอายุ
+        if (err.status === 401) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'ไม่มีสิทธิ์เข้าถึง',
+            detail: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง'
+          });
+          setTimeout(() => {
+            this.authService.logout();
+            this.router.navigate(['/login']);
+          }, 2000);
+        } else {
+          const errorMessage = err.error?.message || err.message || 'ไม่สามารถแก้ไขข้อมูลได้';
+          this.messageService.add({
+            severity: 'error',
+            summary: 'ข้อผิดพลาด',
+            detail: errorMessage
+          });
+        }
         this.loading = false;
       }
     });

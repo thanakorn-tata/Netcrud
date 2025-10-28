@@ -20,7 +20,6 @@ export interface RegisterRequest {
   role?: string;
 }
 
-// เพิ่ม interface สำหรับ response
 interface AuthResponse {
   success: boolean;
   message?: string;
@@ -34,6 +33,7 @@ interface LoginResponse {
   message?: string;
   role?: string;
   fullname?: string;
+  user?: User; // ✅ เพิ่ม user field (กรณี Backend ส่งมาครบ)
 }
 
 @Injectable({
@@ -63,7 +63,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, userData, { withCredentials: true }).pipe(
       map(response => {
         if (response.success && response.user) {
-          console.log('Register success', response.user);
+          console.log('✅ Register success', response.user);
           return response;
         }
         throw new Error(response.message || 'Registration failed');
@@ -74,23 +74,42 @@ export class AuthService {
 
   // ==================== LOGIN ====================
   login(username: string, password: string): Observable<any> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { username, password }, { withCredentials: true }).pipe(
+    console.log('🔐 Sending login request...');
+
+    return this.http.post<LoginResponse>(
+      `${this.apiUrl}/login`,
+      { username, password },
+      { withCredentials: true }
+    ).pipe(
       map(response => {
+        console.log('📡 Login response:', response);
+
         if (response.success) {
-          // สร้าง User object จาก response
-          const user: User = {
-            id: 0, // Backend ไม่ได้ส่ง id มา อาจต้องเรียก /me เพื่อดึงข้อมูลเต็ม
+          // ✅ ถ้า Backend ส่ง user object ครบมา ใช้เลย
+          if (response.user) {
+            console.log('✅ Backend sent full user object');
+            localStorage.setItem(this.USER_KEY, JSON.stringify(response.user));
+            this.currentUserSubject.next(response.user);
+            return response;
+          }
+
+          // ⚠️ ถ้า Backend ไม่ส่ง user ครบ สร้าง temporary user
+          // (จะต้องเรียก loadCurrentUser() ตามด้วย)
+          console.warn('⚠️ Backend did not send full user object, creating temporary user');
+          const tempUser: User = {
+            id: 0, // ⚠️ Temporary ID - must call loadCurrentUser() after
             username: username,
             fullname: response.fullname || '',
-            email: '', // Backend ไม่ได้ส่ง email มา
+            email: '',
             role: response.role as 'ADMIN' | 'USER'
           };
 
-          localStorage.setItem(this.USER_KEY, JSON.stringify(user));
-          this.currentUserSubject.next(user);
+          localStorage.setItem(this.USER_KEY, JSON.stringify(tempUser));
+          this.currentUserSubject.next(tempUser);
 
           return response;
         }
+
         throw new Error(response.message || 'Login failed');
       }),
       catchError(this.handleError)
@@ -98,37 +117,57 @@ export class AuthService {
   }
 
   // ==================== LOGOUT ====================
-  logout(): void {
-    this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
-      next: () => {
-        localStorage.removeItem(this.USER_KEY);
-        this.currentUserSubject.next(null);
-      },
-      error: () => {
-        // ลบ local data แม้ logout ไม่สำเร็จ
-        localStorage.removeItem(this.USER_KEY);
-        this.currentUserSubject.next(null);
-      }
-    });
-  }
+  logout(): Observable<void> {
+  return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).pipe(
+    tap(() => {
+      console.log('✅ Logout successful');
+      localStorage.removeItem(this.USER_KEY);
+      this.currentUserSubject.next(null);
+    }),
+    catchError(err => {
+      console.error('❌ Logout error:', err);
+      localStorage.removeItem(this.USER_KEY);
+      this.currentUserSubject.next(null);
+      return throwError(() => err);
+    }),
+    map(() => void 0)
+  );
+}
+
 
   // ==================== LOAD CURRENT USER ====================
   loadCurrentUser(): Observable<User> {
+    console.log('🔍 Loading current user from /me endpoint...');
+
     return this.http.get<AuthResponse>(`${this.apiUrl}/me`, { withCredentials: true }).pipe(
       map(response => {
+        console.log('📡 /me response:', response);
+
         if (response.success && response.user) {
+          console.log('✅ User loaded successfully:', response.user);
+
+          // ✅ บันทึก user ที่ได้ทับของเดิม
+          localStorage.setItem(this.USER_KEY, JSON.stringify(response.user));
           this.currentUserSubject.next(response.user);
+
           return response.user;
         }
+
         throw new Error(response.message || 'Failed to load user');
       }),
       catchError(err => {
+        console.error('❌ Failed to load current user:', err);
+
+        // ⚠️ ถ้าดึง user ไม่สำเร็จ ลบ session
+        localStorage.removeItem(this.USER_KEY);
         this.currentUserSubject.next(null);
+
         return throwError(() => err);
       })
     );
   }
 
+  // ==================== UTILITY METHODS ====================
   isLoggedIn(): boolean {
     return !!this.currentUserValue;
   }
@@ -145,8 +184,20 @@ export class AuthService {
     return this.currentUserValue?.role || null;
   }
 
+  getUserId(): number | null {
+    return this.currentUserValue?.id || null;
+  }
+
+  // ==================== ERROR HANDLER ====================
   private handleError(error: HttpErrorResponse) {
     let message = 'เกิดข้อผิดพลาด';
+
+    console.error('🔴 HTTP Error:', {
+      status: error.status,
+      statusText: error.statusText,
+      error: error.error,
+      message: error.message
+    });
 
     if (error.error?.message) {
       message = error.error.message;
@@ -154,11 +205,12 @@ export class AuthService {
       message = 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้';
     } else if (error.status === 401) {
       message = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
+    } else if (error.status === 400) {
+      message = 'ข้อมูลไม่ถูกต้อง';
     } else if (error.status === 500) {
-      message = 'เกิดข้อผิดพลาดที่เซิร์ฟเวอร์';
+      message = 'เกิดข้อผิดพลาดในระบบ กรุณาลองใหม่อีกครั้ง';
     }
 
-    console.error('API Error:', error);
     return throwError(() => new Error(message));
   }
 }

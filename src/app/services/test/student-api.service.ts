@@ -37,19 +37,27 @@ export class StudentApiService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<StudentAPI[]> {
-    return this.http.get<StudentAPI[]>(this.apiUrl);
+    return this.http.get<StudentAPI[]>(this.apiUrl, {
+      withCredentials: true // ✅ เพิ่ม
+    });
   }
 
   getById(id: number): Observable<StudentAPI> {
-    return this.http.get<StudentAPI>(`${this.apiUrl}/${id}`);
+    return this.http.get<StudentAPI>(`${this.apiUrl}/${id}`, {
+      withCredentials: true // ✅ เพิ่ม
+    });
   }
 
   create(student: StudentAPI): Observable<StudentAPI> {
-    return this.http.post<StudentAPI>(this.apiUrl, student);
+    return this.http.post<StudentAPI>(this.apiUrl, student, {
+      withCredentials: true // ✅ เพิ่ม
+    });
   }
 
   update(id: number, student: Partial<StudentAPI>): Observable<StudentAPI> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, student).pipe(
+    return this.http.put<any>(`${this.apiUrl}/${id}`, student, {
+      withCredentials: true // ✅ เพิ่ม
+    }).pipe(
       map(response => {
         if (response && response.data) {
           return response.data;
@@ -60,11 +68,15 @@ export class StudentApiService {
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, {
+      withCredentials: true // ✅ เพิ่ม
+    });
   }
 
   createWithFiles(formData: FormData): Observable<StudentAPI> {
-    return this.http.post<ApiResponse<StudentAPI>>(`${this.apiUrl}/upload`, formData).pipe(
+    return this.http.post<ApiResponse<StudentAPI>>(`${this.apiUrl}/upload`, formData, {
+      withCredentials: true // ✅ เพิ่ม
+    }).pipe(
       map(response => {
         if (response && response.data) {
           return response.data;
@@ -75,7 +87,9 @@ export class StudentApiService {
   }
 
   updateWithFiles(id: number, formData: FormData): Observable<StudentAPI> {
-    return this.http.put<ApiResponse<StudentAPI>>(`${this.apiUrl}/upload/${id}`, formData).pipe(
+    return this.http.put<ApiResponse<StudentAPI>>(`${this.apiUrl}/upload/${id}`, formData, {
+      withCredentials: true // ✅ เพิ่ม (สำคัญมาก!)
+    }).pipe(
       map(response => {
         if (response && response.data) {
           return response.data;
@@ -89,13 +103,16 @@ export class StudentApiService {
   downloadFile(type: string, filename: string): Observable<Blob> {
     const url = `http://localhost:8080/uploads/${type}/${filename}`;
     return this.http.get(url, {
-      responseType: 'blob',  // สำคัญมาก! ต้องเป็น blob
-      observe: 'body'
+      responseType: 'blob',
+      observe: 'body',
+      withCredentials: true // ✅ เพิ่ม
     });
   }
 
   // ✅ Method สำหรับตรวจสอบสิทธิ์การแก้ไข
   canEdit(id: number): Observable<{canEdit: boolean, reason?: string}> {
-    return this.http.get<{canEdit: boolean, reason?: string}>(`${this.apiUrl}/${id}/can-edit`);
+    return this.http.get<{canEdit: boolean, reason?: string}>(`${this.apiUrl}/${id}/can-edit`, {
+      withCredentials: true // ✅ เพิ่ม
+    });
   }
 }

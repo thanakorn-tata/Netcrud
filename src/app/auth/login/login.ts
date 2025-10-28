@@ -47,18 +47,36 @@ export class LoginComponent implements OnInit {
 
     const { username, password } = this.loginForm.value;
 
+    console.log('🔐 Attempting login...');
+
     this.authService.login(username, password).subscribe({
       next: (response) => {
-        // response มี success, message, role, fullname
-        console.log('Login successful:', response);
-        this.router.navigate(['/dashboard']);
+        console.log('✅ Login successful:', response);
+
+        // ✅ FIX: เรียก loadCurrentUser เพื่อดึง user.id ที่ถูกต้องจาก Backend
+        this.authService.loadCurrentUser().subscribe({
+          next: (user) => {
+            console.log('✅ User loaded with ID:', user.id);
+            this.loading = false;
+            this.router.navigate(['/dashboard']);
+          },
+          error: (err) => {
+            console.error('❌ Failed to load user details:', err);
+            // ถึงแม้ loadUser ไม่สำเร็จ ก็ยังให้เข้าระบบได้
+            this.loading = false;
+            this.router.navigate(['/dashboard']);
+          }
+        });
       },
       error: (err) => {
-        // err เป็น Error object ที่มี message
+        console.error('❌ Login error:', err);
         this.errorMessage = err.message || 'เข้าสู่ระบบไม่สำเร็จ';
         this.loading = false;
-        console.error('Login error:', err);
       }
     });
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }
