@@ -150,30 +150,45 @@ export class StudentComponent implements OnInit {
   }
 
  onGradeChange(student: Student): void {
-  if (!student.id || !student.grade) return;
+  if (!student.id) {
+    console.error('❌ Student ID is missing');
+    return;
+  }
 
+  if (!student.grade) {
+    console.warn('⚠️ Grade is empty');
+    return;
+  }
+
+  console.log(`🔄 Updating grade for ${student.fullname} to ${student.grade}`);
   this.loading = true;
 
-  // เรียกใช้ update() แทน updateGrade()
   this.studentApiService.update(student.id, { grade: student.grade }).subscribe({
     next: (updatedStudent) => {
-      this.loading = false;
+      console.log('✅ Grade updated successfully:', updatedStudent);
 
-      // Update local data immutably
+      // อัพเดท local data
       this.students = this.students.map(s =>
         s.id === student.id ? { ...s, grade: updatedStudent.grade } : s
       );
 
-      console.log(`✅ Updated grade for ${student.fullname}: ${updatedStudent.grade}`);
+      this.filteredStudents = this.filteredStudents.map(s =>
+        s.id === student.id ? { ...s, grade: updatedStudent.grade } : s
+      );
+
+      this.loading = false;
+      console.log(`✅ Grade updated: ${student.fullname} = ${updatedStudent.grade}`);
     },
     error: (err) => {
       this.loading = false;
       console.error('❌ Error updating grade:', err);
+      alert('เกิดข้อผิดพลาดในการบันทึกเกรด กรุณาลองใหม่อีกครั้ง');
+
+      // Reload เพื่อดึงค่าเดิมกลับมา
+      this.loadStudents();
     }
   });
 }
-
-
 
   getGradeColor(grade: string | undefined | null): string {
     if (!grade) return 'text-gray-400';

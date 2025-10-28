@@ -1,17 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { PrimeNgSharedModule } from '../../shared/prime-ng-shared.module';
-import { AuthService } from '../../services/test/auth.service';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { AuthService, RegisterRequest } from '../../services/test/auth.service';
+
+interface RegisterFormValue {
+  fullname: string;
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, PrimeNgSharedModule, MessagesModule, MessageModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule, // เพิ่มตรงนี้
+    PrimeNgSharedModule,
+    MessagesModule,
+    MessageModule
+  ],
   templateUrl: './register.html',
   styleUrls: ['./register.scss']
 })
@@ -21,36 +35,31 @@ export class RegisterComponent implements OnInit {
   messages: any[] = [];
 
   constructor(
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private router: Router,
     private authService: AuthService
   ) {
-    // Redirect if already logged in
-    if (this.authService.isLoggedIn()) {
+    // ตรวจสอบว่า login แล้วหรือยัง
+    const user = this.authService.currentUserValue;
+    if (user) {
       this.router.navigate(['/dashboard']);
     }
   }
 
   ngOnInit(): void {
-    this.registerForm = this.formBuilder.group({
+    this.registerForm = this.fb.group({
       fullname: ['', [Validators.required, Validators.minLength(2)]],
       username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
-    }, {
-      validators: this.passwordMatchValidator
-    });
+    }, { validators: this.passwordMatchValidator });
   }
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
-
-    if (!password || !confirmPassword) {
-      return null;
-    }
-
+    if (!password || !confirmPassword) return null;
     return password.value === confirmPassword.value ? null : { passwordMismatch: true };
   }
 
@@ -63,52 +72,34 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
     this.messages = [];
 
-    const { confirmPassword, ...userData } = this.registerForm.value;
+    const formValue = this.registerForm.value as RegisterFormValue;
+    const payload: RegisterRequest = {
+      fullname: formValue.fullname,
+      username: formValue.username,
+      email: formValue.email,
+      password: formValue.password,
+      role: 'USER' // เพิ่ม default role
+    };
 
-    // เรียก API Backend
-    this.authService.register(userData).subscribe({
+    this.authService.register(payload).subscribe({
       next: (response) => {
-        console.log('Register response:', response);
-
-        if (response.success) {
-          // สมัครสมาชิกสำเร็จ
-          this.messages = [{
-            severity: 'success',
-            summary: 'สำเร็จ',
-            detail: 'สมัครสมาชิกสำเร็จ! กำลังนำคุณไปยังหน้าเข้าสู่ระบบ...'
-          }];
-
-          // รอ 2 วินาทีแล้ว redirect ไปหน้า login
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 2000);
-        } else {
-          this.messages = [{
-            severity: 'error',
-            summary: 'เกิดข้อผิดพลาด',
-            detail: response.message || 'สมัครสมาชิกไม่สำเร็จ'
-          }];
-          this.loading = false;
-        }
+        // response มี success, message, user
+        console.log('Register successful:', response);
+        this.messages = [{
+          severity: 'success',
+          summary: 'สำเร็จ',
+          detail: 'สมัครสมาชิกสำเร็จ! กำลังไปหน้าเข้าสู่ระบบ...'
+        }];
+        setTimeout(() => this.router.navigate(['/login']), 2000);
       },
-      error: (error) => {
-        console.error('Register error:', error);
-
-        // แสดง error message จาก Backend
-        let errorDetail = 'เกิดข้อผิดพลาดในการสมัครสมาชิก';
-
-        if (error.error?.message) {
-          errorDetail = error.error.message;
-        } else if (error.status === 0) {
-          errorDetail = 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้';
-        }
-
+      error: (err) => {
+        // err เป็น Error object ที่มี message
+        console.error('Register error:', err);
         this.messages = [{
           severity: 'error',
           summary: 'เกิดข้อผิดพลาด',
-          detail: errorDetail
+          detail: err.message || 'สมัครสมาชิกไม่สำเร็จ'
         }];
-
         this.loading = false;
       }
     });
@@ -118,7 +109,6 @@ export class RegisterComponent implements OnInit {
     Object.keys(formGroup.controls).forEach(key => {
       const control = formGroup.get(key);
       control?.markAsTouched();
-
       if (control instanceof FormGroup) {
         this.markFormGroupTouched(control);
       }

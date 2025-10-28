@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { tap, catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 export interface User {
@@ -12,18 +12,28 @@ export interface User {
   role: 'ADMIN' | 'USER';
 }
 
-export interface LoginResponse {
-  success: boolean;
-  token?: string;
-  refreshToken?: string;
-  user?: User;
-}
-
 export interface RegisterRequest {
   fullname: string;
   username: string;
   email: string;
   password: string;
+  role?: string;
+}
+
+// เพิ่ม interface สำหรับ response
+interface AuthResponse {
+  success: boolean;
+  message?: string;
+  user?: User;
+  role?: string;
+  fullname?: string;
+}
+
+interface LoginResponse {
+  success: boolean;
+  message?: string;
+  role?: string;
+  fullname?: string;
 }
 
 @Injectable({
@@ -31,8 +41,6 @@ export interface RegisterRequest {
 })
 export class AuthService {
   private apiUrl = environment.apiUrl + '/auth';
-  private readonly TOKEN_KEY = 'auth_token';
-  private readonly REFRESH_TOKEN_KEY = 'refresh_token';
   private readonly USER_KEY = 'current_user';
 
   private currentUserSubject: BehaviorSubject<User | null>;
@@ -50,140 +58,107 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  // ----------------- REGISTER -----------------
+  // ==================== REGISTER ====================
   register(userData: RegisterRequest): Observable<any> {
-    // ถ้าไม่มี backend ใช้ mock response
-    const mockResponse = {
-      success: true,
-      message: 'User registered successfully'
-    };
-    return of(mockResponse).pipe(
-      map(res => {
-        console.log('✅ สมัครสมาชิกสำเร็จ:', res);
-        return res;
-      }),
-      catchError(err => throwError(() => err))
-    );
-
-    // ถ้ามี backend จริง uncomment ด้านล่าง
-    /*
-    return this.http.post(`${this.apiUrl}/register`, userData).pipe(
-      map(res => {
-        console.log('✅ สมัครสมาชิกสำเร็จ:', res);
-        return res;
-      }),
-      catchError(err => throwError(() => err))
-    );
-    */
-  }
-
-  // ----------------- LOGIN -----------------
-  login(username: string, password: string): Observable<LoginResponse> {
-    // Mock users
-    const mockUsers: User[] = [
-      { id: 1, username: 'admin', fullname: 'Admin User', email: 'admin@example.com', role: 'ADMIN' },
-      { id: 2, username: 'student', fullname: 'Student User', email: 'student@example.com', role: 'USER' }
-    ];
-
-    const user = mockUsers.find(u => u.username === username && password === '123456');
-
-    if (user) {
-      const mockResponse: LoginResponse = {
-        success: true,
-        token: 'mock-jwt-token',
-        refreshToken: 'mock-refresh-token',
-        user
-      };
-      // เก็บ token และ user
-      localStorage.setItem(this.TOKEN_KEY, mockResponse.token!);
-      localStorage.setItem(this.REFRESH_TOKEN_KEY, mockResponse.refreshToken!);
-      localStorage.setItem(this.USER_KEY, JSON.stringify(mockResponse.user));
-      this.currentUserSubject.next(user);
-
-      console.log('✅ เข้าสู่ระบบสำเร็จ:', user);
-      return of(mockResponse);
-    } else {
-      return of({ success: false });
-    }
-
-    // ถ้ามี backend จริง uncomment ด้านล่าง
-    /*
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { username, password }).pipe(
-      map(res => {
-        if (res.success && res.token) {
-          localStorage.setItem(this.TOKEN_KEY, res.token);
-          localStorage.setItem(this.REFRESH_TOKEN_KEY, res.refreshToken!);
-          localStorage.setItem(this.USER_KEY, JSON.stringify(res.user));
-          this.currentUserSubject.next(res.user);
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, userData, { withCredentials: true }).pipe(
+      map(response => {
+        if (response.success && response.user) {
+          console.log('Register success', response.user);
+          return response;
         }
-        return res;
+        throw new Error(response.message || 'Registration failed');
       }),
-      catchError(err => throwError(() => err))
+      catchError(this.handleError)
     );
-    */
   }
 
-  // ----------------- LOGOUT -----------------
+  // ==================== LOGIN ====================
+  login(username: string, password: string): Observable<any> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { username, password }, { withCredentials: true }).pipe(
+      map(response => {
+        if (response.success) {
+          // สร้าง User object จาก response
+          const user: User = {
+            id: 0, // Backend ไม่ได้ส่ง id มา อาจต้องเรียก /me เพื่อดึงข้อมูลเต็ม
+            username: username,
+            fullname: response.fullname || '',
+            email: '', // Backend ไม่ได้ส่ง email มา
+            role: response.role as 'ADMIN' | 'USER'
+          };
+
+          localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+          this.currentUserSubject.next(user);
+
+          return response;
+        }
+        throw new Error(response.message || 'Login failed');
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  // ==================== LOGOUT ====================
   logout(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.REFRESH_TOKEN_KEY);
-    localStorage.removeItem(this.USER_KEY);
-    this.currentUserSubject.next(null);
-    console.log('👋 ออกจากระบบแล้ว');
+    this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe({
+      next: () => {
+        localStorage.removeItem(this.USER_KEY);
+        this.currentUserSubject.next(null);
+      },
+      error: () => {
+        // ลบ local data แม้ logout ไม่สำเร็จ
+        localStorage.removeItem(this.USER_KEY);
+        this.currentUserSubject.next(null);
+      }
+    });
   }
 
-  // ----------------- HELPERS -----------------
+  // ==================== LOAD CURRENT USER ====================
+  loadCurrentUser(): Observable<User> {
+    return this.http.get<AuthResponse>(`${this.apiUrl}/me`, { withCredentials: true }).pipe(
+      map(response => {
+        if (response.success && response.user) {
+          this.currentUserSubject.next(response.user);
+          return response.user;
+        }
+        throw new Error(response.message || 'Failed to load user');
+      }),
+      catchError(err => {
+        this.currentUserSubject.next(null);
+        return throwError(() => err);
+      })
+    );
+  }
+
   isLoggedIn(): boolean {
-    const token = this.getToken();
-    return !!token && !this.isTokenExpired(token);
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
-  }
-
-  getRefreshToken(): string | null {
-    return localStorage.getItem(this.REFRESH_TOKEN_KEY);
-  }
-
-  getCurrentUser(): User | null {
-    return this.currentUserValue;
+    return !!this.currentUserValue;
   }
 
   isAdmin(): boolean {
-    const user = this.currentUserValue;
-    return user?.role === 'ADMIN';
+    return this.currentUserValue?.role === 'ADMIN';
   }
 
   isUser(): boolean {
-    const user = this.currentUserValue;
-    return user?.role === 'USER';
+    return this.currentUserValue?.role === 'USER';
   }
 
   getRole(): string | null {
     return this.currentUserValue?.role || null;
   }
 
-  private isTokenExpired(token: string): boolean {
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return Date.now() > payload.exp * 1000;
-    } catch {
-      return true;
+  private handleError(error: HttpErrorResponse) {
+    let message = 'เกิดข้อผิดพลาด';
+
+    if (error.error?.message) {
+      message = error.error.message;
+    } else if (error.status === 0) {
+      message = 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้';
+    } else if (error.status === 401) {
+      message = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
+    } else if (error.status === 500) {
+      message = 'เกิดข้อผิดพลาดที่เซิร์ฟเวอร์';
     }
-  }
 
-  validateToken(): Observable<any> {
-    // ถ้าไม่มี backend ใช้ mock
-    if (this.isLoggedIn()) return of({ valid: true });
-    return of({ valid: false });
-
-    // ถ้ามี backend จริง uncomment
-    // return this.http.get(`${this.apiUrl}/validate`).pipe(
-    //   catchError(err => {
-    //     this.logout();
-    //     return throwError(() => err);
-    //   })
-    // );
+    console.error('API Error:', error);
+    return throwError(() => new Error(message));
   }
 }

@@ -2,9 +2,7 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Chart from 'chart.js/auto';
-import { routes } from './app.routes';
-import { AuthInterceptor } from './auth/auth.interceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { routes } from './app.routes';import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
@@ -21,12 +19,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
-    provideAnimations(),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    },
     providePrimeNG({
       theme: {
         preset: BlueAura
