@@ -318,7 +318,66 @@
   background-color: #8b5cf6 !important; /* hover ม่วงฟ้าเข้ม */
   color: #ffffff !important;
 }
+/* ============================= */
+/* 🔹 Grade Selector in Dialog Footer */
+::ng-deep .custom-p-select .p-select,
+::ng-deep .p-dialog-footer .p-select {
+  background-color: #ede9fe !important; /* ม่วงฟ้าอ่อนเหมือน input อื่น */
+  color: #5d3b80 !important;
+  border: 1px solid #c4b5fd !important;
+  border-radius: 0.5rem !important;
+  width: 100% !important;
+}
 
+::ng-deep .custom-p-select .p-select-label,
+::ng-deep .p-dialog-footer .p-select-label {
+  color: #5d3b80 !important;
+  background-color: #ede9fe !important; /* ม่วงฟ้าอ่อน */
+  font-weight: 600;
+}
 
+::ng-deep .custom-p-select .p-select-dropdown,
+::ng-deep .p-dialog-footer .p-select-dropdown {
+  background-color: #ede9fe !important;
+}
 
+::ng-deep .custom-p-select .p-select-dropdown-icon,
+::ng-deep .p-dialog-footer .p-select-dropdown-icon {
+  color: #5d3b80 !important;
+}
 
+/* เมื่อ hover */
+::ng-deep .custom-p-select .p-select:not(.p-disabled):hover,
+::ng-deep .p-dialog-footer .p-select:not(.p-disabled):hover {
+  border-color: #8b5cf6 !important; /* ม่วงฟ้าเข้ม */
+}
+
+/* เมื่อ focus */
+::ng-deep .custom-p-select .p-select:focus,
+::ng-deep .p-dialog-footer .p-select:focus {
+  outline: none !important;
+  border-color: #8b5cf6 !important;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Dropdown Panel */
+::ng-deep .custom-grade-panel,
+::ng-deep .p-select-overlay {
+  background-color: #ede9fe !important;
+  border: 1px solid #c4b5fd !important;
+  border-radius: 0.5rem !important;
+}
+
+::ng-deep .custom-grade-panel .p-select-option,
+::ng-deep .p-select-overlay .p-select-option {
+  background-color: #ede9fe !important;
+  color: #5d3b80 !important;
+}
+
+::ng-deep .custom-grade-panel .p-select-option:hover,
+::ng-deep .p-select-overlay .p-select-option:hover,
+::ng-deep .custom-grade-panel .p-select-option.p-focus,
+::ng-deep .p-select-overlay .p-select-option.p-focus {
+  background-color: #8b5cf6 !important;
+  color: #ffffff !important;
+}

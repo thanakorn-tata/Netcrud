@@ -31,7 +31,6 @@ interface MenuItem {
     ButtonModule,
     NgFor,
     TranslateModule,
-    FooterComponent
   ],
   animations: [
     trigger('slideDown', [
@@ -83,9 +82,6 @@ export class LayoutMainComponent {
     this.sidebarCollapsed = window.innerWidth <= 864;
   }
 
-  toggleSidebar(): void {
-    this.sidebarCollapsed = !this.sidebarCollapsed;
-  }
 
   toggleSubmenu(item: MenuItem): void {
     if (item.submenu) {
@@ -122,4 +118,9 @@ export class LayoutMainComponent {
       }
     });
   }
+  sidebarOpen = false;
+
+toggleSidebar() {
+  this.sidebarOpen = !this.sidebarOpen;
+}
 }

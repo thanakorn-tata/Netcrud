@@ -10,7 +10,9 @@
     "message": {
       "Pleaseselect": "กรุณาเลือก",
       "Pleaseenter": "กรุณากรอกข้อมูล",
-      "placeholder": "กรุณากรอกข้อมูลให้ครบถ้วน"
+      "placeholder": "กรุณากรอกข้อมูลให้ครบถ้วน",
+      "Pleaseenterex": "วันที่เริ่มและวันที่สิ้นสุด(เช่น 01/01/2025 - 31/4/2025)",
+      "Pleasesee": "AR Soft,AR DI,Tester,UX/UI,Account,HR"
 
     },
     "button": {
@@ -53,7 +55,7 @@
     "major": "สาขา",
     "contact_number": "เบอร์โทร",
     "email": "อีเมล",
-    "intern_department": "ฝ่ายที่ฝึกงาน",
+    "intern_department": "แผนก",
     "intern_duration": "ระยะเวลา",
     "grade": {
       "placeholder": "เลือกเกรด"
