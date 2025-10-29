@@ -1,305 +1,414 @@
 <div class="container max-w-full mx-auto">
   <p-toast></p-toast>
 
-  <!-- Loading Spinner -->
+ <!-- Loading Spinner -->
   <div *ngIf="loading" class="flex items-center justify-center h-64">
     <p-progressSpinner></p-progressSpinner>
   </div>
 
-  <div *ngIf="!loading" class="p-4 rounded-lg card bg-blue-50">
+  <div *ngIf="!loading" class="p-6 shadow-lg rounded-xl card bg-gradient-to-br from-blue-50 to-blue-100">
     <!-- Header -->
-    <h4 class="mt-2 mb-2 text-4xl font-bold text-blue-900">
-      {{
-        isViewOnly
-          ? "ดูข้อมูลนักศึกษา"
-          : isEditMode
-          ? ("student.search.editheader" | translate)
-          : ("student.search.headermanage" | translate)
-      }}
-    </h4>
-    <hr class="mb-4 border-blue-400" />
+    <div class="mb-6">
+      <h4 class="mb-2 text-4xl font-bold text-blue-900">
+        {{
+          isViewOnly
+            ? "ดูข้อมูลนักศึกษา"
+            : isEditMode
+            ? ("student.search.editheader" | translate)
+            : ("student.search.headermanage" | translate)
+        }}
+      </h4>
+      <div class="h-1 rounded-full bg-gradient-to-r from-blue-500 to-blue-300 w-28"></div>
+    </div>
 
     <!-- ✅ แสดงข้อความเตือนถ้าเป็นโหมดดูอย่างเดียว -->
-    <div *ngIf="isViewOnly" class="p-4 mb-4 border-l-4 border-yellow-400 rounded-md bg-yellow-50">
+    <div *ngIf="isViewOnly" class="p-4 mb-6 border-l-4 border-yellow-400 rounded-lg shadow-md bg-gradient-to-r from-yellow-50 to-yellow-100">
       <div class="flex items-center">
-        <i class="mr-3 text-2xl text-yellow-600 pi pi-lock"></i>
-        <div>
-          <p class="font-semibold text-yellow-800">โหมดดูข้อมูลเท่านั้น</p>
+        <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 bg-yellow-200 rounded-full">
+          <i class="text-2xl text-yellow-700 pi pi-lock"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-lg font-semibold text-yellow-900">โหมดดูข้อมูลเท่านั้น</p>
           <p class="text-sm text-yellow-700">คุณไม่มีสิทธิ์แก้ไขข้อมูลนักศึกษานี้</p>
         </div>
       </div>
     </div>
 
     <!-- ✅ แสดงข้อความสำหรับ Admin -->
-    <div *ngIf="!isViewOnly && isEditMode" class="p-4 mb-4 border-l-4 border-green-400 rounded-md bg-green-50">
+    <div *ngIf="!isViewOnly && isEditMode" class="p-4 mb-6 border-l-4 border-green-400 rounded-lg shadow-md bg-gradient-to-r from-green-50 to-green-100">
       <div class="flex items-center">
-        <i class="mr-3 text-2xl text-green-600 pi pi-check-circle"></i>
-        <div>
-          <p class="font-semibold text-green-800">โหมดแก้ไข</p>
+        <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 bg-green-200 rounded-full">
+          <i class="text-2xl text-green-700 pi pi-check-circle"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-lg font-semibold text-green-900">โหมดแก้ไข</p>
           <p class="text-sm text-green-700">คุณสามารถแก้ไขข้อมูลนักศึกษานี้ได้</p>
         </div>
       </div>
     </div>
 
-    <section class="mb-4 text-lg font-semibold text-blue-900">
-      {{ "common.message.placeholder" | translate }}
-    </section>
-
-    <!-- Student Form -->
-    <div class="grid gap-4 mb-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1">
-
-      <!-- Full Name -->
-      <div>
-        <label class="block mb-1 font-semibold text-blue-900">
-          <span class="mr-1 text-red-500">*</span>
-          {{ "student.fullname" | translate }}
-        </label>
-        <input
-          pInputText
-          type="text"
-          [(ngModel)]="student.fullname"
-          [disabled]="isViewOnly"
-          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-          required
-          class="w-full p-2 text-blue-900 border border-blue-300 rounded-md"
-          [ngClass]="{'bg-gray-100 cursor-not-allowed': isViewOnly, 'bg-blue-100': !isViewOnly}"
-        />
+    <!-- Student Form Card -->
+    <div class="p-6 bg-white shadow-xl rounded-xl">
+      <div class="mb-6">
+        <h5 class="text-2xl font-semibold text-blue-900">
+          {{ "common.message.placeholder" | translate }}
+        </h5>
+        <p class="text-sm text-blue-600">กรุณากรอกข้อมูลให้ครบถ้วน</p>
       </div>
 
-      <!-- University -->
-      <div>
-        <label class="block mb-1 font-semibold text-blue-900">
-          <span class="mr-1 text-red-500">*</span>
-          {{ "student.university" | translate }}
-        </label>
-        <input
-          pInputText
-          type="text"
-          [(ngModel)]="student.university"
-          [disabled]="isViewOnly"
-          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-          required
-          class="w-full p-2 text-blue-900 border border-blue-300 rounded-md"
-          [ngClass]="{'bg-gray-100 cursor-not-allowed': isViewOnly, 'bg-blue-100': !isViewOnly}"
-        />
-      </div>
+      <div class="grid gap-6 mb-6 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1">
 
-      <!-- Faculty -->
-      <div>
-        <label class="block mb-1 font-semibold text-blue-900">
-          <span class="mr-1 text-red-500">*</span>
-          {{ "student.faculty" | translate }}
-        </label>
-        <input
-          pInputText
-          type="text"
-          [(ngModel)]="student.faculty"
-          [disabled]="isViewOnly"
-          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-          required
-          class="w-full p-2 text-blue-900 border border-blue-300 rounded-md"
-          [ngClass]="{'bg-gray-100 cursor-not-allowed': isViewOnly, 'bg-blue-100': !isViewOnly}"
-        />
-      </div>
-
-      <!-- Major -->
-      <div>
-        <label class="block mb-1 font-semibold text-blue-900">
-          <span class="mr-1 text-red-500">*</span>
-          {{ "student.major" | translate }}
-        </label>
-        <input
-          pInputText
-          type="text"
-          [(ngModel)]="student.major"
-          [disabled]="isViewOnly"
-          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-          required
-          class="w-full p-2 text-blue-900 border border-blue-300 rounded-md"
-          [ngClass]="{'bg-gray-100 cursor-not-allowed': isViewOnly, 'bg-blue-100': !isViewOnly}"
-        />
-      </div>
-
-      <!-- Contact Number -->
-      <div>
-        <label class="block mb-1 font-semibold text-blue-900">
-          <span class="mr-1 text-red-500">*</span>
-          {{ "student.contact_number" | translate }}
-        </label>
-        <input
-          pInputText
-          type="tel"
-          [(ngModel)]="student.contact_number"
-          [disabled]="isViewOnly"
-          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-          required
-          class="w-full p-2 text-blue-900 border border-blue-300 rounded-md"
-          [ngClass]="{'bg-gray-100 cursor-not-allowed': isViewOnly, 'bg-blue-100': !isViewOnly}"
-        />
-      </div>
-
-      <!-- Email -->
-      <div>
-        <label class="block mb-1 font-semibold text-blue-900">
-          <span class="mr-1 text-red-500">*</span>
-          {{ "student.email" | translate }}
-        </label>
-        <input
-          pInputText
-          type="email"
-          [(ngModel)]="student.email"
-          [disabled]="isViewOnly"
-          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-          required
-          class="w-full p-2 text-blue-900 border border-blue-300 rounded-md"
-          [ngClass]="{'bg-gray-100 cursor-not-allowed': isViewOnly, 'bg-blue-100': !isViewOnly}"
-        />
-      </div>
-
-      <!-- Internship Department -->
-      <div>
-        <label class="block mb-1 font-semibold text-blue-900">
-          <span class="mr-1 text-red-500">*</span>
-          {{ "student.intern_department" | translate }}
-        </label>
-        <input
-          pInputText
-          type="text"
-          [(ngModel)]="student.intern_department"
-          [disabled]="isViewOnly"
-          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-          required
-          class="w-full p-2 text-blue-900 border border-blue-300 rounded-md"
-          [ngClass]="{'bg-gray-100 cursor-not-allowed': isViewOnly, 'bg-blue-100': !isViewOnly}"
-        />
-      </div>
-
-      <!-- Internship Duration -->
-      <div>
-        <label class="block mb-1 font-semibold text-blue-900">
-          <span class="mr-1 text-red-500">*</span>
-          {{ "student.intern_duration" | translate }}
-        </label>
-        <input
-          pInputText
-          type="text"
-          [(ngModel)]="student.intern_duration"
-          [disabled]="isViewOnly"
-          placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-          required
-          class="w-full p-2 text-blue-900 border border-blue-300 rounded-md"
-          [ngClass]="{'bg-gray-100 cursor-not-allowed': isViewOnly, 'bg-blue-100': !isViewOnly}"
-        />
-      </div>
-
-      <p-divider class="col-span-2 border-blue-500 border-t-1"></p-divider>
-
-      <!-- Upload Profile Image -->
-      <div>
-        <label class="block mb-1 font-semibold text-blue-900">
-          <span class="mr-1 text-red-500">*</span>
-          {{ "common.button.Upload" | translate }}
-        </label>
-
-        <!-- ✅ แสดงปุ่ม Upload เฉพาะเมื่อไม่ใช่ View-Only -->
-        <label
-          *ngIf="!isViewOnly"
-          class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200"
-        >
-          <i class="mr-2 text-xl text-blue-600 pi pi-image"></i>
-          <span class="text-blue-900">
-            {{ "common.button.Upload" | translate }}
-          </span>
-          <input
-            type="file"
-            accept="image/*"
-            class="hidden"
-            (change)="onProfileChange($event)"
-            #profileInput
-          />
-        </label>
-
-        <!-- ✅ แสดงข้อความแทนปุ่มเมื่อเป็น View-Only -->
-        <div
-          *ngIf="isViewOnly"
-          class="flex items-center justify-center w-full p-2 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed"
-        >
-          <i class="mr-2 text-xl text-gray-400 pi pi-lock"></i>
-          <span class="text-gray-500">ไม่สามารถอัปโหลดได้</span>
-        </div>
-
-        <div *ngIf="profilePreview" class="mt-3">
-          <div class="p-2 bg-white border-2 border-blue-300 rounded-lg shadow-sm" style="width: fit-content;">
-            <img
-              [src]="profilePreview"
-              alt="Profile Preview"
-              class="object-cover rounded-md"
-              style="width: 250px; height: 250px;"
+        <!-- Full Name -->
+        <div class="form-group">
+          <label class="block mb-2 text-sm font-semibold text-blue-900">
+            <span class="mr-1 text-red-500">*</span>
+            {{ "student.fullname" | translate }}
+          </label>
+          <div class="relative">
+            <span class="absolute text-blue-400 transform -translate-y-1/2 left-3 top-1/2">
+              <i class="pi pi-user"></i>
+            </span>
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="student.fullname"
+              [disabled]="isViewOnly"
+              placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+              required
+              class="w-full py-3 pl-10 pr-4 transition-all duration-200 border-2 rounded-lg"
+              [ngClass]="{
+                'bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed': isViewOnly,
+                'bg-blue-50 border-blue-200 text-blue-900 hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200': !isViewOnly
+              }"
             />
           </div>
         </div>
-      </div>
 
-      <!-- Upload Project File -->
-      <div>
-        <label class="block mb-1 font-semibold text-blue-900">
-          <span class="mr-1 text-red-500">*</span>
-          {{ "common.button.Upload1" | translate }}
-        </label>
-
-        <!-- ✅ แสดงปุ่ม Upload เฉพาะเมื่อไม่ใช่ View-Only -->
-        <label
-          *ngIf="!isViewOnly"
-          class="flex items-center justify-center w-full p-2 bg-blue-100 border border-blue-300 rounded-md cursor-pointer hover:bg-blue-200"
-        >
-          <i class="mr-2 text-xl text-blue-600 pi pi-cloud-upload"></i>
-          <span class="text-blue-900">
-            {{ "common.button.Upload1" | translate }}
-          </span>
-          <input
-            type="file"
-            accept=".pdf,.doc,.docx,.zip"
-            class="hidden"
-            (change)="onProjectChange($event)"
-            #projectInput
-          />
-        </label>
-
-        <!-- ✅ แสดงข้อความแทนปุ่มเมื่อเป็น View-Only -->
-        <div
-          *ngIf="isViewOnly"
-          class="flex items-center justify-center w-full p-2 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed"
-        >
-          <i class="mr-2 text-xl text-gray-400 pi pi-lock"></i>
-          <span class="text-gray-500">ไม่สามารถอัปโหลดได้</span>
+        <!-- University -->
+        <div class="form-group">
+          <label class="block mb-2 text-sm font-semibold text-blue-900">
+            <span class="mr-1 text-red-500">*</span>
+            {{ "student.university" | translate }}
+          </label>
+          <div class="relative">
+            <span class="absolute text-blue-400 transform -translate-y-1/2 left-3 top-1/2">
+              <i class="pi pi-building"></i>
+            </span>
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="student.university"
+              [disabled]="isViewOnly"
+              placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+              required
+              class="w-full py-3 pl-10 pr-4 transition-all duration-200 border-2 rounded-lg"
+              [ngClass]="{
+                'bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed': isViewOnly,
+                'bg-blue-50 border-blue-200 text-blue-900 hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200': !isViewOnly
+              }"
+            />
+          </div>
         </div>
 
-        <!-- ✅ แสดงชื่อไฟล์พร้อมปุ่มดาวน์โหลด -->
-        <div *ngIf="projectFileName" class="p-3 mt-3 bg-blue-100 border border-blue-300 rounded-md">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center flex-1 min-w-0 gap-2">
-              <i class="flex-shrink-0 text-lg text-blue-600 pi pi-file"></i>
-              <span class="text-sm text-blue-900 truncate" [title]="projectFileName">
-                {{ projectFileName }}
-              </span>
-            </div>
-            <p-button
-              icon="pi pi-download"
-              label="ดาวน์โหลด"
-              (onClick)="downloadProjectFile()"
-              size="small"
-              [outlined]="true"
-              styleClass="p-button-sm ml-2"
-              severity="info"
-            ></p-button>
+        <!-- Faculty -->
+        <div class="form-group">
+          <label class="block mb-2 text-sm font-semibold text-blue-900">
+            <span class="mr-1 text-red-500">*</span>
+            {{ "student.faculty" | translate }}
+          </label>
+          <div class="relative">
+            <span class="absolute text-blue-400 transform -translate-y-1/2 left-3 top-1/2">
+              <i class="pi pi-book"></i>
+            </span>
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="student.faculty"
+              [disabled]="isViewOnly"
+              placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+              required
+              class="w-full py-3 pl-10 pr-4 transition-all duration-200 border-2 rounded-lg"
+              [ngClass]="{
+                'bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed': isViewOnly,
+                'bg-blue-50 border-blue-200 text-blue-900 hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200': !isViewOnly
+              }"
+            />
+          </div>
+        </div>
+
+        <!-- Major -->
+        <div class="form-group">
+          <label class="block mb-2 text-sm font-semibold text-blue-900">
+            <span class="mr-1 text-red-500">*</span>
+            {{ "student.major" | translate }}
+          </label>
+          <div class="relative">
+            <span class="absolute text-blue-400 transform -translate-y-1/2 left-3 top-1/2">
+              <i class="pi pi-graduation-cap"></i>
+            </span>
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="student.major"
+              [disabled]="isViewOnly"
+              placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+              required
+              class="w-full py-3 pl-10 pr-4 transition-all duration-200 border-2 rounded-lg"
+              [ngClass]="{
+                'bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed': isViewOnly,
+                'bg-blue-50 border-blue-200 text-blue-900 hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200': !isViewOnly
+              }"
+            />
+          </div>
+        </div>
+
+        <!-- Contact Number -->
+        <div class="form-group">
+          <label class="block mb-2 text-sm font-semibold text-blue-900">
+            <span class="mr-1 text-red-500">*</span>
+            {{ "student.contact_number" | translate }}
+          </label>
+          <div class="relative">
+            <span class="absolute text-blue-400 transform -translate-y-1/2 left-3 top-1/2">
+              <i class="pi pi-phone"></i>
+            </span>
+            <input
+              pInputText
+              type="tel"
+              [(ngModel)]="student.contact_number"
+              [disabled]="isViewOnly"
+              placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+              required
+              class="w-full py-3 pl-10 pr-4 transition-all duration-200 border-2 rounded-lg"
+              [ngClass]="{
+                'bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed': isViewOnly,
+                'bg-blue-50 border-blue-200 text-blue-900 hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200': !isViewOnly
+              }"
+            />
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="block mb-2 text-sm font-semibold text-blue-900">
+            <span class="mr-1 text-red-500">*</span>
+            {{ "student.email" | translate }}
+          </label>
+          <div class="relative">
+            <span class="absolute text-blue-400 transform -translate-y-1/2 left-3 top-1/2">
+              <i class="pi pi-envelope"></i>
+            </span>
+            <input
+              pInputText
+              type="email"
+              [(ngModel)]="student.email"
+              [disabled]="isViewOnly"
+              placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+              required
+              class="w-full py-3 pl-10 pr-4 transition-all duration-200 border-2 rounded-lg"
+              [ngClass]="{
+                'bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed': isViewOnly,
+                'bg-blue-50 border-blue-200 text-blue-900 hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200': !isViewOnly
+              }"
+            />
+          </div>
+        </div>
+
+        <!-- Internship Department -->
+        <div class="form-group">
+          <label class="block mb-2 text-sm font-semibold text-blue-900">
+            <span class="mr-1 text-red-500">*</span>
+            {{ "student.intern_department" | translate }}
+          </label>
+          <div class="relative">
+            <span class="absolute text-blue-400 transform -translate-y-1/2 left-3 top-1/2">
+              <i class="pi pi-briefcase"></i>
+            </span>
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="student.intern_department"
+              [disabled]="isViewOnly"
+              placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+              required
+              class="w-full py-3 pl-10 pr-4 transition-all duration-200 border-2 rounded-lg"
+              [ngClass]="{
+                'bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed': isViewOnly,
+                'bg-blue-50 border-blue-200 text-blue-900 hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200': !isViewOnly
+              }"
+            />
+          </div>
+        </div>
+
+        <!-- Internship Duration -->
+        <div class="form-group">
+          <label class="block mb-2 text-sm font-semibold text-blue-900">
+            <span class="mr-1 text-red-500">*</span>
+            {{ "student.intern_duration" | translate }}
+          </label>
+          <div class="relative">
+            <span class="absolute text-blue-400 transform -translate-y-1/2 left-3 top-1/2">
+              <i class="pi pi-calendar"></i>
+            </span>
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="student.intern_duration"
+              [disabled]="isViewOnly"
+              placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+              required
+              class="w-full py-3 pl-10 pr-4 transition-all duration-200 border-2 rounded-lg"
+              [ngClass]="{
+                'bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed': isViewOnly,
+                'bg-blue-50 border-blue-200 text-blue-900 hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200': !isViewOnly
+              }"
+            />
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Divider -->
+      <div class="my-8">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t-2 border-blue-200"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-4 text-blue-600 bg-white">ไฟล์แนบ</span>
           </div>
         </div>
       </div>
 
+      <!-- File Upload Section -->
+      <div class="grid gap-6 mb-6 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1">
+
+        <!-- Upload Profile Image -->
+        <div class="form-group">
+          <label class="block mb-2 text-sm font-semibold text-blue-900">
+            <span class="mr-1 text-red-500">*</span>
+            {{ "common.button.Upload" | translate }}
+          </label>
+
+          <!-- ✅ แสดงปุ่ม Upload เฉพาะเมื่อไม่ใช่ View-Only -->
+          <label
+            *ngIf="!isViewOnly"
+            class="relative flex flex-col items-center justify-center w-full px-4 py-6 transition-all duration-200 border-2 border-blue-300 border-dashed rounded-lg cursor-pointer bg-blue-50 hover:bg-blue-100 hover:border-blue-400 group"
+          >
+            <div class="flex flex-col items-center">
+              <div class="flex items-center justify-center w-16 h-16 mb-3 transition-all duration-200 bg-blue-200 rounded-full group-hover:bg-blue-300">
+                <i class="text-3xl text-blue-600 pi pi-image"></i>
+              </div>
+              <span class="text-sm font-medium text-blue-900">
+                <span class="font-semibold">คลิกเพื่ออัปโหลด</span> หรือลากไฟล์มาวาง
+              </span>
+              <span class="mt-1 text-xs text-blue-500">PNG, JPG, JPEG (สูงสุด 5MB)</span>
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              class="hidden"
+              (change)="onProfileChange($event)"
+              #profileInput
+            />
+          </label>
+
+          <!-- ✅ แสดงข้อความแทนปุ่มเมื่อเป็น View-Only -->
+          <div
+            *ngIf="isViewOnly"
+            class="flex flex-col items-center justify-center w-full px-4 py-6 border-2 border-gray-200 border-dashed rounded-lg cursor-not-allowed bg-gray-50"
+          >
+            <div class="flex items-center justify-center w-16 h-16 mb-3 bg-gray-200 rounded-full">
+              <i class="text-3xl text-gray-400 pi pi-lock"></i>
+            </div>
+            <span class="text-sm font-medium text-gray-500">ไม่สามารถอัปโหลดได้</span>
+          </div>
+
+          <div *ngIf="profilePreview" class="mt-4">
+            <div class="overflow-hidden border-2 border-blue-200 rounded-lg shadow-md" style="width: fit-content;">
+              <img
+                [src]="profilePreview"
+                alt="Profile Preview"
+                class="object-cover"
+                style="width: 250px; height: 250px;"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Project File -->
+        <div class="form-group">
+          <label class="block mb-2 text-sm font-semibold text-blue-900">
+            <span class="mr-1 text-red-500">*</span>
+            {{ "common.button.Upload1" | translate }}
+          </label>
+
+          <!-- ✅ แสดงปุ่ม Upload เฉพาะเมื่อไม่ใช่ View-Only -->
+          <label
+            *ngIf="!isViewOnly"
+            class="relative flex flex-col items-center justify-center w-full px-4 py-6 transition-all duration-200 border-2 border-blue-300 border-dashed rounded-lg cursor-pointer bg-blue-50 hover:bg-blue-100 hover:border-blue-400 group"
+          >
+            <div class="flex flex-col items-center">
+              <div class="flex items-center justify-center w-16 h-16 mb-3 transition-all duration-200 bg-blue-200 rounded-full group-hover:bg-blue-300">
+                <i class="text-3xl text-blue-600 pi pi-cloud-upload"></i>
+              </div>
+              <span class="text-sm font-medium text-blue-900">
+                <span class="font-semibold">คลิกเพื่ือัปโหลด</span> หรือลากไฟล์มาวาง
+              </span>
+              <span class="mt-1 text-xs text-blue-500">PDF, DOC, DOCX, ZIP (สูงสุด 10MB)</span>
+            </div>
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx,.zip"
+              class="hidden"
+              (change)="onProjectChange($event)"
+              #projectInput
+            />
+          </label>
+
+          <!-- ✅ แสดงข้อความแทนปุ่มเมื่อเป็น View-Only -->
+          <div
+            *ngIf="isViewOnly"
+            class="flex flex-col items-center justify-center w-full px-4 py-6 border-2 border-gray-200 border-dashed rounded-lg cursor-not-allowed bg-gray-50"
+          >
+            <div class="flex items-center justify-center w-16 h-16 mb-3 bg-gray-200 rounded-full">
+              <i class="text-3xl text-gray-400 pi pi-lock"></i>
+            </div>
+            <span class="text-sm font-medium text-gray-500">ไม่สามารถอัปโหลดได้</span>
+          </div>
+
+          <!-- ✅ แสดงชื่อไฟล์พร้อมปุ่มดาวน์โหลด -->
+          <div *ngIf="projectFileName" class="p-4 mt-4 border-2 border-blue-200 rounded-lg shadow-sm bg-blue-50">
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center flex-1 min-w-0 gap-3">
+                <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-blue-200 rounded-lg">
+                  <i class="text-lg text-blue-600 pi pi-file"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-blue-900 truncate" [title]="projectFileName">
+                    {{ projectFileName }}
+                  </p>
+                  <p class="text-xs text-blue-500">ไฟล์โครงงาน</p>
+                </div>
+              </div>
+              <p-button
+                icon="pi pi-download"
+                label="ดาวน์โหลด"
+                (onClick)="downloadProjectFile()"
+                size="small"
+                [outlined]="true"
+                styleClass="p-button-sm flex-shrink-0"
+                severity="info"
+              ></p-button>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- Buttons -->
-    <div class="flex justify-center gap-2 mt-8">
+    <div class="flex justify-center gap-3 mt-8">
       <!-- ✅ ปุ่มบันทึก - แสดงเฉพาะเมื่อไม่ใช่ View-Only -->
       <p-button
         *ngIf="!isViewOnly"
@@ -307,7 +416,8 @@
         icon="pi pi-save"
         (onClick)="onSave()"
         [loading]="loading"
-        styleClass="p-button-primary p-button-sm"
+        styleClass="p-button-primary p-button-lg shadow-lg hover:shadow-xl transition-all"
+        [style]="{'padding': '0.75rem 2rem'}"
       ></p-button>
 
       <!-- ✅ ปุ่มยกเลิก/กลับ - แสดงเสมอ -->
@@ -315,9 +425,11 @@
         [label]="isViewOnly ? 'กลับ' : ('common.button.cancel' | translate)"
         [icon]="isViewOnly ? 'pi pi-arrow-left' : 'pi pi-times'"
         (onClick)="onCancel()"
-        [variant]="isViewOnly ? 'outlined' : 'outlined'"
+        [variant]="'outlined'"
         [disabled]="loading"
-        styleClass="p-button-primary p-button-sm"
+        styleClass="p-button-lg shadow-lg hover:shadow-xl transition-all"
+        [severity]="isViewOnly ? 'secondary' : 'secondary'"
+        [style]="{'padding': '0.75rem 2rem'}"
       ></p-button>
     </div>
   </div>

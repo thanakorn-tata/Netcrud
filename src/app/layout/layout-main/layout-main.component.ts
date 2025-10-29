@@ -8,6 +8,7 @@ import { NgFor } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FooterComponent } from '../footer/footer.component';
 import { AuthService, User } from '../../services/test/auth.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 interface MenuItem {
   label: string;
@@ -31,6 +32,18 @@ interface MenuItem {
     NgFor,
     TranslateModule,
     FooterComponent
+  ],
+  animations: [
+    trigger('slideDown', [
+      transition(':enter', [
+        style({ height: '0', opacity: 0, overflow: 'hidden' }),
+        animate('300ms ease-in-out', style({ height: '*', opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ height: '*', opacity: 1, overflow: 'hidden' }),
+        animate('300ms ease-in-out', style({ height: '0', opacity: 0 }))
+      ])
+    ])
   ]
 })
 export class LayoutMainComponent {
@@ -92,41 +105,10 @@ export class LayoutMainComponent {
       routerLink: '/student'
     },
     {
-      label: 'แผนก',
+      label: 'รายชื่อนักศึกษา',
       icon: PrimeIcons.BUILDING,
-      expanded: false,
-      submenu: [
-        {
-          label: 'AR soft',
-          icon: PrimeIcons.DESKTOP,
-          routerLink: '/arsoft'
-        },
-        {
-          label: 'AR DI',
-          icon: PrimeIcons.DOLLAR,
-          routerLink: '/ardi'
-        },
-        {
-          label: 'Tester',
-          icon: PrimeIcons.USER,
-          routerLink: '/tester'
-        },
-        {
-          label: 'UX/UI',
-          icon: PrimeIcons.CHART_LINE,
-          routerLink: '/uxui'
-        },
-        {
-          label: 'Accounting',
-          icon: PrimeIcons.SHOPPING_CART,
-          routerLink: '/accounting'
-        },
-        {
-          label: 'Human Resources',
-          icon: PrimeIcons.SHOPPING_CART,
-          routerLink: '/hr'
-        }
-      ]
+      routerLink: '/studentview'
+
     }
   ];
 

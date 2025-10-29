@@ -1,202 +1,301 @@
 <div class="container max-w-full p-4">
-  <div class="p-4 text-blue-900 rounded-lg">
+  <div class="p-6 text-blue-900 shadow-xl rounded-xl bg-gradient-to-br from-purple-50 to-blue-50">
+
     <!-- Accordion -->
-    <div class="mb-4">
+    <div class="mb-6">
       <p-accordion [activeIndex]="0" styleClass="mb-5">
         <p-accordionTab
           [header]="'student.search.header' | translate"
           [headerStyle]="{
-            'background-color': '#8b5cf6',
-            color: '#ffffff',
-            'font-weight': '600'
+            'background': 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)',
+            'color': '#ffffff',
+            'font-weight': '600',
+            'border-radius': '0.75rem 0.75rem 0 0',
+            'padding': '1rem 1.5rem',
+            'box-shadow': '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
           }"
-          [contentStyle]="{ 'background-color': '#ede9fe', color: '#5d3b80' }"
+          [contentStyle]="{
+            'background-color': '#ffffff',
+            'color': '#5d3b80',
+            'border-radius': '0 0 0.75rem 0.75rem',
+            'padding': '1.5rem',
+            'box-shadow': '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+          }"
         >
           <!-- ฟอร์มค้นหา -->
-          <div class="grid gap-4 text-white lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
+          <div class="grid gap-5 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
+
             <!-- Full Name -->
-            <div>
-              <label class="block mb-2 font-semibold text-blue-900">
+            <div class="form-group">
+              <label class="block mb-2 text-sm font-semibold text-purple-900">
                 {{ 'student.fullname' | translate }}
               </label>
-              <input
-                type="text"
-                [(ngModel)]="searchFilters.fullname"
-                class="w-full p-2 text-black border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-              />
+              <div class="relative">
+                <input
+                  type="text"
+                  [(ngModel)]="searchFilters.fullname"
+                  class="w-full py-2.5 pl-10 pr-4 text-purple-900 bg-purple-50 border-2 border-purple-200 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 hover:border-purple-300"
+                  placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+                />
+              </div>
             </div>
 
             <!-- University -->
-            <div>
-              <label class="block mb-2 font-semibold text-blue-900">
+            <div class="form-group">
+              <label class="block mb-2 text-sm font-semibold text-purple-900">
                 {{ 'student.university' | translate }}
               </label>
-              <input
-                type="text"
-                [(ngModel)]="searchFilters.university"
-                class="w-full p-2 text-black border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-              />
+              <div class="relative">
+                <input
+                  type="text"
+                  [(ngModel)]="searchFilters.university"
+                  class="w-full py-2.5 pl-10 pr-4 text-purple-900 bg-purple-50 border-2 border-purple-200 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 hover:border-purple-300"
+                  placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+                />
+              </div>
             </div>
 
             <!-- Faculty -->
-            <div>
-              <label class="block mb-2 font-semibold text-blue-900">
+            <div class="form-group">
+              <label class="block mb-2 text-sm font-semibold text-purple-900">
                 {{ 'student.faculty' | translate }}
               </label>
-              <input
-                type="text"
-                [(ngModel)]="searchFilters.faculty"
-                class="w-full p-2 text-black border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-              />
+              <div class="relative">
+                <input
+                  type="text"
+                  [(ngModel)]="searchFilters.faculty"
+                  class="w-full py-2.5 pl-10 pr-4 text-purple-900 bg-purple-50 border-2 border-purple-200 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 hover:border-purple-300"
+                  placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+                />
+              </div>
             </div>
 
             <!-- Major -->
-            <div>
-              <label class="block mb-2 font-semibold text-blue-900">
+            <div class="form-group">
+              <label class="block mb-2 text-sm font-semibold text-purple-900">
                 {{ 'student.major' | translate }}
               </label>
-              <input
-                type="text"
-                [(ngModel)]="searchFilters.major"
-                class="w-full p-2 text-black border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="{{ 'common.message.Pleaseenter' | translate }}"
-              />
+              <div class="relative">
+                <input
+                  type="text"
+                  [(ngModel)]="searchFilters.major"
+                  class="w-full py-2.5 pl-10 pr-4 text-purple-900 bg-purple-50 border-2 border-purple-200 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 hover:border-purple-300"
+                  placeholder="{{ 'common.message.Pleaseenter' | translate }}"
+                />
+              </div>
             </div>
           </div>
 
           <!-- Buttons -->
-          <div class="flex justify-center gap-2 mt-6">
-  <!-- ปุ่ม Search -->
-  <p-button
-    [label]="'common.button.search' | translate"
-    icon="pi pi-search"
-    (onClick)="onSearch()"
-    styleClass="p-button-sm bg-purple-500 border-purple-500 text-white hover:bg-purple-600"
-  ></p-button>
+          <div class="flex justify-center gap-3 mt-6">
+            <!-- ปุ่ม Search -->
+            <p-button
+              [label]="'common.button.search' | translate"
+              icon="pi pi-search"
+              (onClick)="onSearch()"
+              styleClass="p-button-sm px-6 bg-purple-600 border-purple-600 text-white hover:bg-purple-700 shadow-md hover:shadow-lg transition-all"
+            ></p-button>
 
-  <!-- ปุ่ม Clear -->
-  <p-button
-    [label]="'common.button.clear' | translate"
-    icon="pi pi-refresh"
-    variant="outlined"
-    (onClick)="onClear()"
-    styleClass="p-button-sm border-purple-500 text-purple-500 hover:bg-purple-100"
-  ></p-button>
-</div>
+            <!-- ปุ่ม Clear -->
+            <p-button
+              [label]="'common.button.clear' | translate"
+              icon="pi pi-refresh"
+              variant="outlined"
+              (onClick)="onClear()"
+              styleClass="p-button-sm px-6 border-2 border-purple-600 text-purple-600 hover:bg-purple-50 shadow-md hover:shadow-lg transition-all"
+            ></p-button>
+          </div>
         </p-accordionTab>
       </p-accordion>
     </div>
 
     <!-- Header + Add button -->
-    <div class="flex items-center justify-between my-4">
-      <h4 class="font-semibold text-blue-900">
-        {{ 'student.list.header' | translate }}
-        <span *ngIf="!isAdmin" class="ml-2 text-sm text-gray-600">
-          ({{ 'student.list.userinfo' | translate }})
-        </span>
-      </h4>
-      <p-button
-        [label]="'common.button.add' | translate"
-        icon="pi pi-plus-circle"
-        (onClick)="openPage()"
-        styleClass="p-button-sm bg-blue-500 border-blue-500 text-white hover:bg-blue-600"
-      ></p-button>
+    <div class="p-5 mb-5 bg-white shadow-lg rounded-xl">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h4 class="text-2xl font-bold text-purple-900">
+            {{ 'student.list.header' | translate }}
+          </h4>
+          <p *ngIf="!isAdmin" class="mt-1 text-sm text-gray-600">
+            <i class="mr-1 pi pi-info-circle"></i>
+            {{ 'student.list.userinfo' | translate }}
+          </p>
+        </div>
+        <p-button
+          [label]="'common.button.add' | translate"
+          icon="pi pi-plus-circle"
+          (onClick)="openPage()"
+          styleClass="p-button-sm px-6 bg-gradient-to-r from-blue-500 to-blue-600 border-0 text-white hover:from-blue-600 hover:to-blue-700 shadow-lg hover:shadow-xl transition-all"
+        ></p-button>
+      </div>
     </div>
-    <hr class="border-blue-400" />
 
-    <!-- Table -->
-    <p-table
-      stripedRows
-      [value]="filteredStudents"
-      [totalRecords]="totalRecords"
-      [paginator]="true"
-      [rowHover]="true"
-      [rows]="rows"
-      styleClass="p-datatable-striped"
-      [tableStyle]="{ 'min-width': '80rem' }"
-    >
-      <!-- Header -->
-      <ng-template pTemplate="header">
-        <tr>
-          <th class="text-center" style="width: 5%">{{ 'common.table.no' | translate }}</th>
-          <th style="width: 12%">{{ 'student.fullname' | translate }}</th>
-          <th style="width: 10%">{{ 'student.university' | translate }}</th>
-          <th style="width: 10%">{{ 'student.faculty' | translate }}</th>
-          <th style="width: 10%">{{ 'student.major' | translate }}</th>
-          <th style="width: 8%">{{ 'student.contact_number' | translate }}</th>
-          <th style="width: 10%">{{ 'student.email' | translate }}</th>
-          <th style="width: 10%">{{ 'student.intern_department' | translate }}</th>
-          <th style="width: 10%">{{ 'student.intern_duration' | translate }}</th>
-          <th class="text-center" style="width: 8%">Grade</th>
-          <th class="text-center" style="width: 10%">{{ 'common.table.manage' | translate }}</th>
-        </tr>
-      </ng-template>
+    <!-- Table Card -->
+    <div class="overflow-hidden bg-white shadow-xl rounded-xl">
+      <!-- Table -->
+      <p-table
+        stripedRows
+        [value]="filteredStudents"
+        [totalRecords]="totalRecords"
+        [paginator]="true"
+        [rowHover]="true"
+        [rows]="rows"
+        styleClass="p-datatable-striped"
+        [tableStyle]="{ 'min-width': '80rem' }"
+      >
+        <!-- Header -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="text-center" style="width: 5%">{{ 'common.table.no' | translate }}</th>
+            <th style="width: 12%">{{ 'student.fullname' | translate }}</th>
+            <th style="width: 10%">{{ 'student.university' | translate }}</th>
+            <th style="width: 10%">{{ 'student.faculty' | translate }}</th>
+            <th style="width: 10%">{{ 'student.major' | translate }}</th>
+            <th style="width: 8%">{{ 'student.contact_number' | translate }}</th>
+            <th style="width: 10%">{{ 'student.email' | translate }}</th>
+            <th style="width: 10%">{{ 'student.intern_department' | translate }}</th>
+            <th style="width: 10%">{{ 'student.intern_duration' | translate }}</th>
+            <th class="text-center" style="width: 8%">Grade</th>
+            <th class="text-center" style="width: 10%">{{ 'common.table.manage' | translate }}</th>
+          </tr>
+        </ng-template>
 
-      <!-- Body -->
-      <ng-template pTemplate="body" let-student let-rowIndex="rowIndex">
-        <tr>
-          <td class="text-center text-black">{{ rowIndex + 1 }}</td>
-          <td>{{ student.fullname }}</td>
-          <td>{{ student.university }}</td>
-          <td>{{ student.faculty }}</td>
-          <td>{{ student.major }}</td>
-          <td>{{ student.contact_number }}</td>
-          <td>{{ student.email }}</td>
-          <td>{{ student.intern_department }}</td>
-          <td>{{ student.intern_duration }}</td>
-          <td class="text-center">
-            <p-select
-              *ngIf="isAdmin"
-              [(ngModel)]="student.grade"
-              [options]="gradeOptions"
-              optionLabel="label"
-              optionValue="value"
-              placeholder="{{ 'student.grade.placeholder' | translate }}"
-              (onChange)="onGradeChange(student)"
-              styleClass="w-full"
-              appendTo="body"
-            ></p-select>
+        <!-- Body -->
+        <ng-template pTemplate="body" let-student let-rowIndex="rowIndex">
+          <tr>
+            <td class="text-center text-black">{{ rowIndex + 1 }}</td>
+            <td>{{ student.fullname }}</td>
+            <td>{{ student.university }}</td>
+            <td>{{ student.faculty }}</td>
+            <td>{{ student.major }}</td>
+            <td>{{ student.contact_number }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.intern_department }}</td>
+            <td>{{ student.intern_duration }}</td>
+            <td class="text-center">
+              <p-select
+                *ngIf="isAdmin"
+                [(ngModel)]="student.grade"
+                [options]="gradeOptions"
+                optionLabel="label"
+                optionValue="value"
+                placeholder="{{ 'student.grade.placeholder' | translate }}"
+                (onChange)="onGradeChange(student)"
+                styleClass="w-full"
+                appendTo="body"
+              ></p-select>
 
-            <span *ngIf="!isAdmin" class="font-semibold" [class]="getGradeColor(student.grade)">
-              {{ student.grade || '-' }}
-            </span>
-          </td>
-          <td class="text-center">
-            <!-- Admin actions -->
-            <span *ngIf="isAdmin" class="text-blue-600 cursor-pointer pi pi-pencil" (click)="openPage(student.id)" title="{{ 'common.button.edit' | translate }}"></span>
-            <span *ngIf="isAdmin" class="ml-2 text-red-600 cursor-pointer pi pi-trash" (click)="deleteStudent(student.id)" title="{{ 'common.button.delete' | translate }}"></span>
+              <span *ngIf="!isAdmin" class="font-semibold" [class]="getGradeColor(student.grade)">
+                {{ student.grade || '-' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <div class="flex items-center justify-center gap-2">
+                <!-- Admin actions -->
+                <button
+                  *ngIf="isAdmin"
+                  class="p-2 text-blue-600 transition-all rounded-lg hover:bg-blue-100 hover:text-blue-700"
+                  (click)="openPage(student.id)"
+                  title="{{ 'common.button.edit' | translate }}"
+                >
+                  <i class="pi pi-pencil"></i>
+                </button>
+                <button
+                  *ngIf="isAdmin"
+                  class="p-2 text-red-600 transition-all rounded-lg hover:bg-red-100 hover:text-red-700"
+                  (click)="deleteStudent(student.id)"
+                  title="{{ 'common.button.delete' | translate }}"
+                >
+                  <i class="pi pi-trash"></i>
+                </button>
 
-            <!-- User actions -->
-            <span *ngIf="!isAdmin && isMyStudent(student)" class="text-blue-600 cursor-pointer pi pi-pencil" (click)="openPage(student.id)" title="{{ 'common.button.edit' | translate }}"></span>
-            <span *ngIf="!isAdmin && isMyStudent(student)" class="ml-2 text-red-600 cursor-pointer pi pi-trash" (click)="deleteStudent(student.id)" title="{{ 'common.button.delete' | translate }}"></span>
-            <span *ngIf="!isAdmin && !isMyStudent(student)" class="text-gray-600 cursor-pointer pi pi-eye" (click)="viewStudent(student.id)" title="{{ 'common.button.view' | translate }}"></span>
-          </td>
-        </tr>
-      </ng-template>
+                <!-- User actions -->
+                <button
+                  *ngIf="!isAdmin && isMyStudent(student)"
+                  class="p-2 text-blue-600 transition-all rounded-lg hover:bg-blue-100 hover:text-blue-700"
+                  (click)="openPage(student.id)"
+                  title="{{ 'common.button.edit' | translate }}"
+                >
+                  <i class="pi pi-pencil"></i>
+                </button>
+                <button
+                  *ngIf="!isAdmin && isMyStudent(student)"
+                  class="p-2 text-red-600 transition-all rounded-lg hover:bg-red-100 hover:text-red-700"
+                  (click)="deleteStudent(student.id)"
+                  title="{{ 'common.button.delete' | translate }}"
+                >
+                  <i class="pi pi-trash"></i>
+                </button>
+                <button
+                  *ngIf="!isAdmin && !isMyStudent(student)"
+                  class="p-2 text-purple-600 transition-all rounded-lg hover:bg-purple-100 hover:text-purple-700"
+                  (click)="viewStudent(student.id)"
+                  title="{{ 'common.button.view' | translate }}"
+                >
+                  <i class="pi pi-eye"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
 
-      <!-- Empty message -->
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td colspan="11" class="py-6 text-center text-gray-500">
-            {{ 'common.table.emptyMessage' | translate }}
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+        <!-- Empty message -->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="11" class="py-12 text-center">
+              <div class="flex flex-col items-center justify-center">
+                <div class="flex items-center justify-center w-20 h-20 mb-4 bg-gray-100 rounded-full">
+                  <i class="text-4xl text-gray-400 pi pi-inbox"></i>
+                </div>
+                <p class="text-lg font-medium text-gray-500">{{ 'common.table.emptyMessage' | translate }}</p>
+                <p class="mt-1 text-sm text-gray-400">ไม่พบข้อมูลที่คุณค้นหา</p>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
 </div>
 
 <!-- Delete Confirmation Dialog -->
-<p-dialog [(visible)]="showDeleteDialog" [modal]="true" [style]="{width: '450px'}" header="{{ 'common.dialog.deleteHeader' | translate }}">
-  <div class="flex items-center gap-3">
-    <i class="text-4xl text-red-500 pi pi-exclamation-triangle"></i>
-    <span>{{ 'common.dialog.deleteMessage' | translate:{name:selectedStudent?.fullname} }}</span>
+<p-dialog
+  [(visible)]="showDeleteDialog"
+  [modal]="true"
+  [style]="{width: '450px'}"
+  header="{{ 'common.dialog.deleteHeader' | translate }}"
+  [contentStyle]="{'padding': '2rem'}"
+  styleClass="shadow-2xl"
+>
+  <div class="flex items-start gap-4">
+    <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 bg-red-100 rounded-full">
+      <i class="text-2xl text-red-600 pi pi-exclamation-triangle"></i>
+    </div>
+    <div class="flex-1">
+      <p class="text-lg font-medium text-gray-900">ยืนยันการลบข้อมูล</p>
+      <p class="mt-2 text-sm text-gray-600">
+        {{ 'common.dialog.deleteMessage' | translate:{name:selectedStudent?.fullname} }}
+      </p>
+      <p class="mt-2 text-xs text-red-500">
+        <i class="mr-1 pi pi-info-circle"></i>
+        การดำเนินการนี้ไม่สามารถย้อนกลับได้
+      </p>
+    </div>
   </div>
   <ng-template pTemplate="footer">
-    <p-button label="{{ 'common.button.cancel' | translate }}" icon="pi pi-times" (onClick)="showDeleteDialog = false" styleClass="p-button-text"></p-button>
-    <p-button label="{{ 'common.button.delete' | translate }}" icon="pi pi-trash" (onClick)="confirmDelete()" styleClass="p-button-danger"></p-button>
+    <div class="flex justify-end gap-2">
+      <p-button
+        label="{{ 'common.button.cancel' | translate }}"
+        icon="pi pi-times"
+        (onClick)="showDeleteDialog = false"
+        styleClass="p-button-text p-button-secondary"
+      ></p-button>
+      <p-button
+        label="{{ 'common.button.delete' | translate }}"
+        icon="pi pi-trash"
+        (onClick)="confirmDelete()"
+        styleClass="p-button-danger shadow-md hover:shadow-lg transition-all"
+      ></p-button>
+    </div>
   </ng-template>
 </p-dialog>

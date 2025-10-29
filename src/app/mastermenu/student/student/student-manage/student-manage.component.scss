@@ -1,127 +1,269 @@
 /* ========================================================== */
-/* 🎓 STUDENT DATA TABLE, FORM & DROPDOWN — BLUE THEME       */
+/* 🎓 STUDENT FORM - BLUE THEME (FIXED OVERRIDE)            */
 /* ========================================================== */
 
 /* ============================= */
-/* 🔹 DataTable Header & Rows */
-:host ::ng-deep .p-datatable-thead > tr > th {
-  background-color: #3b82f6 !important; /* ฟ้าเข้มเหมือน Accordion header */
-  color: #ffffff !important; /* ตัวอักษรขาว */
-  font-weight: 600;
-  text-align: center;
-}
-
-:host ::ng-deep .p-datatable-tbody > tr:nth-child(even),
-:host ::ng-deep .p-datatable-tbody > tr:nth-child(odd) {
-  background-color: #dbeafe !important; /* ฟ้าอ่อนเหมือนช่องฟอร์ม */
-}
-
-:host ::ng-deep .p-datatable-tbody > tr > td {
-  color: #1e3a8a !important; /* ฟ้าน้ำเงินเข้ม */
-  background-color: #dbeafe !important; /* ฟ้าอ่อนเหมือนช่องฟอร์ม */
-}
-
-/* ============================= */
-/* 🔹 Input Text, Textarea & PrimeNG InputText */
+/* 🔹 Force Input Styling with !important */
 :host ::ng-deep input[type="text"],
 :host ::ng-deep input[type="email"],
 :host ::ng-deep input[type="tel"],
 :host ::ng-deep input[type="number"],
 :host ::ng-deep input[type="password"],
 :host ::ng-deep textarea,
-:host ::ng-deep .p-inputtext {
-  background-color: #dbeafe !important; /* ฟ้าอ่อน */
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-component {
   color: #1e3a8a !important; /* ฟ้าน้ำเงินเข้ม */
-  border: 1px solid #60a5fa !important;
-  border-radius: 0.5rem !important;
-  padding: 0.5rem !important;
-  font-weight: 500;
-  transition: all 0.2s ease-in-out;
+  padding-left: 3rem !important; /* เผื่อที่ไอคอน */
+  font-weight: 500 !important;
+  font-size: 0.95rem !important;
+  transition: all 0.2s ease-in-out !important;
 }
 
+/* Input Focus State */
 :host ::ng-deep input:focus,
 :host ::ng-deep textarea:focus,
-:host ::ng-deep .p-inputtext:focus {
+:host ::ng-deep .p-inputtext:focus,
+:host ::ng-deep .p-component:focus {
   outline: none !important;
   border-color: #3b82f6 !important; /* ฟ้าเข้ม */
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
-  background-color: #dbeafe !important; /* ฟ้าอ่อนคงที่ */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+  background-color: #dbeafe !important;
+}
+
+/* Input Hover State */
+:host ::ng-deep input:hover:not(:disabled),
+:host ::ng-deep textarea:hover:not(:disabled),
+:host ::ng-deep .p-inputtext:hover:not(:disabled) {
+  border-color: #60a5fa !important;
+}
+
+/* Disabled Input */
+:host ::ng-deep input:disabled,
+:host ::ng-deep textarea:disabled,
+:host ::ng-deep .p-inputtext:disabled {
+  background-color: #f3f4f6 !important;
+  border-color: #d1d5db !important;
+  color: #6b7280 !important;
+  cursor: not-allowed !important;
 }
 
 /* ============================= */
-/* 🔹 PrimeNG p-select (Dropdown) */
-:host ::ng-deep .p-select {
-  background-color: #dbeafe !important; /* ฟ้าอ่อนเหมือนช่องฟอร์ม */
-  color: #1e3a8a !important;
-  border: 1px solid #60a5fa !important;
-  border-radius: 0.5rem !important;
+/* 🔹 Icon Styling (แก้ไขไอคอนหาย) */
+:host ::ng-deep .pi {
+  display: inline-block !important;
+  font-size: 1.1rem !important;
+  color: #60a5fa !important;
+  pointer-events: none !important;
+}
+
+/* Icon Container */
+:host ::ng-deep .relative .pi {
+  position: absolute !important;
+  left: 0.75rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 10 !important;
+}
+
+/* ============================= */
+/* 🔹 PrimeNG Select (Dropdown) - แก้ใหม่ */
+:host ::ng-deep .p-select,
+:host ::ng-deep .p-dropdown {
   width: 100% !important;
-}
-
-:host ::ng-deep .p-select-label {
-  color: #1e3a8a !important;
   background-color: #dbeafe !important;
-}
-
-:host ::ng-deep .p-select-list-container {
-  background-color: #dbeafe !important;
-  color: #1e3a8a !important;
+  border: 2px solid #93c5fd !important;
   border-radius: 0.5rem !important;
-  border: 1px solid #93c5fd !important;
-  z-index: 9999 !important;
 }
 
-:host ::ng-deep .p-select-option {
+:host ::ng-deep .p-select .p-select-label,
+:host ::ng-deep .p-dropdown .p-dropdown-label {
+  color: #1e3a8a !important;
+  background-color: transparent !important;
+  padding: 0.75rem !important;
+  font-weight: 500 !important;
+}
+
+:host ::ng-deep .p-select:hover,
+:host ::ng-deep .p-dropdown:hover {
+  border-color: #60a5fa !important;
+}
+
+:host ::ng-deep .p-select:focus-within,
+:host ::ng-deep .p-dropdown:focus-within {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Dropdown Panel */
+:host ::ng-deep .p-select-overlay,
+:host ::ng-deep .p-dropdown-panel {
+  background-color: #ffffff !important;
+  border: 2px solid #93c5fd !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+  margin-top: 0.25rem !important;
+}
+
+/* Dropdown Items */
+:host ::ng-deep .p-select-option,
+:host ::ng-deep .p-dropdown-item {
+  background-color: transparent !important;
+  color: #1e3a8a !important;
+  padding: 0.75rem 1rem !important;
+  transition: all 0.15s !important;
+}
+
+:host ::ng-deep .p-select-option:hover,
+:host ::ng-deep .p-dropdown-item:hover,
+:host ::ng-deep .p-select-option.p-focus,
+:host ::ng-deep .p-dropdown-item.p-focus {
   background-color: #dbeafe !important;
   color: #1e3a8a !important;
-  transition: background-color 0.2s;
 }
 
-:host ::ng-deep .p-select-option.p-focus,
-:host ::ng-deep .p-select-option:hover {
-  background-color: #60a5fa !important; /* ฟ้าเข้ม hover */
-  color: #ffffff !important;
-}
-
-/* ============================= */
-/* 🔹 Paginator Styling */
-:host ::ng-deep .p-paginator {
-  background-color: #dbeafe !important; /* ฟ้าอ่อนเหมือนช่อง */
-  color: #1e3a8a !important;
-  border-top: 1px solid #60a5fa !important;
-}
-
-:host ::ng-deep .p-paginator .p-paginator-page,
-:host ::ng-deep .p-paginator .p-paginator-prev,
-:host ::ng-deep .p-paginator .p-paginator-next {
-  color: #1e3a8a !important;
-}
-
-:host ::ng-deep .p-paginator .p-paginator-page.p-highlight {
+:host ::ng-deep .p-select-option.p-selected,
+:host ::ng-deep .p-dropdown-item.p-selected {
   background-color: #3b82f6 !important;
   color: #ffffff !important;
 }
 
-:host ::ng-deep .p-paginator .p-paginator-page:hover,
-:host ::ng-deep .p-paginator .p-paginator-prev:hover,
-:host ::ng-deep .p-paginator .p-paginator-next:hover {
-  background-color: #60a5fa !important;
-  color: #ffffff !important;
+/* ============================= */
+/* 🔹 Upload Area Styling */
+:host ::ng-deep .border-dashed {
+  border-style: dashed !important;
+  border-width: 2px !important;
+  border-color: #93c5fd !important;
+  transition: all 0.2s !important;
+}
+
+:host ::ng-deep .border-dashed:hover {
+  border-color: #60a5fa !important;
+  background-color: #eff6ff !important;
 }
 
 /* ============================= */
-/* 🔹 Table Scrollbar */
-:host ::ng-deep .p-datatable-wrapper {
-  scrollbar-color: #60a5fa #dbeafe !important;
-  scrollbar-width: thin;
+/* 🔹 Button Styling */
+:host ::ng-deep .p-button {
+  font-weight: 600 !important;
+  transition: all 0.2s !important;
+  border-radius: 0.5rem !important;
+  padding: 0.75rem 2rem !important;
+  min-width: 120px !important;
+}
+
+/* แก้ไขระยะห่างระหว่างไอคอนกับข้อความ */
+:host ::ng-deep .p-button .p-button-icon {
+  margin-right: 0.5rem !important;
+  font-size: 1.1rem !important;
+}
+
+/* ปุ่มแบบ icon อยู่ขวา */
+:host ::ng-deep .p-button .p-button-icon-right {
+  margin-right: 0 !important;
+  margin-left: 0.5rem !important;
+}
+
+/* ปุ่ม Primary */
+:host ::ng-deep .p-button-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3) !important;
+  color: #ffffff !important; /* 👈 สีข้อความปุ่มบันทึก - เปลี่ยนตรงนี้ */
+}
+
+/* สีไอคอนในปุ่ม Primary */
+:host ::ng-deep .p-button-primary .p-button-icon {
+  color: #ffffff !important; /* 👈 สีไอคอนปุ่มบันทึก */
+}
+
+/* สีข้อความ Label ในปุ่ม Primary */
+:host ::ng-deep .p-button-primary .p-button-label {
+  color: #ffffff !important; /* 👈 สี Label ปุ่มบันทึก */
+}
+
+:host ::ng-deep .p-button-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 6px 8px -1px rgba(59, 130, 246, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ปุ่ม Outlined */
+:host ::ng-deep .p-button-outlined {
+  background-color: transparent !important;
+  border: 2px solid #3b82f6 !important;
+  color: #3b82f6 !important;
+}
+
+:host ::ng-deep .p-button-outlined:hover:not(:disabled) {
+  background-color: #eff6ff !important;
+  border-color: #2563eb !important;
+  color: #2563eb !important;
+}
+
+/* ปุ่ม Disabled */
+:host ::ng-deep .p-button:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+/* Loading Spinner */
+:host ::ng-deep .p-button .p-button-loading-icon {
+  margin-right: 0.5rem !important;
 }
 
 /* ============================= */
-/* 🔹 Cell Alignment */
-:host ::ng-deep td.text-left {
-  text-align: left !important;
+/* 🔹 Toast Notification */
+:host ::ng-deep .p-toast {
+  z-index: 9999 !important;
 }
 
-:host ::ng-deep td.text-center {
-  text-align: center !important;
+:host ::ng-deep .p-toast-message {
+  border-radius: 0.75rem !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ============================= */
+/* 🔹 Card & Container */
+:host ::ng-deep .card {
+  border-radius: 1rem !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ============================= */
+/* 🔹 Label Styling */
+:host ::ng-deep label {
+  font-weight: 600 !important;
+  color: #1e3a8a !important;
+  margin-bottom: 0.5rem !important;
+  display: block !important;
+}
+
+/* ============================= */
+/* 🔹 Placeholder Color */
+:host ::ng-deep input::placeholder,
+:host ::ng-deep textarea::placeholder,
+:host ::ng-deep .p-inputtext::placeholder {
+  color: #94a3b8 !important;
+  opacity: 0.8 !important;
+}
+
+/* ============================= */
+/* 🔹 File Preview Card */
+:host ::ng-deep .border-blue-200 {
+  border-color: #bfdbfe !important;
+}
+
+:host ::ng-deep .bg-blue-50 {
+  background-color: #eff6ff !important;
+}
+
+/* ============================= */
+/* 🔹 Divider */
+:host ::ng-deep .p-divider {
+  border-color: #93c5fd !important;
+}
+
+:host ::ng-deep hr {
+  border-color: #93c5fd !important;
+  opacity: 0.5 !important;
 }
