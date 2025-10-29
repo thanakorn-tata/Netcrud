@@ -269,21 +269,21 @@
 >
   <div class="flex items-start gap-4">
     <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 bg-red-100 rounded-full">
-      <i class="text-2xl text-red-600 pi pi-exclamation-triangle"></i>
+      <i class="items-center text-2xl text-red-600 pi pi-exclamation-triangl "></i>
     </div>
     <div class="flex-1">
       <p class="text-lg font-medium text-gray-900">ยืนยันการลบข้อมูล</p>
-      <p class="mt-2 text-sm text-gray-600">
+      <p class="justify-center text-sm text-center text-whtite" style="padding: 20px magin 3px">
         {{ 'common.dialog.deleteMessage' | translate:{name:selectedStudent?.fullname} }}
       </p>
-      <p class="mt-2 text-xs text-red-500">
-        <i class="mr-1 pi pi-info-circle"></i>
+      <p class="mt-2 text-xs text-center text-red-500">
+        <i class="items-center mr-1 pi pi-info-circle"></i>
         การดำเนินการนี้ไม่สามารถย้อนกลับได้
       </p>
     </div>
   </div>
   <ng-template pTemplate="footer">
-    <div class="flex justify-end gap-2">
+    <div class="flex justify-end gap-2 mt-5">
       <p-button
         label="{{ 'common.button.cancel' | translate }}"
         icon="pi pi-times"

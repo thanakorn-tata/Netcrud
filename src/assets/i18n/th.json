@@ -12,7 +12,7 @@
       "Pleaseenter": "กรุณากรอกข้อมูล",
       "placeholder": "กรุณากรอกข้อมูลให้ครบถ้วน",
       "Pleaseenterex": "วันที่เริ่มและวันที่สิ้นสุด(เช่น 01/01/2025 - 31/4/2025)",
-      "Pleasesee": "AR Soft,AR DI,Tester,UX/UI,Account,HR"
+      "Pleasesee": "AR Soft,AR DI,Tester,UX/UI,Account,Human Resources"
 
     },
     "button": {
@@ -29,7 +29,7 @@
     },
     "dialog": {
       "deleteHeader": "ยืนยันการลบ",
-      "deleteMessage": "คุณต้องการลบนักศึกษา <strong>{{name}}</strong> ใช่หรือไม่?"
+      "deleteMessage": "คุณต้องการลบนักศึกษา ใช่หรือไม่?"
     }
   },
 "role": {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
@@ -156,4 +156,10 @@ export class AuthService {
     console.error('API Error:', error);
     return throwError(() => new Error(message));
   }
+  checkAndReloadSession(): Observable<User | null> {
+  if (!this.currentUserValue || this.currentUserValue.id === 0) {
+    return this.loadCurrentUser();
+  }
+  return of(this.currentUserValue);
+}
 }

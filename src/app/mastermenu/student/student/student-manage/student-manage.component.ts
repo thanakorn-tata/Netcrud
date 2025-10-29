@@ -137,7 +137,7 @@ export class StudentmanageComponent implements OnInit {
           this.messageService.add({
             severity: 'error',
             summary: 'ไม่มีสิทธิ์เข้าถึง',
-            detail: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+            detail: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ng',
             life: 5000
           });
 
@@ -163,10 +163,17 @@ export class StudentmanageComponent implements OnInit {
     });
   }
 
+  /**
+   * ✅ โหลดข้อมูลนักศึกษา (FIXED VERSION)
+   */
   loadStudent(id: number) {
     this.loading = true;
     this.studentApiService.getById(id).subscribe({
       next: (student) => {
+        console.log('📦 Loaded student data:', student);
+        console.log('🖼️ profile_file:', student.profile_file);
+        console.log('📁 project_file:', student.project_file);
+
         this.student = {
           fullname: student.fullname,
           university: student.university,
@@ -179,19 +186,44 @@ export class StudentmanageComponent implements OnInit {
           attached_project: student.attached_project || ''
         };
 
+        // ✅ โหลดรูปโปรไฟล์ - รองรับหลายรูปแบบ
         if (student.profile_file) {
-          this.profilePreview = `http://localhost:8080/uploads/${student.profile_file}`;
+          if (student.profile_file.startsWith('http')) {
+            // กรณี URL เต็ม
+            this.profilePreview = student.profile_file;
+          } else if (student.profile_file.includes('/')) {
+            // กรณีมี path เช่น "profile/abc.jpg"
+            this.profilePreview = `http://localhost:8080/uploads/${student.profile_file}`;
+          } else {
+            // กรณีมีแค่ชื่อไฟล์
+            this.profilePreview = `http://localhost:8080/uploads/profile/${student.profile_file}`;
+          }
+          console.log('✅ Profile preview URL:', this.profilePreview);
         }
 
+        // ✅ โหลดไฟล์โปรเจกต์ - รองรับหลายรูปแบบ
         if (student.project_file) {
-          this.projectFileName = student.project_file.split('/').pop() || '';
-          this.existingProjectFileUrl = `http://localhost:8080/uploads/${student.project_file}`;
+          // แยกชื่อไฟล์ออกมา
+          const fileName = student.project_file.split('/').pop() || student.project_file;
+          this.projectFileName = fileName;
+
+          // สร้าง URL สำหรับดาวน์โหลด
+          if (student.project_file.startsWith('http')) {
+            this.existingProjectFileUrl = student.project_file;
+          } else if (student.project_file.includes('/')) {
+            this.existingProjectFileUrl = `http://localhost:8080/uploads/${student.project_file}`;
+          } else {
+            this.existingProjectFileUrl = `http://localhost:8080/uploads/project/${student.project_file}`;
+          }
+
+          console.log('✅ Project file name:', this.projectFileName);
+          console.log('✅ Project file URL:', this.existingProjectFileUrl);
         }
 
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error loading student:', err);
+        console.error('❌ Error loading student:', err);
         this.messageService.add({
           severity: 'error',
           summary: 'ข้อผิดพลาด',
