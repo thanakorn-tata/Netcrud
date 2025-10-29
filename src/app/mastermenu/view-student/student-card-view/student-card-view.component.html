@@ -140,7 +140,16 @@
             styleClass="flex-1"
             severity="info"
           ></p-button>
-
+  <p-select
+    *ngIf="isAdmin && selectedStudent"
+    [(ngModel)]="selectedStudent.grade"
+    [options]="gradeOptions"
+    optionLabel="label"
+    optionValue="value"
+    placeholder="เลือกเกรด"
+    (onChange)="onGradeChange(selectedStudent)"
+    appendTo="body"
+  ></p-select>
 
         </div>
       </div>
@@ -350,7 +359,6 @@
     </div>
   </div>
 
-  <!-- แทนที่ส่วน ng-template pTemplate="footer" เดิมด้วยโค้ดนี้ -->
 <!-- แทนที่ส่วน ng-template pTemplate="footer" เดิมด้วยโค้ดนี้ -->
 <ng-template pTemplate="footer">
   <div class="space-y-4">
@@ -358,26 +366,15 @@
     <div class="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
       <!-- Grade Selector (ใช้เมื่อต้องการเลือกจาก dropdown) -->
       <div class="flex items-center gap-2">
-        <p-select
-          *ngIf="isAdmin && selectedStudent"
-          [(ngModel)]="selectedStudent.grade"
-          [options]="gradeOptions"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="เลือกเกรด"
-          (onChange)="onGradeChange(selectedStudent)"
-          styleClass="w-32"
-          appendTo="body"
-        ></p-select>
+  <!-- Grade Display for Non-Admin -->
+  <div *ngIf="!isAdmin && selectedStudent" class="px-4 py-2 bg-gray-100 rounded-lg">
+    <span class="text-sm text-gray-600">เกรด: </span>
+    <span class="text-lg font-semibold" [class]="getGradeColor(selectedStudent.grade)">
+      {{ selectedStudent.grade || '-' }}
+    </span>
+  </div>
+</div>
 
-        <!-- Grade Display for Non-Admin -->
-        <div *ngIf="!isAdmin && selectedStudent" class="px-4 py-2 bg-gray-100 rounded-lg">
-          <span class="text-sm text-gray-600">เกรด: </span>
-          <span class="text-lg font-semibold" [class]="getGradeColor(selectedStudent.grade)">
-            {{ selectedStudent.grade || '-' }}
-          </span>
-        </div>
-      </div>
 
       <!-- Action Buttons -->
       <div class="flex gap-2">

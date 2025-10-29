@@ -117,3 +117,82 @@ hr {
   color: #5d3b80;
   opacity: 0.2;
 }
+/* ===========================================
+   🎨 GLOBAL PURPLE THEME FOR p-select
+   ใช้กับ styleClass="grade-select"
+   =========================================== */
+
+:root {
+  --purple-light: #d8b4fe;
+  --purple: #a855f7;
+  --purple-dark: #7c3aed;
+  --white: #ffffff;
+  --text-dark: #3b0764;
+}
+
+/* 🟣 Main Dropdown Container */
+.grade-select.p-dropdown {
+  background: linear-gradient(to right, var(--purple), var(--purple-dark)) !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  color: var(--white) !important;
+  font-weight: 600 !important;
+  transition: all 0.25s ease !important;
+  min-width: 8rem;
+}
+
+/* ✨ Label Inside Dropdown */
+.grade-select .p-dropdown-label {
+  color: var(--white) !important;
+  font-weight: 700 !important;
+}
+
+/* ⬇ Trigger Icon */
+.grade-select .p-dropdown-trigger {
+  color: var(--white) !important;
+}
+
+/* 🔦 Hover & Focus Effect */
+.grade-select.p-dropdown:hover,
+.grade-select.p-dropdown.p-focus {
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.8) !important;
+  transform: scale(1.02);
+}
+
+/* 📋 Dropdown Panel when expanded */
+.p-dropdown-panel {
+  background: #f3e8ff !important;
+  border: 2px solid var(--purple-dark) !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 0 16px rgba(124, 58, 237, 0.5) !important;
+}
+
+/* 🔹 Items List */
+.p-dropdown-items .p-dropdown-item {
+  color: var(--text-dark) !important;
+  font-weight: 500 !important;
+  transition: background 0.2s ease;
+}
+
+.p-dropdown-items .p-dropdown-item:hover {
+  background: var(--purple-light) !important;
+  color: var(--white) !important;
+}
+
+.p-dropdown-items .p-dropdown-item.p-highlight {
+  background: var(--purple) !important;
+  color: var(--white) !important;
+}
+
+/* 🚫 Disabled */
+.grade-select.p-dropdown.p-disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .grade-select.p-dropdown {
+    min-width: 100% !important;
+  }
+}
