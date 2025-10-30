@@ -41,3 +41,28 @@
     color: #1f2937 !important;
   }
 }
+@media (prefers-color-scheme: dark) {
+  :host {
+    background-color: #1f2937 !important; // เทาเข้ม
+    color: #f9fafb !important; // ตัวอักษรสีอ่อน
+  }
+
+  :host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    background-color: #374151;
+    color: #f9fafb;
+  }
+
+  :host ::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+    background-color: #4b5563;
+  }
+
+  :host ::ng-deep .p-select {
+    background-color: #374151 !important;
+    color: #f9fafb !important;
+    border: 1px solid #6b7280;
+  }
+
+  :host ::ng-deep .p-select-label {
+    color: #f9fafb !important;
+  }
+}

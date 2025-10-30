@@ -348,7 +348,7 @@ export class DashboardComponent implements OnInit {
       datasets: [
         {
           data: durations.map((d) => d[1]),
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0','#D2042D'],
         },
       ],
     };
